@@ -1,0 +1,12 @@
+Build.PL
+Changes
+Makefile.PL
+MANIFEST
+META.yml
+README
+bin/pod2readme
+t/10-basic.t
+t/90-fileport.t
+t/90-pod.t
+t/90-podcover.t
+lib/Pod/Readme.pm
