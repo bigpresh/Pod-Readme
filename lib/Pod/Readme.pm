@@ -64,10 +64,14 @@ $VERSION = '0.09';
 
 =begin internal
 
+=over 12
+
 =item initialize
 
 Override adds the C<readme_type> and <debug> options, and initializes
 the "README_SKIP" flag.
+
+=back
 
 =end internal
 
@@ -94,12 +98,15 @@ the "README_SKIP" flag.
   }
 }
 
-
 =begin internal
+
+=over 12 
 
 =item output
 
 Override does not output anything if the "README_SKIP" flag is enabled.
+
+=back
 
 =end internal
 
@@ -114,9 +121,13 @@ sub output {
 
 =begin internal
 
+=over
+
 =item _parse_args
 
 Parses destination and name="value" arguments passed for L</cmd_for>.
+
+=back
 
 =end internal
 
@@ -164,9 +175,13 @@ sub _parse_args {
 
 =begin internal
 
+=over
+
 =item cmd_begin
 
 Overrides support for "begin" command.
+
+=back
 
 =end internal
 
@@ -199,9 +214,13 @@ sub cmd_begin {
 
 =begin internal
 
+=over
+
 =item cmd_for
 
 Overrides support for "for" command.
+
+=back
 
 =end internal
 
@@ -248,9 +267,13 @@ sub cmd_for {
 
 =begin internal
 
+=over
+
 =item _include_file
 
 Includes a file.
+
+=back
 
 =end internal
 
@@ -287,9 +310,13 @@ sub _include_file {
 
 =begin internal
 
+=over
+
 =item seq_l
 
 Overrides support for "L" markup.
+
+=back
 
 =end internal
 
@@ -335,7 +362,6 @@ sub seq_l {
     }
 }
 
-
 =head1 DESCRIPTION
 
 This module is a subclass of L<Pod::PlainText> which provides additional
@@ -378,7 +404,7 @@ Special POD markup options are described below:
 =item begin/end
 
   =begin readme
-  
+
   =head1 README ONLY
 
   This section will only show up in the README file.
