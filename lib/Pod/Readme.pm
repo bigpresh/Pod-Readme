@@ -60,7 +60,7 @@ use vars qw( @ISA $VERSION );
 
 @ISA = qw( Pod::PlainText );
 
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 =begin internal
 
@@ -486,32 +486,23 @@ Warnings will be issued for any ignored formatting commands.
 
 For an example, see the F<Readme.pm> file in this distribution.
 
-=for readme continue
-
-=begin readme
-
-=head1 REVSION HISTORY
-
-Changes since the last release:
-
-=for readme include file="Changes" start="^0.09" stop="^0.081" type="text"
-
-A detailed history is available in the F<Changes> file.
-
-=end readme
-
 =head1 SEE ALSO
 
 See L<perlpod>, L<perlpodspec> and L<podlators>.
 
 =head1 AUTHOR
 
-Robert Rothenberg <rrwo at cpan.org>
+Originally by Robert Rothenberg <rrwo at cpan.org>
 
-=head2 Suggestions and Bug Reporting
+Now maintained by David Precious <davidp@preshweb.co.uk>
 
-Feedback is always welcome.  Please use the CPAN Request Tracker at
-L<http://rt.cpan.org> to submit bug reports.
+
+=head2 Suggestions, Bug Reporting and Contributing
+
+This module is developed on GitHub at:
+
+http://github.com/bigpresh/Pod-Readme
+
 
 =head1 LICENSE
 
