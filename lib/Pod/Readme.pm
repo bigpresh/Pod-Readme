@@ -264,6 +264,32 @@ sub cmd_for {
   }
 }
 
+=begin internal
+
+=over
+
+=item cmd_encoding
+
+Handle =encoding directive.
+
+TODO: actually change the encoding of the output file.
+
+=back
+
+=end internal
+
+=cut
+
+sub cmd_encoding {
+    my $self = shift;
+    my $encoding = (split /\s+/, shift)[0];
+    if ($self->{_encoding}) {
+        die "=encoding option must occur only once!";
+    }
+    $self->{_encoding} = $encoding;
+    # TODO: Need to actually do something with this option
+    # At least recognising it and not dying is a step in the right direction.
+}
 
 =begin internal
 
