@@ -1,8 +1,6 @@
-Build.PL
 Changes
 Makefile.PL
 MANIFEST
-META.yml
 README
 bin/pod2readme
 t/10-basic.t
