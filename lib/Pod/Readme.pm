@@ -60,7 +60,7 @@ use vars qw( @ISA $VERSION );
 
 @ISA = qw( Pod::PlainText );
 
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 =begin internal
 

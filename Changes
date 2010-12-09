@@ -1,5 +1,11 @@
 Revision history for Perl extension Pod::Readme.
 
+0.11  2010-12-09
+        - Recognise the =encoding directive, rather than dying when it's
+          encountered.
+          TODO: actually take heed of it.
+          Thanks to Ivan Bessarabov for bringing this to my attention!
+
 0.10  2010-05-19
         - David Precious <davidp@preshweb.co.uk> taking over maintainership
         - Apply POD fix patch from RT #38328, thanks to David A. Desrosiers
