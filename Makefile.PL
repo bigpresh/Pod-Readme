@@ -22,6 +22,11 @@ WriteMakefile(
                     'bin/pod2readme'
                     ],
     PL_FILES => {},
+    META_MERGE => {
+        resources => {
+            repository => 'https://github.com/bigpresh/Pod-Readme',
+        },
+    },
     dist       => { COMPRESS => 'gzip -9f', SUFFIX => 'gz' },
     clean      => { FILES => 'Pod-Readme-*' },
 );
