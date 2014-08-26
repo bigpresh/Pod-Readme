@@ -6,6 +6,7 @@ REQUIREMENTS
     modules (depending on your Perl version) are required:
 
       Pod::PlainText
+      Regexp::Common
       Test::More
 
 INSTALLATION
