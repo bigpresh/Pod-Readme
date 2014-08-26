@@ -10,6 +10,7 @@ This module should run on Perl 5.005 or newer.  The following non-core
 modules (depending on your Perl version) are required:
 
   Pod::PlainText
+  Regexp::Common
   Test::More
 
 =head1 INSTALLATION
@@ -312,7 +313,7 @@ sub _include_file {
   my $mark = shift || "";
   my $stop = shift || "";
 
-  my $fh   = IO::File->new("<$file")
+  my $fh   = IO::File->new('<', $file)
     || croak "Unable to open file \"$file\"";
 
   my $buffer = "";
