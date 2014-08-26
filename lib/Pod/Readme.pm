@@ -60,7 +60,7 @@ use vars qw( @ISA $VERSION );
 
 @ISA = qw( Pod::PlainText );
 
-$VERSION = '0.11';
+$VERSION = '0.12';
 
 =begin internal
 
@@ -100,7 +100,7 @@ the "README_SKIP" flag.
 
 =begin internal
 
-=over 12 
+=over 12
 
 =item output
 
@@ -405,7 +405,7 @@ Another problem is that the F<README> includes the entirety of
 the module documentation!  Most people browsing the F<README> file do not
 need all of this information.
 
-Likewise, including installation and requirement information in the 
+Likewise, including installation and requirement information in the
 module documentation is not necessary either, since the module is already
 installed.
 
