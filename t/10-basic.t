@@ -1,8 +1,62 @@
-#!/usr/bin/perl
+use Test::Most;
 
-use strict;
+my $class = 'Pod::Readme';
 
-use Test::More;
+use_ok($class);
+
+{
+    ok my $p = $class->new(), 'new';
+
+    my $out;
+
+    $p->output_string(\$out);
+
+    $p->parse_string_document("=pod\n\nBefore\n\n=for readme stop \n\nInside\n\n=for readme start\n\nAfter");
+
+    ok $p->content_seen, 'content_seen';
+
+    like $out, qr/\s+Before\n\s+After\n/, 'expected output';
+
+    note $out;
+}
+
+{
+    ok my $p = $class->new(), 'new';
+
+    my $out;
+
+    $p->output_string(\$out);
+
+    $p->parse_string_document("=pod\n\nBefore\n\n=begin :readme\n\nInside\n\n=end :readme \n\nAfter\n\n");
+
+    ok $p->content_seen, 'content_seen';
+
+    like $out, qr/\s+Before\n\s+Inside\s+After\n/, 'expected output';
+
+    note $out;
+}
+
+{
+    ok my $p = $class->new(), 'new';
+
+    my $out;
+
+    $p->output_string(\$out);
+
+    $p->parse_string_document("=pod\n\nBefore\n\n=begin readme\n\nInside\n\n=end readme \n\nAfter\n\n");
+
+    ok $p->content_seen, 'content_seen';
+
+    like $out, qr/\s+Before\n\s+Inside\s+After\n/, 'expected output';
+
+    note $out;
+}
+
+
+done_testing;
+
+__END__
+
 
 my %L_ARGS = (
   'http://www.example.com/' => undef,
@@ -34,7 +88,7 @@ my @INVALID = qw(
 my @METHODS = qw( cmd_head3 cmd_head4 );
 
 plan tests => 2 + (19 * scalar(@TYPES)) + scalar(keys %L_ARGS) +
-                  (2 * scalar(@INVALID)) + 
+                  (2 * scalar(@INVALID)) +
                   (1 * scalar(@METHODS));
 
 use_ok("Pod::Readme", 0.06);
@@ -123,4 +177,3 @@ foreach my $type (@TYPES) {
     ok($p->can($method), "method $method supported");
   }
 }
-

@@ -1,6 +1,18 @@
 Revision history for Perl extension Pod::Readme.
 
-        - added MANIFEST.SKIP to distribution.
+v0.999.0
+        [Incompatabilities]
+        - Major rewrite, using modern Perl 5.10 and Pod::Simple.
+
+        - Changed how directives are handled, to abuse the POD spec
+          less.
+
+        - The "=for readme include" directive is no longer supported.
+
+        [Other Changes]
+        - Switched to semantic versioning.
+
+        - Added MANIFEST.SKIP to distribution.
 
 0.11  2010-12-09
         - Recognise the =encoding directive, rather than dying when it's
