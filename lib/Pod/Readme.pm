@@ -105,6 +105,9 @@ sub _elem_wrap {
 around 'handle_text' => sub {
     my ($orig, $self, $text) = @_;
 
+    # Bug: when handle_text called while within for/begin, a new
+    # paragraph is started in Pod::Simple.
+
     if (my $element = $self->_elements->[-1]) {
 
         if ($element eq '=for') {

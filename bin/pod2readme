@@ -32,7 +32,7 @@ if (-e $output) {
   copy( $output, $output . ".bak" );
 }
 
-$parser->parse_from_file( $input, $output );
+$parser->parse_from_file( $input );
 
 __END__
 
