@@ -4,6 +4,35 @@ package Pod::Readme;
 
 Pod::Readme - generate README files from POD
 
+=head1 SYNOPSIS
+
+TODO
+
+=head1 DESCRIPTION
+
+TODO
+
+=begin :readme
+
+=for readme plugin changes
+
+=for readme changes
+
+=for readme stop
+
+=end :readme
+
+=head1 METHODS
+
+See L<Pod::Simple::Methody> for the base methods that this module
+uses.
+
+It adds methods of the form C<pod_readme_CMD>, which are triggered by
+
+  =for readme CMD
+
+=for readme start
+
 =cut
 
 use 5.10.1;
@@ -99,7 +128,9 @@ around 'handle_text' => sub {
         }
 
     } else {
+
         $self->$orig($text) if $self->enabled;
+
     }
 };
 

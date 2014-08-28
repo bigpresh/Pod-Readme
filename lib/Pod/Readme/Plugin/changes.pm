@@ -34,6 +34,12 @@ has 'changes_title' => (
     default => 'CHANGES IN THIS RELEASE',
 );
 
+has 'changes_verbatim' => (
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 1,
+);
+
 sub pod_readme_changes {
     my ($self, $file) = @_;
 
@@ -45,15 +51,41 @@ sub pod_readme_changes {
     my $element = $self->_pop_element;
 
     $self->start_head1();
-    $self->handle_text($self->changes_title . "\n\n");
+    $self->handle_text($self->changes_title);
     $self->end_head1();
 
-    my $text = $latest->serialize;
-    $text =~ s/\n+$//g;
+    if ($self->changes_verbatim) {
 
-    $self->start_Verbatim();
-    $self->handle_text($text);
-    $self->end_Verbatim();
+        my $text = $latest->serialize;
+        $text =~ s/\s+$//g;
+
+        $self->start_Verbatim();
+        $self->handle_text($text);
+        $self->end_Verbatim();
+
+    } else {
+
+        foreach my $group ($latest->groups) {
+
+            if ($group ne '') {
+                $self->start_head2();
+                $self->handle_text($group);
+                $self->end_head2();
+            }
+
+            $self->start_over_bullet();
+            foreach my $items ($latest->get_group($group)->changes) {
+                foreach my $item (@{$items}) {
+                    $self->start_item_bullet();
+                    $self->handle_text($item);
+                    $self->end_item_bullet();
+                }
+            }
+            $self->end_over_bullet();
+
+        }
+
+    }
 
     $self->_push_element($element);
 }
