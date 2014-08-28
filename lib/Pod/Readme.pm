@@ -97,6 +97,15 @@ sub pod_readme_plugin {
     $self->load_plugin($_) for @args;
 }
 
+sub _elem_wrap {
+    my ($self, $name, $text) = @_;
+    my $start = $self->can("start_${name}");
+    my $end   = $self->can("end_${name}");
+    $self->$start();
+    $self->handle_text($text);
+    $self->$end();
+}
+
 around 'handle_text' => sub {
     my ($orig, $self, $text) = @_;
 

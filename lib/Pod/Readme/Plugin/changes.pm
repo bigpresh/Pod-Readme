@@ -37,7 +37,7 @@ has 'changes_title' => (
 has 'changes_verbatim' => (
     is      => 'rw',
     isa     => 'Bool',
-    default => 1,
+    default => 0,
 );
 
 sub pod_readme_changes {
@@ -50,35 +50,26 @@ sub pod_readme_changes {
 
     my $element = $self->_pop_element;
 
-    $self->start_head1();
-    $self->handle_text($self->changes_title);
-    $self->end_head1();
+    $self->_elem_wrap('head1', $self->changes_title);
 
     if ($self->changes_verbatim) {
 
         my $text = $latest->serialize;
         $text =~ s/\s+$//g;
 
-        $self->start_Verbatim();
-        $self->handle_text($text);
-        $self->end_Verbatim();
+        $self->_elem_wrap('Verbatim', $text);
 
     } else {
 
         foreach my $group ($latest->groups) {
 
-            if ($group ne '') {
-                $self->start_head2();
-                $self->handle_text($group);
-                $self->end_head2();
-            }
+            $self->_elem_wrap('head2', $group)
+                if ($group ne '');
 
             $self->start_over_bullet();
             foreach my $items ($latest->get_group($group)->changes) {
                 foreach my $item (@{$items}) {
-                    $self->start_item_bullet();
-                    $self->handle_text($item);
-                    $self->end_item_bullet();
+                    $self->_elem_wrap('item_bullet', $item);
                 }
             }
             $self->end_over_bullet();
