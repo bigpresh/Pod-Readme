@@ -1,5 +1,11 @@
 package Pod::Readme;
 
+=head1 NAME
+
+Pod::Readme - generate README files from POD
+
+=cut
+
 use 5.10.1;
 
 use Moose;
