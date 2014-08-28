@@ -138,7 +138,7 @@ around 'handle_text' => sub {
 
     } else {
 
-        $self->$orig($text) if $self->enabled;
+       $self->$orig($text) if $self->enabled;
 
     }
 };

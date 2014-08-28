@@ -13,31 +13,25 @@ DESCRIPTION
 
 CHANGES IN THIS RELEASE
 
- Documentation
+    v0.999.1
+     [Documentation]
+     - Changes rewritten to conform to CPAN::Changes::Spec.
+    
+     [Incompatabilities]
+     - Major rewrite, using modern Perl 5.10 and Pod::Simple.
+     - Changed how directives are handled, to abuse the POD spec less.
+     - The "=for readme include" directive is no longer supported.
+    
+     [New Features]
+     - Added support for plugins.
+     - Added a "changes" plugin for parsing Changes files.
+    
+     [Other Changes]
+     - Switched to semantic versioning.
+     - Added MANIFEST.SKIP to distribution.
+     - QA tests are no longer part of the distribution.
+    
 
-      * Changes rewritten to conform to CPAN::Changes::Spec.
-
- Incompatabilities
-
-      * Major rewrite, using modern Perl 5.10 and Pod::Simple.
-
-      * Changed how directives are handled, to abuse the POD spec less.
-
-      * The "=for readme include" directive is no longer supported.
-
- New Features
-
-      * Added support for plugins.
-
-      * Added a "changes" plugin for parsing Changes files.
-
- Other Changes
-
-      * Switched to semantic versioning.
-
-      * Added MANIFEST.SKIP to distribution.
-
-      * QA tests are no longer part of the distribution.
 
 
 

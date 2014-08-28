@@ -37,7 +37,7 @@ has 'changes_title' => (
 has 'changes_verbatim' => (
     is      => 'rw',
     isa     => 'Bool',
-    default => 0,
+    default => 1,
 );
 
 sub pod_readme_changes {
@@ -54,10 +54,7 @@ sub pod_readme_changes {
 
     if ($self->changes_verbatim) {
 
-        my $text = $latest->serialize;
-        $text =~ s/\s+$//g;
-
-        $self->_elem_wrap('Verbatim', $text);
+        $self->_elem_wrap('Verbatim', $latest->serialize);
 
     } else {
 
