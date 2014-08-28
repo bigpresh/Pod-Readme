@@ -12,15 +12,11 @@ TODO
 
 TODO
 
-=begin :readme
-
 =for readme plugin changes
 
 =for readme changes
 
 =for readme stop
-
-=end :readme
 
 =head1 METHODS
 
@@ -122,6 +118,7 @@ around 'handle_text' => sub {
             my $cmd_method = 'pod_readme_' . $cmd;
             if (my $method = $self->can($cmd_method)) {
 
+                $self->pod_readme_start();
                 $self->$method(@args);
 
             } else {
