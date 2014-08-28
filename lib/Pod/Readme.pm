@@ -16,8 +16,8 @@ has 'enabled' => (
     init_arg => 'start_enabled',
     default  => 1,
     handles  => {
-        start => 'set',
-        stop  => 'unset',
+        pod_readme_start => 'set',
+        pod_readme_stop  => 'unset',
     },
 );
 
@@ -69,10 +69,10 @@ around 'handle_text' => sub {
             my @args = split /\s+/, $text;
             my $cmd  = shift @args;
 
-            if ($cmd =~ /^(?:start|stop)$/) {
+            my $cmd_method = 'pod_readme_' . $cmd;
+            if (my $method = $self->can($cmd_method)) {
 
-                my $method = $self->can($cmd);
-                $self->$method();
+                $self->$method(@args);
 
             } else {
 
