@@ -37,7 +37,7 @@ has 'changes_title' => (
 has 'changes_verbatim' => (
     is      => 'rw',
     isa     => 'Bool',
-    default => 1,
+    default => 0,
 );
 
 sub pod_readme_changes {
