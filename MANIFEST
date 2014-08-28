@@ -6,3 +6,4 @@ README
 bin/pod2readme
 t/10-basic.t
 lib/Pod/Readme.pm
+lib/Pod/Readme/Plugin/changes.pm
