@@ -120,4 +120,21 @@ use_ok($class);
 
 }
 
+
+{
+    ok my $p = $class->new(), 'new';
+
+    my $out;
+
+    $p->output_string(\$out);
+
+    $p->parse_string_document("=pod\n\n=for readme plugin changes\n\n=for readme changes\n");
+
+    my $title = quotemeta($p->changes_title);
+    like $out, qr/$title/, 'has changes title';
+
+    note $out;
+
+}
+
 done_testing;

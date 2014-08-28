@@ -10,12 +10,15 @@ WriteMakefile(
         ? (LICENSE=> 'perl')
                 : ()),
     PREREQ_PM => {
+        'CPAN::Changes'     => 0,
         'Moose'             => 0,
         'MooseX::NonMoose'  => 0,
+        'MooseX::Object::Pluggable' => 0,
         'namespace::autoclean' => 0,
         'parent'            => 0,
-        'Pod::Simple::Text' => '3.0',
-        'Test::Most'        => '0'
+        'Pod::Simple::Text' => 0,
+        'Test::Most'        => 0,
+        'version'           => 0.77,
     },
     INSTALLDIRS => 'site',
     EXE_FILES => [

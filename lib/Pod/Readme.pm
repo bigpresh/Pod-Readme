@@ -5,6 +5,8 @@ use 5.10.1;
 use Moose;
 use MooseX::NonMoose;
 
+with 'MooseX::Object::Pluggable';
+
 extends 'Pod::Simple::Text';
 
 use version 0.77; our $VERSION = version->declare('v0.999.0');
@@ -55,6 +57,10 @@ sub end_for {
     $self->_pop_element;
 }
 
+sub pod_readme_plugin {
+    my ($self, @args) = @_;
+    $self->load_plugin($_) for @args;
+}
 
 around 'handle_text' => sub {
     my ($orig, $self, $text) = @_;

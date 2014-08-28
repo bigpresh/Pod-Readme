@@ -9,6 +9,11 @@ v0.999.1
 
   - The "=for readme include" directive is no longer supported.
 
+  [New Features]
+  - Added support for plugins.
+
+  - Added a "changes" plugin for parsing Changes files.
+
   [Documentation]
   - Changes rewritten to conform to CPAN::Changes::Spec.
 
