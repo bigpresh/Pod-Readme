@@ -29,7 +29,7 @@ has 'changes_file' => (
 has 'changes_title' => (
     is      => 'rw',
     isa     => 'Str',
-    default => 'CHANGES IN THIS RELEASE',
+    default => 'RECENT CHANGES',
 );
 
 has 'changes_verbatim' => (
@@ -70,6 +70,9 @@ sub pod_readme_changes {
         }
 
     }
+
+    $self->_elem_wrap( 'Para',
+        sprintf( 'See the %s file for a longer revision history', $file ) );
 
 }
 
