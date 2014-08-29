@@ -10,7 +10,6 @@ DESCRIPTION
 
     TODO
 
-
 CHANGES IN THIS RELEASE
 
  Documentation
@@ -39,13 +38,7 @@ CHANGES IN THIS RELEASE
 
       * QA tests are no longer part of the distribution.
 
-
-
-
-
-
-    
-
+      * Makefile.PL uses Module::Install.
 
 SEE ALSO
 
