@@ -46,8 +46,6 @@ sub pod_readme_changes {
     my $changes = CPAN::Changes->load($file);
     my $latest = ($changes->releases)[-1];
 
-    my $element = $self->_pop_element;
-
     $self->_elem_wrap('head1', $self->changes_title);
 
     if ($self->changes_verbatim) {
@@ -73,7 +71,6 @@ sub pod_readme_changes {
 
     }
 
-    $self->_push_element($element);
 }
 
 sub _indent_changes {

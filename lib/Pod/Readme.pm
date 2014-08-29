@@ -21,7 +21,8 @@ TODO
 See L<Pod::Simple::Methody> for the base methods that this module
 uses.
 
-It adds methods of the form C<pod_readme_CMD>, which are triggered by
+This module adds methods of the form C<pod_readme_CMD>, which are
+triggered by the POD directives
 
   =for readme CMD
 
@@ -69,6 +70,7 @@ has '_elements' => (
     },
 );
 
+
 sub BUILD {
     my ($self, $args) = @_;
     $self->accept_targets_as_text( $self->target );
@@ -84,6 +86,11 @@ sub start_for {
 sub end_for {
     my ($self, $attrs) = @_;
     $self->_pop_element;
+}
+
+sub _is_for {
+    my ($self) = @_;
+    ($self->_elements->[-1] // '') eq '=for';
 }
 
 sub pod_readme_plugin {
@@ -106,42 +113,44 @@ sub _elem_wrap {
 around 'handle_text' => sub {
     my ($orig, $self, $text) = @_;
 
-    # Bug: when handle_text called while within for/begin, a new
-    # paragraph is started in Pod::Simple.
+    # Bug: =for readme stop inserts a blank line
 
-    if (my $element = $self->_elements->[-1]) {
+    if ($self->_is_for) {
 
-        if ($element eq '=for') {
+        $text =~ s/^\s+//;
+        $text =~ s/\s+$//;
 
-            $text =~ s/^\s+//;
-            $text =~ s/\s+$//;
+        my @args = split /\s+/, $text;
+        my $cmd  = shift @args;
 
-            my @args = split /\s+/, $text;
-            my $cmd  = shift @args;
+        my $cmd_method = 'pod_readme_' . $cmd;
+        if (my $method = $self->can($cmd_method)) {
 
-            my $cmd_method = 'pod_readme_' . $cmd;
-            if (my $method = $self->can($cmd_method)) {
+            my $elem = $self->_pop_element;
+            $self->$method(@args);
+            $self->_push_element($elem);
 
-                $self->pod_readme_start();
-                $self->$method(@args);
+        } else {
 
-            } else {
-
-                die "Unsupported command: ${cmd}"; # TODO
-
-            }
-
-        } elsif ($element eq '=begin') {
-
-            $self->$orig($text);
+            die "Unsupported command: ${cmd}"; # TODO
 
         }
 
     } else {
 
-       $self->$orig($text) if $self->enabled;
+        $self->$orig($text);
 
     }
+};
+
+around emit_par => sub {
+    my ($orig, $self, @args) = @_;
+    $self->$orig(@args) if $self->enabled && !$self->_is_for;
+};
+
+around end_Verbatim => sub {
+    my ($orig, $self, @args) = @_;
+    $self->$orig(@args) if $self->enabled && !$self->_is_for;
 };
 
 use namespace::autoclean;
