@@ -1,6 +1,6 @@
 Revision history for Pod-Readme
 
-v0.999.1
+v0.999.0
   [Incompatabilities]
   - Major rewrite, using modern Perl 5.10 and Pod::Simple.
 
