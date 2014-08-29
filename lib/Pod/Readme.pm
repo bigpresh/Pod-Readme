@@ -12,6 +12,8 @@ TODO
 
 TODO
 
+=for readme plugin version
+
 =for readme plugin changes
 
 =for readme stop
