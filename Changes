@@ -33,33 +33,33 @@ v0.999.1
 
 0.10  2010-05-19
 
-   - David Precious <davidp@preshweb.co.uk> taking over maintainership
+  - David Precious <davidp@preshweb.co.uk> taking over maintainership
 
-   - Apply POD fix patch from RT #38328, thanks to David A. Desrosiers
+  - Apply POD fix patch from RT #38328, thanks to David A. Desrosiers
 
 0.09  2006-11-25
 
-    - uses Regexp::Common for URI parsing for L<> tag
+  - uses Regexp::Common for URI parsing for L<> tag
 
-    - added separate check for https, ftps, and svn URIs
-      (rt.cpan.org bugs 23585 and 23613)
+  - added separate check for https, ftps, and svn URIs (rt.cpan.org
+    bugs 23585 and 23613)
 
 0.081 2006-05-07
 
-    - released package without signature, due to Module::Signature
-      issues
+  - released package without signature, due to Module::Signature
+    issues
 
 0.08  2006-05-01
 
-    - head3/4 headings not recognized
+  - head3/4 headings not recognized
 
-    - went back to using Pod::PlainText
+  - went back to using Pod::PlainText
 
 0.07  2006-02-11
 
-    - added min version to use Pod::Text statement in source
+  - added min version to use Pod::Text statement in source
 
-    - removed multiple plans from the podcover test
+  - removed multiple plans from the podcover test
 
 0.06  2006-02-09
 
