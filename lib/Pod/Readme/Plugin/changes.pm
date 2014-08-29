@@ -21,9 +21,9 @@ of a F<Changes> file that conforms to the L<CPAN::Changes::Spec>.
 =cut
 
 has 'changes_file' => (
-   is      => 'rw',
-   isa     => 'Str',
-   default => 'Changes',
+    is      => 'rw',
+    isa     => 'Str',
+    default => 'Changes',
 );
 
 has 'changes_title' => (
@@ -39,30 +39,30 @@ has 'changes_verbatim' => (
 );
 
 sub pod_readme_changes {
-    my ($self, $file) = @_;
+    my ( $self, $file ) = @_;
 
     $file //= $self->changes_file;
 
     my $changes = CPAN::Changes->load($file);
-    my $latest = ($changes->releases)[-1];
+    my $latest  = ( $changes->releases )[-1];
 
-    $self->_elem_wrap('head1', $self->changes_title);
+    $self->_elem_wrap( 'head1', $self->changes_title );
 
-    if ($self->changes_verbatim) {
+    if ( $self->changes_verbatim ) {
 
-        $self->_elem_wrap('Verbatim', $latest->serialize);
+        $self->_elem_wrap( 'Verbatim', $latest->serialize );
 
     } else {
 
-        foreach my $group ($latest->groups) {
+        foreach my $group ( $latest->groups ) {
 
-            $self->_elem_wrap('head2', $group)
-                if ($group ne '');
+            $self->_elem_wrap( 'head2', $group )
+                if ( $group ne '' );
 
             $self->start_over_bullet();
-            foreach my $items ($latest->get_group($group)->changes) {
-                foreach my $item (@{$items}) {
-                    $self->_elem_wrap('item_bullet', $item);
+            foreach my $items ( $latest->get_group($group)->changes ) {
+                foreach my $item ( @{$items} ) {
+                    $self->_elem_wrap( 'item_bullet', $item );
                 }
             }
             $self->end_over_bullet();
@@ -71,9 +71,6 @@ sub pod_readme_changes {
 
     }
 
-}
-
-sub _indent_changes {
 }
 
 1;
