@@ -54,15 +54,15 @@ has 'enabled' => (
 );
 
 has 'target' => (
-    is => 'ro',
-    isa => 'Str',
+    is      => 'ro',
+    isa     => 'Str',
     default => 'readme',
 );
 
 has '_elements' => (
-    is => 'rw',
-    isa => 'ArrayRef[Str]',
-    traits   => [qw/ Array /],
+    is      => 'rw',
+    isa     => 'ArrayRef[Str]',
+    traits  => [qw/ Array /],
     default => sub { [] },
     handles => {
         _push_element => 'push',
@@ -70,39 +70,38 @@ has '_elements' => (
     },
 );
 
-
 sub BUILD {
-    my ($self, $args) = @_;
+    my ( $self, $args ) = @_;
     $self->accept_targets_as_text( $self->target );
 }
 
 sub start_for {
-    my ($self, $attrs) = @_;
-    if ($attrs->{target_matching} eq $self->target) {
-        $self->_push_element( $attrs->{'~really'} ) ;
+    my ( $self, $attrs ) = @_;
+    if ( $attrs->{target_matching} eq $self->target ) {
+        $self->_push_element( $attrs->{'~really'} );
     }
 }
 
 sub end_for {
-    my ($self, $attrs) = @_;
+    my ( $self, $attrs ) = @_;
     $self->_pop_element;
 }
 
 sub _is_for {
     my ($self) = @_;
-    ($self->_elements->[-1] // '') eq '=for';
+    ( $self->_elements->[-1] // '' ) eq '=for';
 }
 
 sub pod_readme_plugin {
-    my ($self, $plugin, @args) = @_;
+    my ( $self, $plugin, @args ) = @_;
     $self->load_plugin($plugin);
-    if (my $method = $self->can("pod_readme_${plugin}")) {
+    if ( my $method = $self->can("pod_readme_${plugin}") ) {
         $self->$method(@args);
     }
 }
 
 sub _elem_wrap {
-    my ($self, $name, $text) = @_;
+    my ( $self, $name, $text ) = @_;
     my $start = $self->can("start_${name}");
     my $end   = $self->can("end_${name}");
     $self->$start();
@@ -111,20 +110,20 @@ sub _elem_wrap {
 }
 
 around 'handle_text' => sub {
-    my ($orig, $self, $text) = @_;
+    my ( $orig, $self, $text ) = @_;
 
     # Bug: =for readme stop inserts a blank line
 
-    if ($self->_is_for) {
+    if ( $self->_is_for ) {
 
         $text =~ s/^\s+//;
         $text =~ s/\s+$//;
 
         my @args = split /\s+/, $text;
-        my $cmd  = shift @args;
+        my $cmd = shift @args;
 
         my $cmd_method = 'pod_readme_' . $cmd;
-        if (my $method = $self->can($cmd_method)) {
+        if ( my $method = $self->can($cmd_method) ) {
 
             my $elem = $self->_pop_element;
             $self->$method(@args);
@@ -132,7 +131,7 @@ around 'handle_text' => sub {
 
         } else {
 
-            die "Unsupported command: ${cmd}"; # TODO
+            die "Unsupported command: ${cmd}";    # TODO
 
         }
 
@@ -144,12 +143,12 @@ around 'handle_text' => sub {
 };
 
 around emit_par => sub {
-    my ($orig, $self, @args) = @_;
+    my ( $orig, $self, @args ) = @_;
     $self->$orig(@args) if $self->enabled && !$self->_is_for;
 };
 
 around end_Verbatim => sub {
-    my ($orig, $self, @args) = @_;
+    my ( $orig, $self, @args ) = @_;
     $self->$orig(@args) if $self->enabled && !$self->_is_for;
 };
 
