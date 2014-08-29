@@ -16,7 +16,7 @@ WriteMakefile(
         'MooseX::Object::Pluggable' => 0,
         'namespace::autoclean' => 0,
         'parent'            => 0,
-        'Pod::Simple::Text' => 0,
+        'Pod::Simple'       => 3.14,
         'Test::Most'        => 0,
         'version'           => 0.77,
     },
