@@ -7,7 +7,7 @@ use CPAN::Meta;
 has 'version_meta_file' => (
     is      => 'rw',
     isa     => 'Str',
-    default => 'MYMETA.json',
+    default => 'META.yml',
 );
 
 has 'version_title' => (
