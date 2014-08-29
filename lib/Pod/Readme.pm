@@ -14,8 +14,6 @@ TODO
 
 =for readme plugin changes
 
-=for readme changes
-
 =for readme stop
 
 =head1 METHODS
@@ -89,8 +87,11 @@ sub end_for {
 }
 
 sub pod_readme_plugin {
-    my ($self, @args) = @_;
-    $self->load_plugin($_) for @args;
+    my ($self, $plugin, @args) = @_;
+    $self->load_plugin($plugin);
+    if (my $method = $self->can("pod_readme_${plugin}")) {
+        $self->$method(@args);
+    }
 }
 
 sub _elem_wrap {

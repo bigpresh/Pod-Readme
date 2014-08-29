@@ -13,8 +13,6 @@ Pod::Readme::Plugin::changes - include latest Changes in README
 
   =for readme plugin changes
 
-  =for readme changes
-
 =head1 DESCRIPTION
 
 This is a plugin for L<Pod::Readme> that includes the latest release
