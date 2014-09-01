@@ -24,3 +24,7 @@ Pod-Readme-v\d+\.\d+\.\d+/
 # Distzilla etc
 
 \.build/
+
+# Misc
+
+^tmp/
