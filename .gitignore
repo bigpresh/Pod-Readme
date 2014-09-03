@@ -1,6 +1,7 @@
 *~
 *.bak
 *.old
+*.tmp
 
 blib/*
 pm_to_blib
