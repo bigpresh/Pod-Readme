@@ -8,12 +8,42 @@ use Moose;
 
 use Carp;
 use File::Slurp qw/ read_file /;
-use IO::Handle;
+use IO qw/ File Handle /;
 
 has encoding => (
     is      => 'ro',
     isa     => 'Str',
     default => ':utf8',
+);
+
+has input_fh => (
+    is      => 'ro',
+    isa     => 'IO::Handle',
+    lazy    => 1,
+    default => sub {
+        my $self = shift;
+        my $fh   = IO::Handle->new;
+        if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
+            return $fh;
+        } else {
+            croak "Cannot get a filehandle for STDIN";
+        }
+    },
+);
+
+has output_fh => (
+    is      => 'ro',
+    isa     => 'IO::Handle',
+    lazy    => 1,
+    default => sub {
+        my $self = shift;
+        my $fh   = IO::Handle->new;
+        if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+            return $fh;
+        } else {
+            croak "Cannot get a filehandle for STDOUT";
+        }
+    },
 );
 
 # TODO: target format names should be \w+
@@ -55,42 +85,12 @@ has mode => (
     init_arg => undef,
 );
 
-has input_fh => (
-    is      => 'ro',
-    isa     => 'IO::Handle',
-    lazy    => 1,
-    default => sub {
-        my $self = shift;
-        my $fh   = IO::Handle->new;
-        if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
-            return $fh;
-        } else {
-            croak "Cannot get a filehandle for STDIN";
-        }
-    },
-);
-
 has _line_no => (
     is      => 'ro',
     isa     => 'Int',
     traits  => [qw/ Counter /],
     default => 0,
     handles => { _inc_line_no => 'inc', },
-);
-
-has output_fh => (
-    is      => 'ro',
-    isa     => 'IO::Handle',
-    lazy    => 1,
-    default => sub {
-        my $self = shift;
-        my $fh   = IO::Handle->new;
-        if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
-            return $fh;
-        } else {
-            croak "Cannot get a filehandle for STDOUT";
-        }
-    },
 );
 
 sub write_line {
