@@ -29,8 +29,8 @@ has in_target => (
     init_arg => undef,
     default  => 1,
     handles  => {
-        pod_readme_start => 'set',
-        pod_readme_stop  => 'unset',
+        cmd_start => 'set',
+        cmd_stop  => 'unset',
     },
 );
 
@@ -141,7 +141,7 @@ sub process_for {
         if ( my $cmd = shift @args ) {
 
             $cmd =~ s/-/_/g;
-            if ( my $method = $self->can("pod_readme_${cmd}") ) {
+            if ( my $method = $self->can("cmd_${cmd}") ) {
                 $self->$method(@args);
             } else {
                 die sprintf( "Unknown command: '\%s' at input line \%d\n",
@@ -268,9 +268,9 @@ sub filter_file {
     }
 }
 
-sub pod_readme_continue {
+sub cmd_continue {
     my $self = shift;
-    $self->pod_readme_start(@_);
+    $self->cmd_start(@_);
 }
 
 # TODO: add support for plugin command
