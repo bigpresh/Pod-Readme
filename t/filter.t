@@ -118,6 +118,22 @@ subtest 'plugin' => sub {
     is $prf->mode('pod'), 'pod', 'mode reset';
 };
 
+subtest 'cut' => sub {
+    note "=cut";
+    $prf->filter_line("=cut\n");
+    is $prf->mode, 'default', 'default mode';
+    $prf->filter_line("\n");
+
+    is $out, '', 'no content';
+
+    $prf->filter_line("=head1 TEST\n");
+    is $prf->mode, 'pod', 'pod mode';
+    $prf->filter_line("\n");
+
+    is $out, "=head1 TEST\n\n", 'expected content';
+    reset_out();
+};
+
 subtest 'copying content' => sub {
     $prf->filter_line("This should be copied.\n");
     $prf->filter_line("\n");
