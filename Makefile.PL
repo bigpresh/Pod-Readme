@@ -25,6 +25,9 @@ build_requires( 'Test::Most' => 0, );
 
 requires(
     'CPAN::Changes'             => 0,
+    'File::Slurp'               => 0,
+    'IO::File'                  => 0,
+    'IO::Handle'                => 0,
     'Moose'                     => 0,
     'MooseX::NonMoose'          => 0,
     'MooseX::Object::Pluggable' => 0,
