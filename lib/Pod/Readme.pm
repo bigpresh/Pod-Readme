@@ -41,7 +41,7 @@ with 'MooseX::Object::Pluggable';
 
 extends 'Pod::Simple::Text';
 
-use version 0.77; our $VERSION = version->declare('v0.999.0_01');
+use version 0.77; our $VERSION = version->declare('v1.0.0_01');
 
 has 'enabled' => (
     is       => 'ro',
