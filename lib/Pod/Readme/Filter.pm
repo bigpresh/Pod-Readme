@@ -291,4 +291,6 @@ sub cmd_plugin {
     }
 }
 
+use namespace::autoclean;
+
 1;
