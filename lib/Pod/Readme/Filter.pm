@@ -125,10 +125,16 @@ has _begin_args => (
     handles  => { _clear_begin_args => 'clear', },
 );
 
+# TODO: should should be able to handle named arguments
+sub parse_arguments {
+    my ( $self, $data ) = @_;
+    my @args = grep { $_ ne '' } split /\s+/, $data;
+}
+
 sub process_for {
     my ( $self, $data ) = @_;
 
-    my ( $target, @args ) = grep { $_ ne '' } split /\s+/, $data;
+    my ( $target, @args ) = $self->parse_arguments($data);
 
     if ( $target && $target =~ $self->_target_regex ) {
 
@@ -202,8 +208,8 @@ sub filter_line {
 
             } elsif ( $cmd eq 'begin' ) {
 
-                my ( $target, @args ) = grep { $_ ne '' }
-                    split /\s+/, substr( $line, 6 );
+                my ( $target, @args )
+                    = $self->parse_arguments( substr( $line, 6 ) );
 
                 if ( $target =~ $self->_target_regex ) {
 
@@ -228,8 +234,8 @@ sub filter_line {
 
             } elsif ( $cmd eq 'end' ) {
 
-                my ( $target, @args ) = grep { $_ ne '' }
-                    split /\s+/, substr( $line, 4 );
+                my ( $target, @args )
+                    = $self->parse_arguments( substr( $line, 4 ) );
 
                 if ( $target =~ $self->_target_regex ) {
                     my $buffer = $self->_begin_args;

@@ -18,9 +18,10 @@ Foo
 
 =end readme
 
-=for readme stop
+=for readme
+stop
 
-This is a para
+This is a para that should not appear.
 
 =for readme start
 
@@ -29,7 +30,8 @@ This is a para
 =for bobobo goo
 boobo
 
-=for readme continue
+=for readme
+continue
 
 Hello
 
