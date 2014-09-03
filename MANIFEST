@@ -9,4 +9,5 @@ t/filter.t
 lib/Pod/Readme.pm
 lib/Pod/Readme/Filter.pm
 lib/Pod/Readme/Plugin/changes.pm
+lib/Pod/Readme/Plugin/noop.pm
 lib/Pod/Readme/Plugin/version.pm

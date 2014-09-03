@@ -276,11 +276,18 @@ sub cmd_continue {
     $self->cmd_start;
 }
 
+around _build_plugin_app_ns => sub {
+    my ($orig, $self) = @_;
+    my $names = $self->$orig;
+    [ 'Pod::Readme', @{$names} ];
+};
+
 sub cmd_plugin {
     my ($self, $plugin, @args) = @_;
-    # TODO
+    $self->load_plugin($plugin);
+    if ( my $method = $self->can("cmd_${plugin}") ) {
+        $self->$method(@args);
+    }
 }
-
-
 
 1;
