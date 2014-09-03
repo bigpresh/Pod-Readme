@@ -267,4 +267,6 @@ sub pod_readme_continue {
     $self->pod_readme_start(@_);
 }
 
+# TODO: add support for plugin command
+
 1;
