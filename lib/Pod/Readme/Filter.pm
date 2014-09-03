@@ -2,6 +2,8 @@ package Pod::Readme::Filter;
 
 use v5.10.1;
 
+# TODO: change to use Moo as per ETHER's suggestion
+
 use Moose;
 
 use Carp;
