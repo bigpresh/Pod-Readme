@@ -5,6 +5,7 @@ use v5.10.1;
 # TODO: change to use Moo as per ETHER's suggestion
 
 use Moose;
+with 'MooseX::Object::Pluggable';
 
 use Carp;
 use File::Slurp qw/ read_file /;
@@ -271,10 +272,15 @@ sub filter_file {
 }
 
 sub cmd_continue {
-    my $self = shift;
-    $self->cmd_start(@_);
+    my ($self) = @_;
+    $self->cmd_start;
 }
 
-# TODO: add support for plugin command
+sub cmd_plugin {
+    my ($self, $plugin, @args) = @_;
+    # TODO
+}
+
+
 
 1;
