@@ -10,6 +10,7 @@ with 'MooseX::Object::Pluggable';
 use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
+use MooseX::Types::IO 'IO';
 
 has encoding => (
     is      => 'ro',
@@ -19,7 +20,7 @@ has encoding => (
 
 has input_fh => (
     is      => 'ro',
-    isa     => 'IO::Handle',
+    isa     => IO,
     lazy    => 1,
     default => sub {
         my $self = shift;
@@ -34,7 +35,7 @@ has input_fh => (
 
 has output_fh => (
     is      => 'ro',
-    isa     => 'IO::Handle',
+    isa     => IO,
     lazy    => 1,
     default => sub {
         my $self = shift;

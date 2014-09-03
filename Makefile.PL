@@ -30,6 +30,7 @@ requires(
     'Moose'                     => 0,
     'MooseX::NonMoose'          => 0,
     'MooseX::Object::Pluggable' => 0,
+    'MooseX::Types::IO'         => 0,
     'namespace::autoclean'      => 0,
     'parent'                    => 0,
     'Pod::Simple'               => 3.14,
