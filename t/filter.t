@@ -13,7 +13,7 @@ isa_ok my $prf = $class->new(
     output_fh => $io,
  ), 'Pod::Readme::Filter';
 
-subtest 'attributes and methods' => sub {
+{
     is_deeply
         [ $prf->_plugin_app_ns ],
         [qw/ Pod::Readme Pod::Readme::Filter /],
@@ -23,12 +23,12 @@ subtest 'attributes and methods' => sub {
         for qw/ stop start continue plugin /;
 };
 
-subtest 'defaults' => sub {
+{
     ok $prf->in_target, 'default in target';
     is $prf->mode, 'default', 'mode';
 };
 
-subtest 'pod' => sub {
+{
     note "=pod";
     $prf->filter_line("=pod\n");
 
@@ -38,7 +38,7 @@ subtest 'pod' => sub {
     reset_out();
 };
 
-subtest 'stop/start' => sub {
+{
     note "=for readme stop";
     $prf->filter_line("=for readme stop\n");
     is $prf->mode, 'pod:for', 'mode';
@@ -65,7 +65,7 @@ subtest 'stop/start' => sub {
     is $out, '', 'no output';
 };
 
-subtest 'stop/continue' => sub {
+{
     note "=for readme stop";
     $prf->filter_line("=for readme stop\n");
     is $prf->mode, 'pod:for', 'mode';
@@ -93,7 +93,7 @@ subtest 'stop/continue' => sub {
     is $out, '', 'no output';
 };
 
-subtest 'plugin' => sub {
+{
     ok !$prf->can('cmd_noop'), 'no noop';
 
     note "=for readme plugin noop";
@@ -118,7 +118,7 @@ subtest 'plugin' => sub {
     is $prf->mode('pod'), 'pod', 'mode reset';
 };
 
-subtest 'cut' => sub {
+{
     note "=cut";
     $prf->filter_line("=cut\n");
     is $prf->mode, 'default', 'default mode';
@@ -134,7 +134,7 @@ subtest 'cut' => sub {
     reset_out();
 };
 
-subtest 'copying content' => sub {
+{
     $prf->filter_line("This should be copied.\n");
     $prf->filter_line("\n");
 
