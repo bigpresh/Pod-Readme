@@ -95,6 +95,14 @@ is $out, '', 'no output';
 can_ok($prf, 'cmd_noop');
 isa_ok($prf, 'Pod::Readme::Filter');
 
+dies_ok {
+    $prf->filter_line("=for readme plugin invalid-plugin\n\n");
+    is $prf->mode, 'pod:for', 'mode';
+    $prf->filter_line("\n");
+} 'bad plugin';
+
+is $prf->mode('pod'), 'pod', 'mode reset';
+
 $prf->filter_line("This should be copied.\n");
 $prf->filter_line("\n");
 
