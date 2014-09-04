@@ -1,11 +1,8 @@
 Revision history for Pod-Readme
 
-v0.999.0
+v1.0.0_01
   [Incompatabilities]
-  - Major rewrite, using modern Perl 5.10 and Pod::Simple.
-
-  - Changed how directives are handled, to abuse the POD spec
-    less.
+  - Major rewrite, using modern Perl 5.10.
 
   - The "=for readme include" directive is no longer supported.
 
@@ -13,6 +10,8 @@ v0.999.0
   - Added support for plugins.
 
   - Added a "changes" plugin for parsing Changes files.
+
+  - Added a "version" plugin for including the current version.
 
   [Documentation]
   - Changes rewritten to conform to CPAN::Changes::Spec.
