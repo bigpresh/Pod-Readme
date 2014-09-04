@@ -120,7 +120,7 @@ has _line_no => (
     handles => { _inc_line_no => 'inc', },
 );
 
-sub write_line {
+sub write {
     my ( $self, $line ) = @_;
     my $fh = $self->output_fh;
 
@@ -250,7 +250,7 @@ sub filter_line {
                         }
 
                         $self->_begin_args($buffer);
-                        $self->write_line("=begin ${buffer}\n\n");
+                        $self->write("=begin ${buffer}\n\n");
                     }
 
                     $self->mode('pod:begin');
@@ -267,7 +267,7 @@ sub filter_line {
                 if ( $target =~ $self->_target_regex ) {
                     my $buffer = $self->_begin_args;
                     if ( $buffer ne '' ) {
-                        $self->write_line("=end ${buffer}\n\n");
+                        $self->write("=end ${buffer}\n\n");
                         $self->_clear_begin_args;
                     }
                 }
@@ -278,7 +278,7 @@ sub filter_line {
 
     }
 
-    $self->write_line($line) if $self->in_target && $self->in_pod;
+    $self->write($line) if $self->in_target && $self->in_pod;
 
     return 1;
 }
