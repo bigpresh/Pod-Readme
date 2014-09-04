@@ -143,6 +143,51 @@ isa_ok my $prf = $class->new(
     reset_out();
 };
 
+{
+    filter_lines('=begin text');
+    is $prf->mode, 'target:text', 'mode';
+    filter_lines('', 'Something', '', '=end text', '');
+    is $out, '', 'no content';
+    reset_out();
+}
+
+{
+    filter_lines('=begin readme');
+    is $prf->mode, 'pod:begin', 'mode';
+    filter_lines('', 'Something', '', '=end readme', '');
+
+    like $out, qr/^Something\n/, 'expected content (minimal)';
+    TODO: {
+        local $TODO = 'extra newline';
+        is $out, "Something\n", 'expected content';
+    }
+    reset_out();
+}
+
+{
+    filter_lines('=begin readme text');
+    is $prf->mode, 'pod:begin', 'mode';
+    filter_lines('', 'Something', '', '=end readme', '');
+
+    TODO: {
+        is $out, "=begin text\n\nSomething\n\n=end text\n\n", 'expected content';
+    }
+    reset_out();
+}
+
+{
+    filter_lines('=begin :readme');
+    is $prf->mode, 'pod:begin', 'mode';
+    filter_lines('', 'Something', '', '=end :readme', '');
+
+    like $out, qr/^Something\n/, 'expected content (minimal)';
+    TODO: {
+        local $TODO = 'extra newline';
+        is $out, "Something\n", 'expected content';
+    }
+    reset_out();
+}
+
 done_testing;
 
 sub filter_lines {
