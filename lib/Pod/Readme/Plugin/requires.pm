@@ -37,7 +37,8 @@ sub cmd_requires {
         foreach (keys %prereqs) {
             delete $prereqs{$_}
               if Module::CoreList->first_release($_) &&
-                  Module::CoreList->first_release($_) <= $perl;
+                  version->parse(Module::CoreList->first_release($_))
+                    <= version->parse($perl);
         }
     }
 

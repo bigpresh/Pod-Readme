@@ -39,7 +39,7 @@ TODO
 
 =cut
 
-use 5.10.1;
+use v5.10.1;
 
 use Moose;
 extends 'Pod::Readme::Filter';
