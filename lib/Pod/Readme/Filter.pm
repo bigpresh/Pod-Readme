@@ -300,6 +300,11 @@ sub cmd_continue {
     $self->cmd_start;
 }
 
+sub cmd_include {
+    my ($self, @args) = @_;
+    die "cmd_include is unimplemented\n";
+}
+
 around _build_plugin_app_ns => sub {
     my ($orig, $self) = @_;
     my $names = $self->$orig;
