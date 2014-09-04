@@ -2,7 +2,7 @@ Changes
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP
-README
+README.md
 bin/pod2readme
 t/filter.t
 t/pod-readme.t

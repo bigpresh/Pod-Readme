@@ -2,7 +2,10 @@ Revision history for Pod-Readme
 
 v1.0.0_01
   [Incompatabilities]
-  - Major rewrite, using modern Perl 5.10.
+  - Major rewrite, using modern Perl v5.10.1.
+
+  - This module is no longer a subclass of a POD parsing
+    module. Instead, it is a simple POD filter.
 
   - The "=for readme include" directive is no longer supported.
 
@@ -13,8 +16,12 @@ v1.0.0_01
 
   - Added a "version" plugin for including the current version.
 
+  - Added a "requires" plugin for listing module requirements.
+
   [Documentation]
   - Changes rewritten to conform to CPAN::Changes::Spec.
+
+  - README is now in markdown format.
 
   [Other Changes]
   - Switched to semantic versioning.

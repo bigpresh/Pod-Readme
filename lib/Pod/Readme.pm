@@ -10,9 +10,11 @@ TODO
 
 =head1 DESCRIPTION
 
-TODO
+This module filters POD to generate a F<README> file.
 
 =for readme plugin version
+
+=for readme plugin requires
 
 =for readme plugin changes
 
@@ -34,6 +36,7 @@ TODO
 
 =head1 METHODS
 
+TODO
 
 =for readme start
 
