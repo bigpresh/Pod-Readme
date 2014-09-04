@@ -11,6 +11,7 @@ use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
+use MooseX::Types::Path::Class;
 
 has encoding => (
     is      => 'ro',
@@ -19,31 +20,55 @@ has encoding => (
 );
 
 has input_file => (
+    is       => 'ro',
+    isa      => 'Path::Class::File',
+    required => 0,
+    coerce   => 1,
+);
+
+has output_file => (
+    is       => 'ro',
+    isa      => 'Path::Class::File',
+    required => 0,
+    coerce   => 1,
+);
+
+has input_fh => (
     is      => 'ro',
     isa     => IO,
-    coerce   => 1,
+    lazy    => 1,
+    coerce  => 1,
     default => sub {
-        my $self = shift;
-        my $fh   = IO::Handle->new;
-        if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
-            return $fh;
+        my ($self) = @_;
+        if ($self->input_file) {
+            $self->input_file->openr;
         } else {
-            croak "Cannot get a filehandle for STDIN";
+            my $fh   = IO::Handle->new;
+            if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
+                return $fh;
+            } else {
+                croak "Cannot get a filehandle for STDIN";
+            }
         }
     },
 );
 
-has output_file => (
+has output_fh => (
     is      => 'ro',
     isa     => IO,
+    lazy    => 1,
     coerce  => 1,
     default => sub {
-        my $self = shift;
-        my $fh   = IO::Handle->new;
-        if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
-            return $fh;
+        my ($self) = @_;
+        if ($self->output_file) {
+            $self->output_file->openw;
         } else {
-            croak "Cannot get a filehandle for STDOUT";
+            my $fh   = IO::Handle->new;
+            if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+                return $fh;
+            } else {
+                croak "Cannot get a filehandle for STDOUT";
+            }
         }
     },
 );
@@ -97,7 +122,7 @@ has _line_no => (
 
 sub write_line {
     my ( $self, $line ) = @_;
-    my $fh = $self->output_file;
+    my $fh = $self->output_fh;
 
     # $line = sprintf('%4d %s', $self->_line_no + 1, $line);
     print {$fh} $line;
@@ -264,7 +289,7 @@ sub filter_file {
     my ($self) = @_;
 
     foreach
-        my $line ( read_file( $self->input_file, binmode => $self->encoding ) )
+        my $line ( read_file( $self->input_fh, binmode => $self->encoding ) )
     {
         $self->filter_line($line)
             or last;

@@ -10,7 +10,7 @@ my $out;
 my $io = IO::String->new($out);
 
 isa_ok my $prf = $class->new(
-    output_file => $io,
+    output_fh => $io,
  ), 'Pod::Readme::Filter';
 
 {
