@@ -24,6 +24,8 @@ isa_ok my $prf = $class->new(
 
     ok $prf->in_target, 'default in target';
     is $prf->mode, 'default', 'mode';
+
+    is $prf->base_dir->stringify, '.', 'base_dir';
 }
 
 {

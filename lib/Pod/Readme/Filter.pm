@@ -19,6 +19,13 @@ has encoding => (
     default => ':utf8',
 );
 
+has base_dir => (
+    is       => 'ro',
+    isa      => 'Path::Class::Dir',
+    coerce   => 1,
+    default  => '.',
+);
+
 has input_file => (
     is       => 'ro',
     isa      => 'Path::Class::File',
