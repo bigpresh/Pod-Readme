@@ -13,6 +13,12 @@ use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
 
+has verbatim_indent => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 2,
+);
+
 has encoding => (
     is      => 'ro',
     isa     => 'Str',
@@ -255,8 +261,7 @@ sub filter_line {
                                 $self->_line_no + 1 );
                         }
 
-                        $self->_begin_args($buffer);
-                        $self->write("=begin ${buffer}\n\n");
+                        $self->write_begin($self->_begin_args($buffer));
                     }
 
                     $self->mode('pod:begin');
@@ -273,7 +278,7 @@ sub filter_line {
                 if ( $target =~ $self->_target_regex ) {
                     my $buffer = $self->_begin_args;
                     if ( $buffer ne '' ) {
-                        $self->write("=end ${buffer}\n\n");
+                        $self->write_end($buffer);
                         $self->_clear_begin_args;
                     }
                 }
@@ -323,6 +328,51 @@ sub cmd_plugin {
     if ( my $method = $self->can("cmd_${plugin}") ) {
         $self->$method(@args);
     }
+}
+
+sub write_verbatim {
+    my ($self, $text) = @_;
+
+    my $indent = ' ' x ($self->verbatim_indent);
+    $text =~ s/^/${indent}/mg;
+    $text =~ s/([^\n])\n?$/$1\n\n/;
+
+    $self->write($text);
+}
+
+sub write_cmd {
+    my ($self, $text) = @_;
+    $text =~ s/([^\n])\n?$/$1\n\n/;
+
+    $self->write($text);
+}
+
+sub write_para {
+    my ($self, $text) = @_;
+    $text //= '';
+    $self->write($text . "\n\n");
+}
+
+{
+    my $meta = __PACKAGE__->meta;
+    foreach my $cmd (qw/ head1 head2 head3 head4
+                         over item begin end for encoding /) {
+        $meta->add_method(
+            "write_${cmd}" => sub {
+                my ($self, $text) = @_;
+                $text //= '';
+                $self->write_cmd('='. $cmd . ' ' . $text);
+            });
+    }
+
+    foreach my $cmd (qw/ pod back cut  /) {
+        $meta->add_method(
+            "write_${cmd}" => sub {
+                my ($self) = @_;
+                $self->write_cmd('='. $cmd);
+            });
+    }
+
 }
 
 use namespace::autoclean;
