@@ -18,15 +18,22 @@ TODO
 
 =for readme stop
 
+=head1 POD COMMANDS
+
+=head2 C<=for readme stop>
+
+=head2 C<=for readme start>
+
+=head2 C<=for readme continue>
+
+=head2 C<=for readme plugin>
+
+=head2 C<=begin readme>
+
+=head2 C<=end readme>
+
 =head1 METHODS
 
-See L<Pod::Simple::Methody> for the base methods that this module
-uses.
-
-This module adds methods of the form C<pod_readme_CMD>, which are
-triggered by the POD directives
-
-  =for readme CMD
 
 =for readme start
 
