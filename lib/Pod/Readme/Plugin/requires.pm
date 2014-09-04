@@ -21,6 +21,12 @@ has 'requires_title' => (
     default => 'REQUIREMENTS',
 );
 
+has 'requires_omit_core' => (
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 1,
+);
+
 sub cmd_requires {
     my ($self, @args) = @_;
 
@@ -33,7 +39,7 @@ sub cmd_requires {
             for (keys %{$type->{requires}});
     }
     my $perl = delete $prereqs{perl};
-    if ($perl) {
+    if ($self->requires_omit_core && $perl) {
         foreach (keys %prereqs) {
             delete $prereqs{$_}
               if Module::CoreList->first_release($_) &&
