@@ -6,20 +6,17 @@ use warnings;
 
 use lib 'lib';
 
-use Pod::Readme::Filter;
+use Pod::Readme;
 
-=begin readme
 
-Foo
+=for readme plugin version
 
-=end readme
-
-ok
+=for readme plugin changes
 
 =cut
 
 use IO::File;
 
-my $prf = Pod::Readme::Filter->new( input_file => $0 );
+my $prf = Pod::Readme->new( input_file => $0 );
 
 $prf->filter_file;

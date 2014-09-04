@@ -175,7 +175,6 @@ sub process_for {
     if ( $target && $target =~ $self->_target_regex ) {
 
         if ( my $cmd = shift @args ) {
-
             $cmd =~ s/-/_/g;
             if ( my $method = $self->can("cmd_${cmd}") ) {
                 $self->$method(@args);

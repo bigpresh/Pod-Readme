@@ -46,6 +46,57 @@ extends 'Pod::Readme::Filter';
 
 use version 0.77; our $VERSION = version->declare('v1.0.0_01');
 
+has verbatim_indent => (
+    is      => 'ro',
+    isa     => 'Int',
+    default => 2,
+);
+
+sub write_verbatim {
+    my ($self, $text) = @_;
+
+    my $indent = ' ' x ($self->verbatim_indent);
+    $text =~ s/^/${indent}/mg;
+    $text =~ s/([^\n])\n?$/$1\n\n/;
+
+    $self->write($text);
+}
+
+sub write_cmd {
+    my ($self, $text) = @_;
+    $text =~ s/([^\n])\n?$/$1\n\n/;
+
+    $self->write($text);
+}
+
+sub write_para {
+    my ($self, $text) = @_;
+    $text //= '';
+    $self->write($text . "\n\n");
+}
+
+{
+    my $meta = __PACKAGE__->meta;
+    foreach my $cmd (qw/ head1 head2 head3 head4
+                         over item begin end for encoding /) {
+        $meta->add_method(
+            "write_${cmd}" => sub {
+                my ($self, $text) = @_;
+                $text //= '';
+                $self->write_cmd('='. $cmd . ' ' . $text);
+            });
+    }
+
+    foreach my $cmd (qw/ pod back cut  /) {
+        $meta->add_method(
+            "write_${cmd}" => sub {
+                my ($self) = @_;
+                $self->write_cmd('='. $cmd);
+            });
+    }
+
+}
+
 use namespace::autoclean;
 
 1;

@@ -1,7 +1,10 @@
 package Pod::Readme::Plugin::changes;
 
 use Moose::Role;
+
 use CPAN::Changes;
+use MooseX::Types::Path::Class;
+use Path::Class;
 
 =head1 NAME
 
@@ -22,7 +25,8 @@ of a F<Changes> file that conforms to the L<CPAN::Changes::Spec>.
 
 has 'changes_file' => (
     is      => 'rw',
-    isa     => 'Str',
+    isa     => 'Path::Class::File',
+    coerce  => 1,
     default => 'Changes',
 );
 
@@ -38,42 +42,46 @@ has 'changes_verbatim' => (
     default => 0,
 );
 
-sub pod_readme_changes {
-    my ( $self, $file ) = @_;
+sub cmd_changes {
+    my ( $self ) = @_;
 
-    $file //= $self->changes_file;
+    my $file = file($self->base_dir, $self->changes_file);
 
     my $changes = CPAN::Changes->load($file);
     my $latest  = ( $changes->releases )[-1];
 
-    $self->_elem_wrap( 'head1', $self->changes_title );
+    $self->write_head1( $self->changes_title );
 
     if ( $self->changes_verbatim ) {
 
-        $self->_elem_wrap( 'Verbatim', $latest->serialize );
+        $self->write_verbatim($latest->serialize);
 
     } else {
 
         foreach my $group ( $latest->groups ) {
 
-            $self->_elem_wrap( 'head2', $group )
+            $self->write_head2($group)
                 if ( $group ne '' );
 
-            $self->start_over_bullet();
+            $self->write_over(4);
             foreach my $items ( $latest->get_group($group)->changes ) {
                 foreach my $item ( @{$items} ) {
-                    $self->_elem_wrap( 'item_bullet', $item );
+                    $self->write_item('* ');
+                    $self->write_para($item);
                 }
             }
-            $self->end_over_bullet();
+            $self->write_back();
 
         }
 
     }
 
-    $self->_elem_wrap( 'Para',
-        sprintf( 'See the %s file for a longer revision history', $file ) );
+    $self->write_para(
+        sprintf( 'See the F<%s> file for a longer revision history.',
+                 $file->basename ) );
 
 }
+
+use namespace::autoclean;
 
 1;

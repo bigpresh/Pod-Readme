@@ -16,16 +16,17 @@ has 'version_title' => (
     default => 'VERSION',
 );
 
-sub pod_readme_version {
+sub cmd_version {
     my ( $self, $file ) = @_;
 
     $file //= $self->version_meta_file;
 
     my $meta = CPAN::Meta->load_file($file);
 
-    $self->_elem_wrap( 'head1', $self->version_title );
-
-    $self->_elem_wrap( 'Para', $meta->version );
+    $self->write_head1($self->version_title);
+    $self->write( $meta->version . "\n\n");
 }
+
+use namespace::autoclean;
 
 1;

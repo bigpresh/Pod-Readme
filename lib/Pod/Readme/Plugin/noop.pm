@@ -20,4 +20,6 @@ This is a no-op plugin.
 
 sub cmd_noop { }
 
+use namespace::autoclean;
+
 1;

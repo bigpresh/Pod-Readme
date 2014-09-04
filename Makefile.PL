@@ -4,7 +4,7 @@ use inc::Module::Install;
 
 author 'Robert Rothenberg <rrwo@cpan.org>';
 name 'Pod-Readme';
-all_from 'lib/Pod/Readme.pm';
+version_from 'lib/Pod/Readme.pm';
 license 'artistic2';
 
 perl_version 5.010;
@@ -25,6 +25,7 @@ build_requires( 'Test::Most' => 0, );
 
 requires(
     'CPAN::Changes'              => 0,
+    'CPAN::Meta'                 => 0,
     'File::Slurp'                => 0,
     'IO'                         => 0,
     'Moose'                      => 0,
@@ -32,7 +33,7 @@ requires(
     'MooseX::Types::IO'          => 0,
     'MooseX::Types::Path::Class' => 0,
     'namespace::autoclean'       => 0,
-    'parent'                     => 0,
+    'Path::Class'                => 0,
     'version'                    => 0.77,
 );
 
