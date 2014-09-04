@@ -24,17 +24,16 @@ configure_requires();
 build_requires( 'Test::Most' => 0, );
 
 requires(
-    'CPAN::Changes'             => 0,
-    'File::Slurp'               => 0,
-    'IO'                        => 0,
-    'Moose'                     => 0,
-    'MooseX::NonMoose'          => 0,
-    'MooseX::Object::Pluggable' => 0,
-    'MooseX::Types::IO'         => 0,
-    'namespace::autoclean'      => 0,
-    'parent'                    => 0,
-    'Pod::Simple'               => 3.14,
-    'version'                   => 0.77,
+    'CPAN::Changes'              => 0,
+    'File::Slurp'                => 0,
+    'IO'                         => 0,
+    'Moose'                      => 0,
+    'MooseX::Object::Pluggable'  => 0,
+    'MooseX::Types::IO'          => 0,
+    'MooseX::Types::Path::Class' => 0,
+    'namespace::autoclean'       => 0,
+    'parent'                     => 0,
+    'version'                    => 0.77,
 );
 
 test_requires( 'Test::Most' => 0, );

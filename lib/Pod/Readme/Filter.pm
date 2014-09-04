@@ -305,7 +305,7 @@ sub cmd_continue {
 around _build_plugin_app_ns => sub {
     my ($orig, $self) = @_;
     my $names = $self->$orig;
-    [ 'Pod::Readme', @{$names} ]; # TODO depends how used by Pod::Readme
+    [ @{$names} ];
 };
 
 sub cmd_plugin {
