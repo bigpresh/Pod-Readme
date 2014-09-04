@@ -2,12 +2,18 @@ package Pod::Readme::Plugin::version;
 
 use Moose::Role;
 
-use CPAN::Meta;
+use ExtUtils::MakeMaker;
 
-has 'version_meta_file' => (
-    is      => 'rw',
-    isa     => 'Str',
-    default => 'META.yml',
+has 'version_from_file' => (
+    is       => 'ro',
+    isa      => 'Path::Class::File',
+    required => 0,
+    coerce   => 1,
+    lazy     => 1,
+    default  => sub {
+        my ($self) = @_;
+        $self->input_file;
+    },
 );
 
 has 'version_title' => (
@@ -17,14 +23,18 @@ has 'version_title' => (
 );
 
 sub cmd_version {
-    my ( $self, $file ) = @_;
+    my ( $self ) = @_;
 
-    $file //= $self->version_meta_file;
+    if (my $file = $self->input_file) {
 
-    my $meta = CPAN::Meta->load_file($file);
+        $self->write_head1($self->version_title);
+        $self->write_para( MM->parse_version($file) );
 
-    $self->write_head1($self->version_title);
-    $self->write( $meta->version . "\n\n");
+    } else {
+
+        die "Don't know what file to determine the version from";
+
+    }
 }
 
 use namespace::autoclean;

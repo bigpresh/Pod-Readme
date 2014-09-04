@@ -8,6 +8,8 @@ use lib 'lib';
 
 use Pod::Readme;
 
+use version 0.77; our $VERSION = '0.30';
+#version->declare('v1.0.0_01');
 
 =for readme plugin version
 

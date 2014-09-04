@@ -26,6 +26,7 @@ build_requires( 'Test::Most' => 0, );
 requires(
     'CPAN::Changes'              => 0,
     'CPAN::Meta'                 => 0,
+    'ExtUtils::MakeMaker'        => 6.56,
     'File::Slurp'                => 0,
     'IO'                         => 0,
     'Moose'                      => 0,
