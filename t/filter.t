@@ -14,18 +14,30 @@ isa_ok my $prf = $class->new(
  ), 'Pod::Readme::Filter';
 
 {
-    is_deeply
+    can_ok($prf, "cmd_" . $_)
+        for qw/ stop start continue plugin /;
+
+   is_deeply
         [ $prf->_plugin_app_ns ],
         [qw/ Pod::Readme Pod::Readme::Filter /],
         'plugin namespace';
 
-    can_ok($prf, "cmd_" . $_)
-        for qw/ stop start continue plugin /;
-};
-
-{
     ok $prf->in_target, 'default in target';
     is $prf->mode, 'default', 'mode';
+}
+
+{
+    ok !$prf->cmd_stop, 'cmd_stop';
+    ok !$prf->in_target, 'not in target';
+
+    ok $prf->cmd_start, 'cmd_start';
+    ok $prf->in_target, 'in target';
+
+    ok !$prf->cmd_stop, 'cmd_stop';
+    ok !$prf->in_target, 'not in target';
+
+    ok $prf->cmd_continue, 'cmd_continue';
+    ok $prf->in_target, 'in target';
 };
 
 {
