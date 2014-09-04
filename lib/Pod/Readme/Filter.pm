@@ -222,8 +222,6 @@ sub filter_line {
         return 1;
     }
 
-    return if $line =~ /^__?(:DATA|END)__/;
-
     if ( $line =~ /^=(\w+)\s/ ) {
         my $cmd = $1;
         $mode = $self->mode( $cmd eq 'cut' ? 'default' : 'pod' );
