@@ -18,10 +18,10 @@ has encoding => (
     default => ':utf8',
 );
 
-has input_fh => (
+has input_file => (
     is      => 'ro',
     isa     => IO,
-    lazy    => 1,
+    coerce   => 1,
     default => sub {
         my $self = shift;
         my $fh   = IO::Handle->new;
@@ -33,10 +33,10 @@ has input_fh => (
     },
 );
 
-has output_fh => (
+has output_file => (
     is      => 'ro',
     isa     => IO,
-    lazy    => 1,
+    coerce  => 1,
     default => sub {
         my $self = shift;
         my $fh   = IO::Handle->new;
@@ -97,7 +97,7 @@ has _line_no => (
 
 sub write_line {
     my ( $self, $line ) = @_;
-    my $fh = $self->output_fh;
+    my $fh = $self->output_file;
 
     # $line = sprintf('%4d %s', $self->_line_no + 1, $line);
     print {$fh} $line;
@@ -264,7 +264,7 @@ sub filter_file {
     my ($self) = @_;
 
     foreach
-        my $line ( read_file( $self->input_fh, binmode => $self->encoding ) )
+        my $line ( read_file( $self->input_file, binmode => $self->encoding ) )
     {
         $self->filter_line($line)
             or last;

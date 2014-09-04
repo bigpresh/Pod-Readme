@@ -16,6 +16,10 @@ Foo
 
 =cut
 
-my $prf = Pod::Readme::Filter->new();
+use IO::File;
+
+my $io = IO::File->new($0, 'r');
+
+my $prf = Pod::Readme::Filter->new( input_fh => $io );
 
 $prf->filter_file;
