@@ -14,7 +14,7 @@ Pod::Readme::Plugin::changes - include latest Changes in README
 
   =pod
 
-  =for readme plugin changes
+  =for readme plugin changes no-verbatim
 
 =head1 DESCRIPTION
 
@@ -43,7 +43,17 @@ has 'changes_verbatim' => (
 );
 
 sub cmd_changes {
-    my ( $self ) = @_;
+    my ( $self, @args ) = @_;
+
+  my $res = $self->parse_cmd_args(@args);
+    foreach my $key (keys %{$res}) {
+        (my $name = "changes_${key}")  =~ s/-/_/g;
+        if (my $method = $self->can($name)) {
+            $self->$method( $res->{$key} );
+        } else {
+            die "Invalid key: '${key}'";
+        }
+    }
 
     my $file = file($self->base_dir, $self->changes_file);
 

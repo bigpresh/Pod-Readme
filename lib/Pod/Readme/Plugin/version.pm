@@ -4,7 +4,7 @@ use Moose::Role;
 
 use ExtUtils::MakeMaker;
 
-has 'version_from_file' => (
+has 'version_file' => (
     is       => 'ro',
     isa      => 'Path::Class::File',
     required => 0,
@@ -23,9 +23,19 @@ has 'version_title' => (
 );
 
 sub cmd_version {
-    my ( $self ) = @_;
+    my ( $self, @args ) = @_;
 
-    if (my $file = $self->input_file) {
+  my $res = $self->parse_cmd_args(@args);
+    foreach my $key (keys %{$res}) {
+        (my $name = "version_${key}")  =~ s/-/_/g;
+        if (my $method = $self->can($name)) {
+            $self->$method( $res->{$key} );
+        } else {
+            die "Invalid key: '${key}'";
+        }
+    }
+
+    if (my $file = $self->version_file) {
 
         $self->write_head1($self->version_title);
         $self->write_para( MM->parse_version($file) );

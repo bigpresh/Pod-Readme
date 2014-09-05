@@ -30,6 +30,16 @@ has 'requires_omit_core' => (
 sub cmd_requires {
     my ($self, @args) = @_;
 
+  my $res = $self->parse_cmd_args(@args);
+    foreach my $key (keys %{$res}) {
+        (my $name = "requires_${key}")  =~ s/-/_/g;
+        if (my $method = $self->can($name)) {
+            $self->$method( $res->{$key} );
+        } else {
+            die "Invalid key: '${key}'";
+        }
+    }
+
     my $meta = CPAN::Meta->load_file(
         file($self->base_dir, $self->requires_from_file));
 
