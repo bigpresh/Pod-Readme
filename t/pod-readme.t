@@ -1,5 +1,7 @@
 use Test::Most;
 
+use lib 't/lib';
+
 use IO::String;
 
 my $class = 'Pod::Readme';
@@ -43,6 +45,18 @@ isa_ok my $prf = $class->new(
     } qr/Unable to locate plugin 'noop::invalid'/, 'bad plugin';
 
     is $prf->mode('pod'), 'pod', 'mode reset';
+
+    filter_lines('=for readme plugin noop', '');
+
+    can_ok($prf, qw/ noop_bool noop_str /);
+    ok !$prf->noop_bool, 'plugin accessor default';
+    is $prf->noop_str, '', 'plugin accessor default';
+
+    filter_lines('=for readme plugin noop bool', '');
+    ok $prf->noop_bool, 'plugin accessor set';
+    filter_lines('=for readme plugin noop no-bool str="Isn\'t this nice?"', '');
+    ok !$prf->noop_bool, 'plugin accessor unset';
+    is $prf->noop_str, "Isn\'t this nice?", 'plugin accessor set';
 };
 
 
@@ -55,7 +69,6 @@ sub filter_lines {
         $prf->filter_line($line . "\n");
     }
 }
-
 
 sub reset_out {
     $io->close;

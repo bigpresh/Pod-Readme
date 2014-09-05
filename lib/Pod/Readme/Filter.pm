@@ -319,6 +319,41 @@ sub filter_line {
     return 1;
 }
 
+sub assign_accessors_from_args {
+    my ($self, $prefix, @args) = @_;
+
+    state $eq = qr/=/;
+
+    my ($key, $val);
+    while (my $arg = shift @args) {
+
+        if ($arg =~ $eq) {
+            ($key, $val) = split $eq, $arg;
+
+            # FIXME - better way to remove surrounding quotes
+            if (($val =~ /^(['"])(.*)(['"])$/) && ($1 eq $3)) {
+                $val = $2 // '';
+            }
+
+        } else {
+            $val = 1;
+            if ($arg =~ /^no[_-](\w+(?:[-_]\w+)*)$/) {
+                $key = $1;
+                $val = 0;
+            } else {
+                $key = $arg;
+            }
+        }
+        $key =~ s/-/_/;
+        my $name = "${prefix}_${key}";
+        if (my $accessor = $self->can($name)) {
+            $self->$accessor($val);
+        } else {
+            die "Invalid argument: no accessor '${name}'\n";
+        }
+    }
+}
+
 sub filter_file {
     my ($self) = @_;
 
@@ -349,8 +384,9 @@ around _build_plugin_app_ns => sub {
 
 sub cmd_plugin {
     my ($self, $plugin, @args) = @_;
-    $self->load_plugin($plugin);
-    if ( my $method = $self->can("cmd_${plugin}") ) {
+    my $name = "cmd_${plugin}";
+    $self->load_plugin($plugin) unless $self->can($name);
+    if ( my $method = $self->can($name) ) {
         $self->$method(@args);
     }
 }
