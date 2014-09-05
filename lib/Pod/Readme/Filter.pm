@@ -168,18 +168,43 @@ has _begin_args => (
 );
 
 # TODO: should should be able to handle named arguments
-sub parse_arguments {
-    my ( $self, $data ) = @_;
-    my @args = grep { $_ ne '' } split /\s+/, $data;
+sub _parse_arguments {
+    my ( $self, $line) = @_;
+    my @args = ();
+
+    my $i = 0;
+    my $prev;
+    my $in_quote = '';
+    my $arg_buff = '';
+    while ($i<length($line)) {
+
+        my $curr = substr($line, $i, 1);
+        if ($curr !~ m/\s/ || $in_quote) {
+            $arg_buff .= $curr;
+            if ($curr =~ /["']/ && $prev ne "\\") {
+              $in_quote = ($curr eq $in_quote) ? '' : $curr;
+            }
+        } elsif ($arg_buff ne '') {
+            push @args, $arg_buff;
+            $arg_buff = '';
+        }
+        $prev = $curr;
+        $i++;
+    }
+
+    if ($arg_buff ne '') {
+      push @args, $arg_buff
+    }
+
+    return @args;
 }
 
 sub process_for {
     my ( $self, $data ) = @_;
 
-    my ( $target, @args ) = $self->parse_arguments($data);
+    my ( $target, @args ) = $self->_parse_arguments($data);
 
     if ( $target && $target =~ $self->_target_regex ) {
-
         if ( my $cmd = shift @args ) {
             $cmd =~ s/-/_/g;
             if ( my $method = $self->can("cmd_${cmd}") ) {
@@ -248,7 +273,7 @@ sub filter_line {
             } elsif ( $cmd eq 'begin' ) {
 
                 my ( $target, @args )
-                    = $self->parse_arguments( substr( $line, 6 ) );
+                    = $self->_parse_arguments( substr( $line, 6 ) );
 
                 if ( $target =~ $self->_target_regex ) {
 
@@ -273,7 +298,7 @@ sub filter_line {
             } elsif ( $cmd eq 'end' ) {
 
                 my ( $target, @args )
-                    = $self->parse_arguments( substr( $line, 4 ) );
+                    = $self->_parse_arguments( substr( $line, 4 ) );
 
                 if ( $target =~ $self->_target_regex ) {
                     my $buffer = $self->_begin_args;
