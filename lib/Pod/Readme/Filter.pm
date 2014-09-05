@@ -168,7 +168,6 @@ has _begin_args => (
     handles  => { _clear_begin_args => 'clear', },
 );
 
-# TODO: should should be able to handle named arguments
 sub _parse_arguments {
     my ( $self, $line) = @_;
     my @args = ();
