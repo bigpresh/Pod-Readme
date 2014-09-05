@@ -370,6 +370,9 @@ sub cmd_continue {
 
 sub cmd_include {
     my ($self, @args) = @_;
+
+    my $res = $self->parse_cmd_args(@args);
+
     die "cmd_include is unimplemented\n";
 }
 
