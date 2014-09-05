@@ -18,7 +18,7 @@ This is a no-op plugin.
 
 =cut
 
-requires 'assign_accessors_from_args';
+requires 'parse_cmd_args';
 
 has noop_bool => (
     is      => 'rw',
@@ -34,7 +34,15 @@ has noop_str => (
 
 sub cmd_noop {
     my ($self, @args) = @_;
-    $self->assign_accessors_from_args('noop', @args);
+
+    my $res = $self->parse_cmd_args(@args);
+    foreach my $key (keys %{$res}) {
+        if (my $method = $self->can("noop_${key}")) {
+            $self->$method( $res->{$key} );
+        } else {
+            die "Invalid key: '${key}'";
+        }
+    }
  }
 
 use namespace::autoclean;

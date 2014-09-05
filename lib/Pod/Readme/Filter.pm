@@ -319,13 +319,13 @@ sub filter_line {
     return 1;
 }
 
-sub assign_accessors_from_args {
-    my ($self, $prefix, @args) = @_;
+sub parse_cmd_args {
+    my ($self, @args) = @_;
 
-    state $eq = qr/=/;
-
-    my ($key, $val);
+    my ($key, $val, %res);
     while (my $arg = shift @args) {
+
+        state $eq = qr/=/;
 
         if ($arg =~ $eq) {
             ($key, $val) = split $eq, $arg;
@@ -344,14 +344,11 @@ sub assign_accessors_from_args {
                 $key = $arg;
             }
         }
-        $key =~ s/-/_/;
-        my $name = "${prefix}_${key}";
-        if (my $accessor = $self->can($name)) {
-            $self->$accessor($val);
-        } else {
-            die "Invalid argument: no accessor '${name}'\n";
-        }
+
+        $res{$key} = $val;
     }
+
+    return \%res;
 }
 
 sub filter_file {

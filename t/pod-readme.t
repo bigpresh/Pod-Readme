@@ -57,6 +57,10 @@ isa_ok my $prf = $class->new(
     filter_lines('=for readme plugin noop no-bool str="Isn\'t this nice?"', '');
     ok !$prf->noop_bool, 'plugin accessor unset';
     is $prf->noop_str, "Isn\'t this nice?", 'plugin accessor set';
+
+    throws_ok {
+        filter_lines('=for readme plugin noop no-bool bad-attr="this"', '');
+    } qr/Invalid key: 'bad-attr'/;
 };
 
 
