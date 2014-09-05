@@ -23,6 +23,8 @@ of a F<Changes> file that conforms to the L<CPAN::Changes::Spec>.
 
 =cut
 
+requires 'parse_cmd_args';
+
 has 'changes_file' => (
     is      => 'rw',
     isa     => 'Path::Class::File',

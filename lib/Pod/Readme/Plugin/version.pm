@@ -4,6 +4,8 @@ use Moose::Role;
 
 use ExtUtils::MakeMaker;
 
+requires 'parse_cmd_args';
+
 has 'version_file' => (
     is       => 'ro',
     isa      => 'Path::Class::File',

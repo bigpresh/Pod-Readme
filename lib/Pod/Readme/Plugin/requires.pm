@@ -8,6 +8,8 @@ use CPAN::Meta;
 use Module::CoreList;
 use Path::Class;
 
+requires 'parse_cmd_args';
+
 has 'requires_from_file' => (
     is       => 'ro',
     isa      => 'Path::Class::File',
