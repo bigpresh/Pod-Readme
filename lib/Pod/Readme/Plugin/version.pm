@@ -37,7 +37,7 @@ This argument allows you to change the title of the heading.
 requires 'parse_cmd_args';
 
 has 'version_file' => (
-    is       => 'ro',
+    is       => 'rw',
     isa      => 'Path::Class::File',
     required => 0,
     coerce   => 1,
