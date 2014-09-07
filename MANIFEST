@@ -7,6 +7,7 @@ bin/pod2readme
 t/filter.t
 t/pod-readme.t
 t/lib/Pod/Readme/Plugin/noop.pm
+t/plugins/version.t
 lib/Pod/Readme.pm
 lib/Pod/Readme/Filter.pm
 lib/Pod/Readme/Plugin.pm
