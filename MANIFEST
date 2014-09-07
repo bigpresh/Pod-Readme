@@ -4,9 +4,10 @@ MANIFEST
 MANIFEST.SKIP
 README.md
 bin/pod2readme
-t/filter.t
-t/pod-readme.t
+t/10-pod-readme-filter.t
+t/20-pod-readme.t
 t/lib/Pod/Readme/Plugin/noop.pm
+t/lib/Pod/Readme/Test.pm
 t/plugins/version.t
 lib/Pod/Readme.pm
 lib/Pod/Readme/Filter.pm

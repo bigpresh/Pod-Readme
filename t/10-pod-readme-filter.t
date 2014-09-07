@@ -1,15 +1,12 @@
 use Test::Most;
 
-use IO::String;
+use lib 't/lib';
+use Pod::Readme::Test;
 
 my $class = 'Pod::Readme::Filter';
-
 use_ok $class;
 
-my $out;
-my $io = IO::String->new($out);
-
-isa_ok my $prf = $class->new(
+isa_ok $prf = $class->new(
     output_fh => $io,
  ), 'Pod::Readme::Filter';
 
@@ -177,18 +174,3 @@ isa_ok my $prf = $class->new(
 }
 
 done_testing;
-
-sub filter_lines {
-    my @lines = @_;
-    foreach my $line (@lines) {
-        note $line if $line =~ /^=(?:\w+)/;
-        $prf->filter_line($line . "\n");
-    }
-}
-
-
-sub reset_out {
-    $io->close;
-    $out = '';
-    $io->open($out);
-}
