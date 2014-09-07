@@ -19,7 +19,10 @@ resources(
 
 configure_requires();
 
-build_requires( 'Test::Most' => 0, );
+build_requires(
+    'Exporter::Lite' => 0,
+    'Test::Most'     => 0,
+);
 
 requires(
     'CPAN::Changes'              => 0,
@@ -37,7 +40,10 @@ requires(
     'version'                    => 0.77,
 );
 
-test_requires( 'Test::Most' => 0, );
+test_requires(
+    'Exporter::Lite' => 0,
+    'Test::Most'     => 0,
+);
 
 install_script( qw{ bin/pod2readme } );
 
