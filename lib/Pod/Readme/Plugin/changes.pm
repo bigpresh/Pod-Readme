@@ -14,12 +14,37 @@ Pod::Readme::Plugin::changes - include latest Changes in README
 
   =pod
 
-  =for readme plugin changes no-verbatim
+  =for readme plugin changes
 
 =head1 DESCRIPTION
 
 This is a plugin for L<Pod::Readme> that includes the latest release
 of a F<Changes> file that conforms to the L<CPAN::Changes::Spec>.
+
+=head1 ARGUMENTS
+
+=head2 C<file>
+
+  =for readme plugin changes file='Changes'
+
+If the F<Changes> file has a non-standard name or location in the
+distribution, you can specify an alternative name.  But note that it
+I<must> conform the the L<CPAN::Changes::Spec>.
+
+=head2 C<title>
+
+  =for readme plugin changes title='RECENT CHANGES'
+
+This option allows you to change the title of the heading.
+
+=head2 C<verbatim>
+
+  =for readme plugin changes verbatim
+
+By default, the F<Changes> file will be parsed and reformatted as POD
+(equivalent to the C<no-verbatim> option).
+
+If you prefer, you can display a verbatim section of the changes file.
 
 =cut
 
