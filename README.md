@@ -22,6 +22,7 @@ This distribution requires the following modules:
 
 - [CPAN::Changes](https://metacpan.org/pod/CPAN::Changes)
 - [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta)
+- [Exporter::Lite](https://metacpan.org/pod/Exporter::Lite)
 - [File::Slurp](https://metacpan.org/pod/File::Slurp)
 - [Moose](https://metacpan.org/pod/Moose)
 - [MooseX::Object::Pluggable](https://metacpan.org/pod/MooseX::Object::Pluggable)
@@ -42,7 +43,6 @@ This distribution requires the following modules:
 
 - Major rewrite, using modern Perl v5.10.1.
 - This module is no longer a subclass of a POD parsing module. Instead, it is a simple POD filter.
-- The "=for readme include" directive is no longer supported.
 
 ## New Features
 
@@ -59,6 +59,12 @@ This distribution requires the following modules:
 - Makefile.PL uses Module::Install.
 
 See the `Changes` file for a longer revision history.
+
+# CAVEATS
+
+This module is intended to be used by module authors for their own
+modules.  It is not recommended for generating `README` files from
+arbitrary Perl modules from untrusted sources.
 
 # SEE ALSO
 
