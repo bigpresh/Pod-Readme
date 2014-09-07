@@ -53,6 +53,12 @@ use namespace::autoclean;
 
 1;
 
+=head1 CAVEATS
+
+This module is intended to be used by module authors for their own
+modules.  It is not recommended for generating F<README> files from
+arbitrary Perl modules from untrusted sources.
+
 =head1 SEE ALSO
 
 See L<perlpod>, L<perlpodspec> and L<podlators>.
