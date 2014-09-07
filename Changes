@@ -7,8 +7,6 @@ v1.0.0_01
   - This module is no longer a subclass of a POD parsing
     module. Instead, it is a simple POD filter.
 
-  - The "=for readme include" directive is no longer supported.
-
   [New Features]
   - Added support for plugins.
 

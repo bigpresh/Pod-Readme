@@ -29,6 +29,7 @@ requires(
     'CPAN::Meta'                 => 0,
     'ExtUtils::MakeMaker'        => 6.56,
     'File::Slurp'                => 0,
+    'Hash::Util'                 => 0,
     'IO'                         => 0,
     'Module::CoreList'           => 0,
     'Moose'                      => 0,

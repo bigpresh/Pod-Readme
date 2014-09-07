@@ -10,6 +10,7 @@ with 'Pod::Readme::Plugin';
 
 use Carp;
 use File::Slurp qw/ read_file /;
+use Hash::Util qw/ lock_keys /;
 use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
@@ -340,8 +341,43 @@ sub cmd_include {
     my ($self, @args) = @_;
 
     my $res = $self->parse_cmd_args(@args);
+    # TODO: eval and die with better error message
+    lock_keys( %{$res}, qw/ file stype start stop /);
 
-    die "cmd_include is unimplemented\n";
+
+    my $start = $res->{start}; $start = qr/${start}/ if $start;
+    my $stop  = $res->{stop};  $stop  = qr/${stop}/  if $stop;
+
+    my $type = $res->{type} // 'pod';
+    unless ($type =~ /^(?:text|pod)$/) {
+        die "Unsupported include type: '${type}'\n";
+    }
+
+    my $file = $res->{file};
+    my $fh = IO::File->new($file, 'r')
+      or die "Unable to open file '${file}': $!\n";
+
+    $self->write("\n");
+
+    while (my $line = <$fh>) {
+
+        next if ($start && $line !~ $start);
+        last if ($stop && $line =~ $stop);
+
+        $start = undef;
+
+        if ($type eq 'text') {
+            $self->write_verbatim($line);
+        } else {
+            $self->write($line);
+        }
+
+    }
+
+    $self->write("\n");
+
+    close $fh;
+
 }
 
 around _build_plugin_app_ns => sub {
