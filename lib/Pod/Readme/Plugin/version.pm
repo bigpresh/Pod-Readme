@@ -4,6 +4,36 @@ use Moose::Role;
 
 use ExtUtils::MakeMaker;
 
+=head1 NAME
+
+Pod::Readme::Plugin::version - include version in README
+
+=head1 SYNOPSIS
+
+  =for readme plugin version
+
+=head1 DESCRIPTION
+
+This is a plugin for L<Pod::Readme> that includes the release version.
+
+=head1 ARGUMENTS
+
+=head2 C<file>
+
+  =for readme plugin version file='lib/My/App.pm'
+
+By default, it will extract the version from the same file that the
+F<README> is being extracted from.  If this is a different file, then
+it should be specified.
+
+=head2 C<title>
+
+  =for readme plugin version title='VERSION'
+
+This argument allows you to change the title of the heading.
+
+=cut
+
 requires 'parse_cmd_args';
 
 has 'version_file' => (
@@ -38,6 +68,8 @@ sub cmd_version {
     }
 
     if (my $file = $self->version_file) {
+
+        # TODO: option to change the heading level
 
         $self->write_head1($self->version_title);
         $self->write_para( MM->parse_version($file) );
