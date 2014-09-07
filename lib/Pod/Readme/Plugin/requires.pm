@@ -8,6 +8,43 @@ use CPAN::Meta;
 use Module::CoreList;
 use Path::Class;
 
+=head1 NAME
+
+Pod::Readme::Plugin::requires - include requirements in README
+
+=head1 SYNOPSIS
+
+  =for readme plugin requires
+
+=head1 DESCRIPTION
+
+This is a plugin for L<Pod::Readme> that includes module requirements
+from the F<META.yml> file.
+
+=head1 ARGUMENTS
+
+=head2 C<file>
+
+  =for readme plugin version file='MYMETA.yml'
+
+By default, it will extract the version from the F<META.yml> file. If,
+for some reason, this file is in a non-standard location, then you
+should specify it here.
+
+=head2 C<no-omit-coree>
+
+By default, core modules for the version of Perl specified in the
+F<META.yml> file are omitted from this list.  If you prefer to lise
+all requirements, then specify this option.
+
+=head2 C<title>
+
+  =for readme plugin version title='REQUIREMENTS'
+
+This argument allows you to change the title of the heading.
+
+=cut
+
 requires 'parse_cmd_args';
 
 has 'requires_from_file' => (
@@ -61,6 +98,8 @@ sub cmd_requires {
     }
 
     if (%prereqs) {
+
+        # TODO: option for setting the heading level
 
         $self->write_head1($self->requires_title);
 
