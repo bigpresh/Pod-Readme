@@ -87,6 +87,8 @@ sub cmd_changes {
     my $changes = CPAN::Changes->load($file);
     my $latest  = ( $changes->releases )[-1];
 
+    # TODO: option for setting the heading level (1..3)
+
     $self->write_head1( $self->changes_title );
 
     if ( $self->changes_verbatim ) {
