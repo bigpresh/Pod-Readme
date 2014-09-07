@@ -12,8 +12,6 @@ Pod::Readme::Plugin::changes - include latest Changes in README
 
 =head1 SYNOPSIS
 
-  =pod
-
   =for readme plugin changes
 
 =head1 DESCRIPTION
