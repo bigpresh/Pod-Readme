@@ -5,6 +5,7 @@ use Moose::Role;
 use version 0.77;
 
 use CPAN::Meta;
+use Hash::Util qw/ lock_keys /;
 use Module::CoreList;
 use Path::Class;
 
@@ -69,7 +70,8 @@ has 'requires_omit_core' => (
 sub cmd_requires {
     my ($self, @args) = @_;
 
-  my $res = $self->parse_cmd_args(@args);
+    my $res = $self->parse_cmd_args(@args);
+    lock_keys( %{$res}, qw/ file title omit-core no-omit-core / );
     foreach my $key (keys %{$res}) {
         (my $name = "requires_${key}")  =~ s/-/_/g;
         if (my $method = $self->can($name)) {

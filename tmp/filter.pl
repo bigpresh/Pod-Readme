@@ -14,12 +14,12 @@ use version 0.77; our $VERSION = version->declare('v1.0.0_01');
 
 =for readme plugin requires omit-core
 
-=for readme plugin changes verbatim
+=for readme plugin changes no-verbatim
 
 =cut
 
 use IO::File;
 
-my $prf = Pod::Readme->new( input_file => $0 ); #'lib/Pod/Readme.pm' );
+my $prf = Pod::Readme->new( input_file => 'lib/Pod/Readme.pm' );
 
 $prf->filter_file;

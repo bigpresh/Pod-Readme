@@ -3,6 +3,7 @@ package Pod::Readme::Plugin::changes;
 use Moose::Role;
 
 use CPAN::Changes;
+use Hash::Util qw/ lock_keys /;
 use MooseX::Types::Path::Class;
 use Path::Class;
 
@@ -70,7 +71,8 @@ has 'changes_verbatim' => (
 sub cmd_changes {
     my ( $self, @args ) = @_;
 
-  my $res = $self->parse_cmd_args(@args);
+    my $res = $self->parse_cmd_args(@args);
+    lock_keys( %{$res}, qw/ file title verbatim no-verbatim / );
     foreach my $key (keys %{$res}) {
         (my $name = "changes_${key}")  =~ s/-/_/g;
         if (my $method = $self->can($name)) {

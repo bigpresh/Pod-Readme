@@ -3,6 +3,7 @@ package Pod::Readme::Plugin::version;
 use Moose::Role;
 
 use ExtUtils::MakeMaker;
+use Hash::Util qw/ lock_keys /;
 
 =head1 NAME
 
@@ -57,7 +58,8 @@ has 'version_title' => (
 sub cmd_version {
     my ( $self, @args ) = @_;
 
-  my $res = $self->parse_cmd_args(@args);
+    my $res = $self->parse_cmd_args(@args);
+    lock_keys( %{$res}, qw/ file title / );
     foreach my $key (keys %{$res}) {
         (my $name = "version_${key}")  =~ s/-/_/g;
         if (my $method = $self->can($name)) {
