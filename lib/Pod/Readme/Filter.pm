@@ -138,8 +138,6 @@ has _line_no => (
 sub write {
     my ( $self, $line ) = @_;
     my $fh = $self->output_fh;
-
-    # $line = sprintf('%4d %s', $self->_line_no + 1, $line);
     print {$fh} $line;
 }
 
