@@ -167,37 +167,6 @@ has _begin_args => (
     handles  => { _clear_begin_args => 'clear', },
 );
 
-sub _parse_arguments {
-    my ( $self, $line) = @_;
-    my @args = ();
-
-    my $i = 0;
-    my $prev;
-    my $in_quote = '';
-    my $arg_buff = '';
-    while ($i<length($line)) {
-
-        my $curr = substr($line, $i, 1);
-        if ($curr !~ m/\s/ || $in_quote) {
-            $arg_buff .= $curr;
-            if ($curr =~ /["']/ && $prev ne "\\") {
-              $in_quote = ($curr eq $in_quote) ? '' : $curr;
-            }
-        } elsif ($arg_buff ne '') {
-            push @args, $arg_buff;
-            $arg_buff = '';
-        }
-        $prev = $curr;
-        $i++;
-    }
-
-    if ($arg_buff ne '') {
-      push @args, $arg_buff
-    }
-
-    return @args;
-}
-
 sub process_for {
     my ( $self, $data ) = @_;
 
