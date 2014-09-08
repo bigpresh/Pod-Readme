@@ -38,6 +38,7 @@ requires(
     'MooseX::Types::Path::Class' => 0,
     'namespace::autoclean'       => 0,
     'Path::Class'                => 0,
+    'Try::Tiny'                  => 0,
     'version'                    => 0.77,
 );
 
