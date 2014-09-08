@@ -10,7 +10,6 @@ with 'Pod::Readme::Plugin';
 
 use Carp;
 use File::Slurp qw/ read_file /;
-use Hash::Util qw/ lock_keys /;
 use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
@@ -307,10 +306,7 @@ sub cmd_continue {
 sub cmd_include {
     my ($self, @args) = @_;
 
-    my $res = $self->parse_cmd_args(@args);
-    # TODO: eval and die with better error message
-    lock_keys( %{$res}, qw/ file stype start stop /);
-
+    my $res = $self->parse_cmd_args([qw/ file stype start stop /], @args);
 
     my $start = $res->{start}; $start = qr/${start}/ if $start;
     my $stop  = $res->{stop};  $stop  = qr/${stop}/  if $stop;

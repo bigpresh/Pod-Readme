@@ -4,6 +4,9 @@ use v5.10.1;
 
 use Moose::Role;
 
+use Hash::Util qw/ lock_keys /;
+use Try::Tiny;
+
 # TODO: docs on how to write plugins here
 
 
@@ -39,7 +42,7 @@ sub _parse_arguments {
 }
 
 sub parse_cmd_args {
-    my ($self, @args) = @_;
+    my ($self, $allowed, @args) = @_;
 
     my ($key, $val, %res);
     while (my $arg = shift @args) {
@@ -49,7 +52,7 @@ sub parse_cmd_args {
         if ($arg =~ $eq) {
             ($key, $val) = split $eq, $arg;
 
-            # FIXME - better way to remove surrounding quotes
+            # TODO - better way to remove surrounding quotes
             if (($val =~ /^(['"])(.*)(['"])$/) && ($1 eq $3)) {
                 $val = $2 // '';
             }
@@ -65,6 +68,20 @@ sub parse_cmd_args {
         }
 
         $res{$key} = $val;
+    }
+
+    if ($allowed) {
+        try {
+            lock_keys(%res, @{$allowed});
+        } catch {
+            if (/Hash has key '(.+)' which is not in the new key set/) {
+                die sprintf( "Invalid argument key '\%s' at input line \%d\n",
+                             $1, $self->_line_no );
+            } else {
+                die sprintf( "Unknown error at input line \%d\n",
+                             $self->_line_no );
+            }
+        };
     }
 
     return \%res;

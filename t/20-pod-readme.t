@@ -55,7 +55,7 @@ isa_ok $prf = $class->new(
 
     throws_ok {
         filter_lines('=for readme plugin noop no-bool bad-attr="this"', '');
-    } qr/Invalid key: 'bad-attr'/;
+    } qr/Invalid argument key 'bad-attr' at input line \d+/;
 };
 
 
