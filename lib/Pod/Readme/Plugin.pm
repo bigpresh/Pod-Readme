@@ -75,11 +75,9 @@ sub parse_cmd_args {
             lock_keys(%res, @{$allowed});
         } catch {
             if (/Hash has key '(.+)' which is not in the new key set/) {
-                die sprintf( "Invalid argument key '\%s' at input line \%d\n",
-                             $1, $self->_line_no );
+                die sprintf( "Invalid argument key '\%s'\n", $1 );
             } else {
-                die sprintf( "Unknown error at input line \%d\n",
-                             $self->_line_no );
+                die "Unknown error checking argument keys\n";
             }
         };
     }

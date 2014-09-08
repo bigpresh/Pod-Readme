@@ -13,6 +13,7 @@ use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
+use Try::Tiny;
 
 has verbatim_indent => (
     is      => 'ro',
@@ -175,7 +176,13 @@ sub process_for {
         if ( my $cmd = shift @args ) {
             $cmd =~ s/-/_/g;
             if ( my $method = $self->can("cmd_${cmd}") ) {
-                $self->$method(@args);
+                try {
+                    $self->$method(@args);
+                } catch {
+                    s/\n$//;
+                    die sprintf( "\%s at input line \%d\n",
+                                 $_, $self->_line_no );
+                };
             } else {
                 die sprintf( "Unknown command: '\%s' at input line \%d\n",
                     $cmd, $self->_line_no );
