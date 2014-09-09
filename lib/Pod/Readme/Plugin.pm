@@ -13,7 +13,8 @@ Pod::Readme::Plugin - plugin role for Pod::Readme
 
 =head1 DESCRIPTION
 
-TODO
+L<Pod::Readme> v1.0 and later supports plugins that extend the
+capabilities of the module.
 
 =head1 ATTRIBUTES
 
