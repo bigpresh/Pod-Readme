@@ -233,7 +233,31 @@ compatability with older POD parsers.
 
 =head1 WRITING PLUGINS
 
-TODO
+Writing plugins is straightforward.  For example,
+
+  package Pod::Readme::Plugin::myplugin;
+
+  use Moose::Role;
+
+  sub cmd_myplugin {
+      my ($self, @args) = @_;
+      ...
+  }
+
+When L<Pod::Readme> encounters POD with
+
+  =for readme plugin myplugin arg1 arg2
+
+the plugin role will be loaded, and the C<cmd_myplugin> method will be
+run.
+
+Note that you do not need to specify a C<cmd_myplugin> method.
+
+Any method prefixed with "cmd_" will be a command that can be called
+using the C<=for readme command> syntax.
+
+A plugin parses arguments using the L</parse_cmd_arguments> method and
+writes output using the write methods noted above.
 
 =cut
 
