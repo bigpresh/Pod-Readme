@@ -15,12 +15,6 @@ use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
 use Try::Tiny;
 
-has verbatim_indent => (
-    is      => 'ro',
-    isa     => 'Int',
-    default => 2,
-);
-
 has encoding => (
     is      => 'ro',
     isa     => 'Str',
@@ -28,10 +22,10 @@ has encoding => (
 );
 
 has base_dir => (
-    is       => 'ro',
-    isa      => 'Path::Class::Dir',
-    coerce   => 1,
-    default  => '.',
+    is      => 'ro',
+    isa     => 'Path::Class::Dir',
+    coerce  => 1,
+    default => '.',
 );
 
 has input_file => (
@@ -55,10 +49,10 @@ has input_fh => (
     coerce  => 1,
     default => sub {
         my ($self) = @_;
-        if ($self->input_file) {
+        if ( $self->input_file ) {
             $self->input_file->openr;
         } else {
-            my $fh   = IO::Handle->new;
+            my $fh = IO::Handle->new;
             if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
                 return $fh;
             } else {
@@ -75,10 +69,10 @@ has output_fh => (
     coerce  => 1,
     default => sub {
         my ($self) = @_;
-        if ($self->output_file) {
+        if ( $self->output_file ) {
             $self->output_file->openw;
         } else {
-            my $fh   = IO::Handle->new;
+            my $fh = IO::Handle->new;
             if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
                 return $fh;
             } else {
@@ -178,10 +172,11 @@ sub process_for {
             if ( my $method = $self->can("cmd_${cmd}") ) {
                 try {
                     $self->$method(@args);
-                } catch {
+                }
+                catch {
                     s/\n$//;
                     die sprintf( "\%s at input line \%d\n",
-                                 $_, $self->_line_no );
+                        $_, $self->_line_no );
                 };
             } else {
                 die sprintf( "Unknown command: '\%s' at input line \%d\n",
@@ -260,7 +255,7 @@ sub filter_line {
                                 $self->_line_no + 1 );
                         }
 
-                        $self->write_begin($self->_begin_args($buffer));
+                        $self->write_begin( $self->_begin_args($buffer) );
                     }
 
                     $self->mode('pod:begin');
@@ -311,32 +306,34 @@ sub cmd_continue {
 }
 
 sub cmd_include {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
 
-    my $res = $self->parse_cmd_args([qw/ file stype start stop /], @args);
+    my $res = $self->parse_cmd_args( [qw/ file stype start stop /], @args );
 
-    my $start = $res->{start}; $start = qr/${start}/ if $start;
-    my $stop  = $res->{stop};  $stop  = qr/${stop}/  if $stop;
+    my $start = $res->{start};
+    $start = qr/${start}/ if $start;
+    my $stop = $res->{stop};
+    $stop = qr/${stop}/ if $stop;
 
     my $type = $res->{type} // 'pod';
-    unless ($type =~ /^(?:text|pod)$/) {
+    unless ( $type =~ /^(?:text|pod)$/ ) {
         die "Unsupported include type: '${type}'\n";
     }
 
     my $file = $res->{file};
-    my $fh = IO::File->new($file, 'r')
-      or die "Unable to open file '${file}': $!\n";
+    my $fh = IO::File->new( $file, 'r' )
+        or die "Unable to open file '${file}': $!\n";
 
     $self->write("\n");
 
-    while (my $line = <$fh>) {
+    while ( my $line = <$fh> ) {
 
-        next if ($start && $line !~ $start);
-        last if ($stop && $line =~ $stop);
+        next if ( $start && $line !~ $start );
+        last if ( $stop  && $line =~ $stop );
 
         $start = undef;
 
-        if ($type eq 'text') {
+        if ( $type eq 'text' ) {
             $self->write_verbatim($line);
         } else {
             $self->write($line);
@@ -351,13 +348,13 @@ sub cmd_include {
 }
 
 around _build_plugin_app_ns => sub {
-    my ($orig, $self) = @_;
+    my ( $orig, $self ) = @_;
     my $names = $self->$orig;
     [ @{$names} ];
 };
 
 sub cmd_plugin {
-    my ($self, $plugin, @args) = @_;
+    my ( $self, $plugin, @args ) = @_;
     my $name = "cmd_${plugin}";
     $self->load_plugin($plugin) unless $self->can($name);
     if ( my $method = $self->can($name) ) {
