@@ -48,10 +48,10 @@ This argument allows you to change the title of the heading.
 requires 'parse_cmd_args';
 
 has 'requires_from_file' => (
-    is       => 'ro',
-    isa      => 'Path::Class::File',
-    coerce   => 1,
-    default  => 'META.yml',
+    is      => 'rw',
+    isa     => 'Path::Class::File',
+    coerce  => 1,
+    default => 'META.yml',
 );
 
 has 'requires_title' => (
@@ -67,13 +67,13 @@ has 'requires_omit_core' => (
 );
 
 sub cmd_requires {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
 
-    my $res = $self->parse_cmd_args([qw/ file title omit-core no-omit-core /],
-                                    @args);
-    foreach my $key (keys %{$res}) {
-        (my $name = "requires_${key}")  =~ s/-/_/g;
-        if (my $method = $self->can($name)) {
+    my $res = $self->parse_cmd_args(
+        [qw/ from-file title omit-core no-omit-core /], @args );
+    foreach my $key ( keys %{$res} ) {
+        ( my $name = "requires_${key}" ) =~ s/-/_/g;
+        if ( my $method = $self->can($name) ) {
             $self->$method( $res->{$key} );
         } else {
             die "Invalid key: '${key}'";
@@ -81,20 +81,20 @@ sub cmd_requires {
     }
 
     my $meta = CPAN::Meta->load_file(
-        file($self->base_dir, $self->requires_from_file));
+        file( $self->base_dir, $self->requires_from_file ) );
 
     my %prereqs;
-    foreach my $type (values %{$meta->prereqs}) {
+    foreach my $type ( values %{ $meta->prereqs } ) {
         $prereqs{$_} = $type->{requires}->{$_}
-            for (keys %{$type->{requires}});
+            for ( keys %{ $type->{requires} } );
     }
     my $perl = delete $prereqs{perl};
-    if ($self->requires_omit_core && $perl) {
-        foreach (keys %prereqs) {
+    if ( $self->requires_omit_core && $perl ) {
+        foreach ( keys %prereqs ) {
             delete $prereqs{$_}
-              if Module::CoreList->first_release($_) &&
-                  version->parse(Module::CoreList->first_release($_))
-                    <= version->parse($perl);
+                if Module::CoreList->first_release($_)
+                && version->parse( Module::CoreList->first_release($_) )
+                <= version->parse($perl);
         }
     }
 
@@ -102,18 +102,21 @@ sub cmd_requires {
 
         # TODO: option for setting the heading level
 
-        $self->write_head1($self->requires_title);
+        $self->write_head1( $self->requires_title );
 
         if ($perl) {
-            $self->write_para(sprintf('This distribution requires Perl %s.',
-                                      version->parse($perl)->normal));
+            $self->write_para(
+                sprintf( 'This distribution requires Perl %s.',
+                    version->parse($perl)->normal )
+            );
         }
 
-        $self->write_para('This distribution requires the following modules:');
+        $self->write_para(
+            'This distribution requires the following modules:');
 
         $self->write_over(4);
-        foreach my $module  (sort keys %prereqs) {
-            $self->write_item(sprintf('* L<%s>', $module));
+        foreach my $module ( sort keys %prereqs ) {
+            $self->write_item( sprintf( '* L<%s>', $module ) );
         }
         $self->write_back;
     }

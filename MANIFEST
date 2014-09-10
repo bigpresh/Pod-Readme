@@ -25,6 +25,7 @@ META.yml
 README.md
 t/10-pod-readme-filter.t
 t/20-pod-readme.t
+t/data/META-1.yml
 t/lib/Pod/Readme/Plugin/noop.pm
 t/lib/Pod/Readme/Test.pm
 t/plugins/changes.t

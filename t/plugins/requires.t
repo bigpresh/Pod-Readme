@@ -14,11 +14,25 @@ isa_ok $prf = $class->new(
 {
     filter_lines( '=for readme plugin requires', '' );
 
-    note $out;
-
     like $out, qr/=head1 REQUIREMENTS\n\n/, '=head1';
     like $out, qr/\nThis distribution requires the following modules:\n\n/,
         'description';
+
+    reset_out();
+}
+
+{
+    filter_lines(
+        '=for readme plugin requires from-file="t/data/META-1.yml" title="PREREQS"',
+        ''
+    );
+
+    note $out;
+
+    like $out, qr/=head1 PREREQS\n\n/, '=head1';
+
+    like $out, qr/\nThis distribution requires Perl v5\.10\.1\.\n\n/,
+        'minimum perl';
 
     # TODO: test content
     # - test no-omit-core option
