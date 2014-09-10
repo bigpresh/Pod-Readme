@@ -16,7 +16,13 @@ isa_ok $prf = $class->new(
 
     note $out;
 
-    # TODO: test content
+    like $out, qr/=head1 RECENT CHANGES\n\n/, '=head1';
+
+    # TODO: test content:
+    # - Changes file with sections (using alternative file)
+    # - Changes file without sections (using alternative file)
+    # - verbatim mode
+    # - changed title
 
     reset_out();
 }

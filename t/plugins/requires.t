@@ -16,7 +16,12 @@ isa_ok $prf = $class->new(
 
     note $out;
 
+    like $out, qr/=head1 REQUIREMENTS\n\n/, '=head1';
+    like $out, qr/\nThis distribution requires the following modules:\n\n/,
+        'description';
+
     # TODO: test content
+    # - test no-omit-core option
 
     reset_out();
 }
