@@ -66,7 +66,7 @@ This distribution requires the following modules:
 ## Documentation
 
 - Changes rewritten to conform to CPAN::Changes::Spec.
-- README is now in markdown format.
+- README is now in Markdown format.
 
 ## Incompatabilities
 

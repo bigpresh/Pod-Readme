@@ -22,7 +22,7 @@ v1.0.0_01
   [Documentation]
   - Changes rewritten to conform to CPAN::Changes::Spec.
 
-  - README is now in markdown format.
+  - README is now in Markdown format.
 
   [Other Changes]
   - Switched to semantic versioning.
