@@ -38,12 +38,6 @@ This module filters POD to generate a F<README> file. It supports a
 series of POD commands for specifying what is included or excluded
 from the F<README> file.
 
-=for readme plugin version
-
-=for readme plugin requires
-
-=for readme plugin changes
-
 =begin :readme
 
 See the L<Pod::Readme> documentation for more details on the POD
@@ -52,6 +46,12 @@ syntax that this module recognizes.
 See L<pod2readme> command-line usage.
 
 =end :readme
+
+=for readme plugin version
+
+=for readme plugin requires
+
+=for readme plugin changes
 
 =for readme stop
 

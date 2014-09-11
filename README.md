@@ -36,6 +36,11 @@ This module filters POD to generate a `README` file. It supports a
 series of POD commands for specifying what is included or excluded
 from the `README` file.
 
+See the [Pod::Readme](https://metacpan.org/pod/Pod::Readme) documentation for more details on the POD
+syntax that this module recognizes.
+
+See [pod2readme](https://metacpan.org/pod/pod2readme) command-line usage.
+
 # VERSION
 
 v1.0.0\_01
@@ -89,11 +94,6 @@ This distribution requires the following modules:
 - Makefile.PL uses Module::Install.
 
 See the `Changes` file for a longer revision history.
-
-See the [Pod::Readme](https://metacpan.org/pod/Pod::Readme) documentation for more details on the POD
-syntax that this module recognizes.
-
-See [pod2readme](https://metacpan.org/pod/pod2readme) command-line usage.
 
 # CAVEATS
 
