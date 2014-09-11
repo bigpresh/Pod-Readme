@@ -50,12 +50,15 @@ This distribution requires the following modules:
 - [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta)
 - [Exporter::Lite](https://metacpan.org/pod/Exporter::Lite)
 - [File::Slurp](https://metacpan.org/pod/File::Slurp)
+- [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive)
+- [IPC::System::Simple](https://metacpan.org/pod/IPC::System::Simple)
 - [Moose](https://metacpan.org/pod/Moose)
 - [MooseX::Object::Pluggable](https://metacpan.org/pod/MooseX::Object::Pluggable)
 - [MooseX::Types::IO](https://metacpan.org/pod/MooseX::Types::IO)
 - [MooseX::Types::Path::Class](https://metacpan.org/pod/MooseX::Types::Path::Class)
 - [Path::Class](https://metacpan.org/pod/Path::Class)
 - [Test::Most](https://metacpan.org/pod/Test::Most)
+- [Try::Tiny](https://metacpan.org/pod/Try::Tiny)
 - [namespace::autoclean](https://metacpan.org/pod/namespace::autoclean)
 
 # RECENT CHANGES
