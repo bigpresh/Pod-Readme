@@ -56,10 +56,10 @@ This distribution requires the following modules:
 - [MooseX::Object::Pluggable](https://metacpan.org/pod/MooseX::Object::Pluggable)
 - [MooseX::Types::IO](https://metacpan.org/pod/MooseX::Types::IO)
 - [MooseX::Types::Path::Class](https://metacpan.org/pod/MooseX::Types::Path::Class)
+- [namespace::autoclean](https://metacpan.org/pod/namespace::autoclean)
 - [Path::Class](https://metacpan.org/pod/Path::Class)
 - [Test::Most](https://metacpan.org/pod/Test::Most)
 - [Try::Tiny](https://metacpan.org/pod/Try::Tiny)
-- [namespace::autoclean](https://metacpan.org/pod/namespace::autoclean)
 
 # RECENT CHANGES
 

@@ -115,7 +115,7 @@ sub cmd_requires {
             'This distribution requires the following modules:');
 
         $self->write_over(4);
-        foreach my $module ( sort keys %prereqs ) {
+        foreach my $module ( sort { lc($a) cmp lc($b) } keys %prereqs ) {
             $self->write_item( sprintf( '* L<%s>', $module ) );
         }
         $self->write_back;
