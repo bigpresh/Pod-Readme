@@ -4,11 +4,37 @@ Pod::Readme - generate README files from POD
 
 # SYNOPSIS
 
-TODO
+    =head1 NAME
+
+    MyApp - my nifty app
+
+    =for readme plugin version
+
+    =head1 DESCRIPTION
+
+    This is a nifty app.
+
+    =begin :readme
+
+    =for readme plugin requires
+
+    =head1 INSTALLATION
+
+    ...
+
+    =end :readme
+
+    =for readme stop
+
+    =head1 METHODS
+
+    ...
 
 # DESCRIPTION
 
-This module filters POD to generate a `README` file.
+This module filters POD to generate a `README` file. It supports a
+series of POD commands for specifying what is included or excluded
+from the `README` file.
 
 # VERSION
 
@@ -70,11 +96,14 @@ arbitrary Perl modules from untrusted sources.
 
 See [perlpod](https://metacpan.org/pod/perlpod), [perlpodspec](https://metacpan.org/pod/perlpodspec) and [podlators](https://metacpan.org/pod/podlators).
 
-# AUTHOR
+# AUTHORS
 
-Originally by Robert Rothenberg <rrwo at cpan.org>
+The original version was by Robert Rothenberg <rrwo@cpan.org> until
+2010, when maintenance was taken over by David Precious
+<davidp@preshweb.co.uk>.
 
-Now maintained by David Precious <davidp@preshweb.co.uk>
+In 2014, Robert Rothenberg rewrote the module to use filtering instead
+of subclassing a POD parser.
 
 ## Suggestions, Bug Reporting and Contributing
 

@@ -1,76 +1,62 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
+
+use v5.10.1;
 
 use strict;
+use warnings;
 
-use File::Copy qw( copy );
+use Getopt::Long::Descriptive;
+use IPC::System::Simple qw/ run /;
+use Path::Class qw/ dir /;
 use Pod::Readme;
 
-our $VERSION = '0.05';
+# TODO POD
 
-# TODO
-# - use Getopts::Long with better options
-# - allow for stream conversion
-# - if no input given, parse META.yml and guess
+my %FORMATS = (
+    'text'     => { cmd => 'pod2text "%s" "%s"', ext => '' },
+    'markdown' => { cmd => 'pod2markdown "%s" "%s"', ext => '.md' },
+    'pod'      => { ext => '.pod' },
+    'html'     => { cmd => 'pod2html --quiet --infile="%s" --outfile="%s"',
+                    ext => '.html' },
+);
 
-my $input  = shift||"";
+# TODO backup option
 
-unless (-r $input) {
-  print STDERR << "USAGE";
-Cannot find input file "$input"
-Usage: pod2readme inputfile [outputfile] [type]
-USAGE
-  exit(1);
+my ($opt, $usage) = describe_options(
+    '%c %o',
+    [],
+    ['Extract README from POD'],
+    [],
+    [ 'output|o'   => "output filename" ],
+    [ 'format|f=s' => "output format", { default => 'text' } ],
+    [ 'stdout|c'   => "output to stdout (console)" ],
+    [ 'help|h'     => "print usage and exit" ],
+    { show_defaults => 1 },
+);
+
+die $usage if $opt->help;
+
+my %args = ();
+
+if (my $input = shift @ARGV) {
+    $args{input_file} = $input;
 }
 
-my $output = shift || "README";
+my $format = $FORMATS{ $opt->format };
+my $output = $opt->output || 'README' . $format->{ext};
 
-my $type   = shift || lc($output);
-
-my $parser = Pod::Readme->new( readme_type => $type );
-
-if (-e $output) {
-  copy( $output, $output . ".bak" );
+unless ($opt->stdout) {
+    my $tmp_dir = dir( $ENV{TMP} || '/tmp' );
+    $args{output_file} =
+        $format->{cmd} ?
+        ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ))[1]
+        : $output;
 }
 
-$parser->parse_from_file( $input );
+my $pf = Pod::Readme->new(%args);
 
-__END__
+$pf->filter_file;
 
-=pod
-
-=head1 NAME
-
-pod2readme - script to convert POD to README file
-
-=head1 SYNOPSIS
-
-  pod2readme lib/Some/Module.pm
-
-=head1 DESCRIPTIONS
-
-Converts POD in the specified file to a F<README> text file. If a
-second argument is given, it will use that as the output file and
-assume that is the type of file to export:
-
-  pod2readme Module.pm COPYING
-
-If need be, this can be overridden in cases where the output file
-is not the same as the type, using a third argument:
-
-  pod2readme Module.pm Module-Install.HOWTO install
-
-=head1 SEE ALSO
-
-L<Pod::Readme>
-
-=head1 AUTHOR
-
-Robert Rothenberg <rrwo at cpan.org>
-
-=head1 LICENSE
-
-Copyright (c) 2005 Robert Rothenberg. All rights reserved.
-This program is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.
-
-=cut
+if (my $cmd = $format->{cmd}) {
+    run( sprintf($cmd, $args{output_file}, $output) );
+}
