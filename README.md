@@ -90,6 +90,11 @@ This distribution requires the following modules:
 
 See the `Changes` file for a longer revision history.
 
+See the [Pod::Readme](https://metacpan.org/pod/Pod::Readme) documentation for more details on the POD
+syntax that this module recognizes.
+
+See [pod2readme](https://metacpan.org/pod/pod2readme) command-line usage.
+
 # CAVEATS
 
 This module is intended to be used by module authors for their own
@@ -111,9 +116,8 @@ of subclassing a POD parser.
 
 ## Suggestions, Bug Reporting and Contributing
 
-This module is developed on GitHub at:
-
-http://github.com/bigpresh/Pod-Readme
+This module is developed on GitHub at
+[http://github.com/bigpresh/Pod-Readme](http://github.com/bigpresh/Pod-Readme)
 
 # LICENSE
 

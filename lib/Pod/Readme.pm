@@ -44,6 +44,15 @@ from the F<README> file.
 
 =for readme plugin changes
 
+=begin :readme
+
+See the L<Pod::Readme> documentation for more details on the POD
+syntax that this module recognizes.
+
+See L<pod2readme> command-line usage.
+
+=end :readme
+
 =for readme stop
 
 =head1 POD COMMANDS
@@ -137,7 +146,7 @@ it is not standard POD.
 
 =head1 METHODS
 
-See L<Pod::Readme::Filter> for a dscription of methods.
+See L<Pod::Readme::Filter> for a description of methods.
 
 =for readme start
 
@@ -175,9 +184,8 @@ of subclassing a POD parser.
 
 =head2 Suggestions, Bug Reporting and Contributing
 
-This module is developed on GitHub at:
-
-http://github.com/bigpresh/Pod-Readme
+This module is developed on GitHub at
+L<http://github.com/bigpresh/Pod-Readme>
 
 =head1 LICENSE
 
