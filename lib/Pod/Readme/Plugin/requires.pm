@@ -85,6 +85,7 @@ sub cmd_requires {
 
     my %prereqs;
     foreach my $type ( values %{ $meta->prereqs } ) {
+        # TODO: max version
         $prereqs{$_} = $type->{requires}->{$_}
             for ( keys %{ $type->{requires} } );
     }
@@ -116,7 +117,9 @@ sub cmd_requires {
 
         $self->write_over(4);
         foreach my $module ( sort { lc($a) cmp lc($b) } keys %prereqs ) {
-            $self->write_item( sprintf( '* L<%s>', $module ) );
+            my $version = $prereqs{$module};
+            my $text    = $version ? " (version ${version})" : '';
+            $self->write_item( sprintf( '* L<%s>', $module ) . $text );
         }
         $self->write_back;
     }
