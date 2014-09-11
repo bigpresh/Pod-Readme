@@ -20,6 +20,15 @@ my %FORMATS = (
                     ext => '.html' },
 );
 
+sub validate_format {
+    my $value = shift;
+    if (exists $FORMATS{$value}) {
+        return $value;
+    } else {
+        die "Invalid format: '${value}'\n";
+    }
+}
+
 # TODO backup option
 
 my ($opt, $usage) = describe_options(
@@ -28,7 +37,10 @@ my ($opt, $usage) = describe_options(
     ['Extract README from POD'],
     [],
     [ 'output|o'   => "output filename" ],
-    [ 'format|f=s' => "output format", { default => 'text' } ],
+    [ 'format|f=s' => "output format",
+      { default   => 'text',
+        callbacks => { format => \&validate_format },
+      } ],
     [ 'stdout|c'   => "output to stdout (console)" ],
     [ 'help|h'     => "print usage and exit" ],
     { show_defaults => 1 },
@@ -43,7 +55,13 @@ if (my $input = shift @ARGV) {
 }
 
 my $format = $FORMATS{ $opt->format };
-my $output = $opt->output || 'README' . $format->{ext};
+unless ($format) {
+    say sprintf("Unknown format: '\%s'", $opt->format);
+    die $usage;
+}
+my $output = $opt->output || shift @ARGV || 'README' . $format->{ext};
+
+
 
 unless ($opt->stdout) {
     my $tmp_dir = dir( $ENV{TMP} || '/tmp' );
