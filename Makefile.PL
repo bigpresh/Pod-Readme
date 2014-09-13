@@ -44,6 +44,12 @@ requires(
     'version'                    => 0.77,
 );
 
+recommends(
+  'Pod::Simple::LaTeX' => 0,
+  'Pod::Man'           => 0,
+  'Pod::Markdown'      => 0,
+);
+
 test_requires(
     'Exporter::Lite' => 0,
     'Test::Most'     => 0,
