@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
 use Getopt::Long::Descriptive;
-use IPC::System::Simple qw/ run /;
+use Module::Load qw/ load /;
 use Path::Class;
 use Pod::Readme;
 
@@ -62,7 +62,8 @@ The target of the filter, which defaults to "readme".
 
 The output format, which defaults to "text".
 
-Other supposed formats are "markdown", "pod" and "html".
+Other supposed formats are "html", "man", "markdown", "pod", "rtf",
+and "xhtml".
 
 =head2 C<--stdout>
 
@@ -74,16 +75,18 @@ Prints the usage and exits.
 
 =head1 SEE ALSO
 
-L<pod2text>, L<pod2html>, L<pod2markdown>.
+L<pod2text>, L<pod2markdown>.
 
 =cut
 
 my %FORMATS = (
-    'text'     => { cmd => 'pod2text "%s" "%s"', ext => '' },
-    'markdown' => { cmd => 'pod2markdown "%s" "%s"', ext => '.md' },
-    'pod'      => { ext => '.pod' },
-    'html'     => { cmd => 'pod2html --quiet --infile="%s" --outfile="%s"',
-                    ext => '.html' },
+    'html'     => { class => 'Pod::Simple::HTML',  ext => '.html' },
+    'man'      => { class => 'Pod::Man',  ext => '.1' },
+    'markdown' => { class => 'Pod::Markdown', ext => '.md' },
+    'pod'      => { class => undef, ext => '.pod' },
+    'rtf'      => { class => 'Pod::Simple::RTF', ext => '.rtf' },
+    'text'     => { class => 'Pod::Text', ext => '' },
+    'xhtml'    => { class => 'Pod::Simple::XHTML',  ext => '.xhtml' },
 );
 
 sub validate_format {
@@ -134,11 +137,12 @@ if ($opt->backup && -e $output) {
     file($output)->copy_to($output . '.bak');
 }
 
-unless ($opt->stdout) {
-    my $tmp_dir = dir( $ENV{TMP} || '/tmp' );
+my $tmp_dir = dir( $ENV{TMP} || '/tmp' );
+
+unless (!$format->{class} && $opt->stdout) {
     $args{output_file} =
-        $format->{cmd} ?
-        ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ))[1]
+        $format->{class} ?
+        ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 0 ))[1]
         : $output;
 }
 
@@ -146,6 +150,27 @@ my $pf = Pod::Readme->new(%args);
 
 $pf->filter_file;
 
-if (my $cmd = $format->{cmd}) {
-    run( sprintf($cmd, $args{output_file}, $output) );
+if (my $class = $format->{class}) {
+    load $class;
+    my $converter = $class->new()
+        or die "Cannot instantiate a ${class} object";
+
+    if ($converter->isa('Pod::Simple')) {
+
+        my $tmp_file = $pf->output_file->stringify;
+
+        close $pf->output_fh
+            or die "Unable to close file ${tmp_file}";
+
+        $converter->output_fh($opt->stdout ? \*STDOUT : file($output)->openw );
+
+        $converter->parse_file( $tmp_file );
+
+    } else {
+
+        die "Don't know how to handle a ${class}\n";
+
+    }
+
+
 }

@@ -17,7 +17,7 @@ v1.0.0_01
   - Added a "requires" plugin for listing module requirements.
 
   - The pod2readme script has been rewritten to take a variety of
-    options, and can generate Markdown, POD or HTML files.
+    options, and can generate Markdown, or POD files.
 
   [Documentation]
   - Changes rewritten to conform to CPAN::Changes::Spec.

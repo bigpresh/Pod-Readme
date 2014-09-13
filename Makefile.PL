@@ -32,7 +32,6 @@ requires(
     'Getopt::Long::Descriptive'  => 0.097,
     'Hash::Util'                 => 0,
     'IO'                         => 0,
-    'IPC::System::Simple'        => 0,
     'Module::CoreList'           => 0,
     'Moose'                      => 0,
     'MooseX::Object::Pluggable'  => 0,
@@ -40,6 +39,7 @@ requires(
     'MooseX::Types::Path::Class' => 0,
     'namespace::autoclean'       => 0,
     'Path::Class'                => 0.33,
+    'Pod::Simple'                => 0,
     'Try::Tiny'                  => 0,
     'version'                    => 0.77,
 );
