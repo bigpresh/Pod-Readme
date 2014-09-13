@@ -81,8 +81,9 @@ L<pod2text>, L<pod2markdown>.
 
 # TODO: App::Pod::Readme should handle this functionality
 
-# TODO: this should come from a config file that can pass options to
-# constructor, so that users can add formats, e.g. Pod::Simple::Wiki
+# TODO: format should optionally take a class name, and load the
+# class. There should be a (repeatable) --format-arg option to specify
+# additional arguments (e.g. for Pod::Simple::Wiki)
 
 my %FORMATS = (
     'html'     => { class => 'Pod::Simple::HTML',  ext => '.html' },
