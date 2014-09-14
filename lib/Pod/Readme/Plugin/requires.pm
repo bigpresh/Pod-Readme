@@ -66,11 +66,17 @@ has 'requires_omit_core' => (
     default => 1,
 );
 
+has 'requires_heading_level' => (
+    is      => 'rw',
+    isa     => 'Int', # 1..3
+    default => 1,
+);
+
 sub cmd_requires {
     my ( $self, @args ) = @_;
 
     my $res = $self->parse_cmd_args(
-        [qw/ from-file title omit-core no-omit-core /], @args );
+        [qw/ from-file title omit-core no-omit-core heading-level /], @args );
     foreach my $key ( keys %{$res} ) {
         ( my $name = "requires_${key}" ) =~ s/-/_/g;
         if ( my $method = $self->can($name) ) {
@@ -101,9 +107,10 @@ sub cmd_requires {
 
     if (%prereqs) {
 
-        # TODO: option for setting the heading level
+        my $heading = $self->can("write_head" . $self->requires_heading_level)
+            or die "Invalid heading level: " . $self->requires_heading_level;
 
-        $self->write_head1( $self->requires_title );
+        $self->$heading( $self->requires_title );
 
         if ($perl) {
             $self->write_para(
@@ -123,6 +130,8 @@ sub cmd_requires {
         }
         $self->write_back;
     }
+
+    # TODO: show recommended modules
 
 }
 

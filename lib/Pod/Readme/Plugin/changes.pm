@@ -21,6 +21,10 @@ of a F<Changes> file that conforms to the L<CPAN::Changes::Spec>.
 
 =head1 ARGUMENTS
 
+Defaults can be overridden with optional arguments.
+
+Note that changing arguments may change later calls to this plugin.
+
 =head2 C<file>
 
   =for readme plugin changes file='Changes'
@@ -28,6 +32,12 @@ of a F<Changes> file that conforms to the L<CPAN::Changes::Spec>.
 If the F<Changes> file has a non-standard name or location in the
 distribution, you can specify an alternative name.  But note that it
 I<must> conform the the L<CPAN::Changes::Spec>.
+
+=head2 C<heading-level>
+
+  =for readme plugin changes heading-level=1
+
+This changes the heading level. (The default is 1.)
 
 =head2 C<title>
 
@@ -67,10 +77,16 @@ has 'changes_verbatim' => (
     default => 0,
 );
 
+has 'changes_heading_level' => (
+    is      => 'rw',
+    isa     => 'Int', # 1..3
+    default => 1,
+);
+
 sub cmd_changes {
     my ( $self, @args ) = @_;
 
-    my $res = $self->parse_cmd_args([qw/ file title verbatim no-verbatim /],
+    my $res = $self->parse_cmd_args([qw/ file title verbatim no-verbatim heading-level /],
                                     @args);
     foreach my $key (keys %{$res}) {
         (my $name = "changes_${key}")  =~ s/-/_/g;
@@ -86,9 +102,10 @@ sub cmd_changes {
     my $changes = CPAN::Changes->load($file);
     my $latest  = ( $changes->releases )[-1];
 
-    # TODO: option for setting the heading level (1..3)
+    my $heading = $self->can("write_head" . $self->changes_heading_level)
+        or die "Invalid heading level: " . $self->changes_heading_level;
 
-    $self->write_head1( $self->changes_title );
+    $self->$heading( $self->changes_title );
 
     if ( $self->changes_verbatim ) {
 

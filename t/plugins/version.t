@@ -25,4 +25,10 @@ isa_ok $prf = $class->new(
     reset_out();
 }
 
+{
+    filter_lines('=for readme plugin version heading-level=2 title="Version"', '');
+    is $out, "=head2 Version\n\n${VERSION}\n\n";
+    reset_out();
+}
+
 done_testing;

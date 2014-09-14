@@ -54,10 +54,16 @@ has 'version_title' => (
     default => 'VERSION',
 );
 
+has 'version_heading_level' => (
+    is      => 'rw',
+    isa     => 'Int', # 1..3
+    default => 1,
+);
+
 sub cmd_version {
     my ( $self, @args ) = @_;
 
-    my $res = $self->parse_cmd_args([qw/ file title /], @args);
+    my $res = $self->parse_cmd_args([qw/ file title heading-level /], @args);
     foreach my $key (keys %{$res}) {
         (my $name = "version_${key}")  =~ s/-/_/g;
         if (my $method = $self->can($name)) {
@@ -69,9 +75,10 @@ sub cmd_version {
 
     if (my $file = $self->version_file) {
 
-        # TODO: option to change the heading level
+        my $heading = $self->can("write_head" . $self->version_heading_level)
+            or die "Invalid heading level: " . $self->version_heading_level;
 
-        $self->write_head1($self->version_title);
+        $self->$heading($self->version_title);
         $self->write_para( MM->parse_version($file) );
 
     } else {
