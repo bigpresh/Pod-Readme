@@ -172,6 +172,8 @@ e.g. L<Pod::Simple::Text>.
 
 If it is C<undef>, then there is no translation.
 
+Only subclasses of L<Pod::Simple> are supported.
+
 =cut
 
 has translation_class => (
@@ -181,6 +183,8 @@ has translation_class => (
 );
 
 =head2 C<translate_to_fh>
+
+The L<IO::Handle> to save the translated file to.
 
 =cut
 
@@ -206,6 +210,9 @@ has translate_to_fh => (
 
 =head2 C<translate_to_file>
 
+The L<Path::Class::File> to save the translated file to. If omitted,
+then it will be saved to C<STDOUT>.
+
 =cut
 
 has translate_to_file => (
@@ -215,6 +222,13 @@ has translate_to_file => (
     lazy     => 1,
     builder  => 'default_readme_file',
 );
+
+=head2 C<output_file>
+
+The L<Pod::Readme::Filter> C<output_file> will default to a temporary
+file.
+
+=cut
 
 has '+output_file' => (
     lazy => 1,
@@ -236,6 +250,11 @@ around '_build_output_fh' => sub {
 =head1 METHODS
 
 This module extends L<Pod::Readme::Filter> with the following methods:
+
+=head2 C<default_readme_file>
+
+The default name of the F<README> file, which depends on the
+L</translation_class>.
 
 =cut
 
@@ -265,6 +284,13 @@ sub default_readme_file {
 
     file($self->base_dir, $name);
 }
+
+=head2 C<translate>
+
+This method runs the C<filter_file> method and then translates the
+resulting POD.
+
+=cut
 
 sub translate {
     my ($self) = @_;
