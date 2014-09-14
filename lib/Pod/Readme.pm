@@ -144,12 +144,6 @@ Note: earlier versions of this module suggested using
 While this version supports that syntax for backwards compatability,
 it is not standard POD.
 
-=head1 METHODS
-
-See L<Pod::Readme::Filter> for a description of methods.
-
-=for readme start
-
 =cut
 
 use v5.10.1;
@@ -157,11 +151,156 @@ use v5.10.1;
 use Moose;
 extends 'Pod::Readme::Filter';
 
+use Carp;
+use IO qw/ File Handle /;
+use Module::Load qw/ load /;
+use MooseX::Types::IO 'IO';
+use MooseX::Types::Path::Class;
+use Path::Class;
+
 use version 0.77; our $VERSION = version->declare('v1.0.0_01');
+
+=head1 ATTRIBUTES
+
+This module extends L<Pod::Readme::Filter> with the following
+attributes:
+
+=head2 C<translation_class>
+
+The class used to translate the filtered POD into another format,
+e.g. L<Pod::Simple::Text>.
+
+If it is C<undef>, then there is no translation.
+
+=cut
+
+has translation_class => (
+    is      => 'ro',
+    isa     => 'Maybe[Str]',
+    default => undef,
+);
+
+=head2 C<translate_to_fh>
+
+=cut
+
+has translate_to_fh => (
+    is      => 'ro',
+    isa     => IO,
+    lazy    => 1,
+    coerce  => 1,
+    default => sub {
+        my ($self) = @_;
+        if ( $self->translate_to_file ) {
+            $self->translate_to_file->openw;
+        } else {
+            my $fh = IO::Handle->new;
+            if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+                return $fh;
+            } else {
+                croak "Cannot get a filehandle for STDOUT";
+            }
+        }
+    },
+);
+
+=head2 C<translate_to_file>
+
+=cut
+
+has translate_to_file => (
+    is       => 'ro',
+    isa      => 'Path::Class::File',
+    coerce   => 1,
+    lazy     => 1,
+    builder  => 'default_readme_file',
+);
+
+has '+output_file' => (
+    lazy => 1,
+    default => sub {
+        my $tmp_dir = dir( $ENV{TMP} || $ENV{TEMP} || '/tmp' );
+        file( ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ))[1] );
+    },
+);
+
+around '_build_output_fh' => sub {
+    my ($orig, $self) = @_;
+    if (defined $self->translation_class) {
+        $self->$orig();
+    } else {
+        $self->translate_to_fh;
+    }
+};
+
+=head1 METHODS
+
+This module extends L<Pod::Readme::Filter> with the following methods:
+
+=cut
+
+sub default_readme_file {
+    my ($self) = @_;
+
+    my $name = uc($self->target);
+
+    state $extensions = {
+        'Pod::Man'           => '.1',
+        'Pod::Markdown'      => '.md',
+        'Pod::Simple::HTML'  => '.html',
+        'Pod::Simple::LaTeX' => '.tex',
+        'Pod::Simple::RTF'   => '.rtf',
+        'Pod::Simple::Text'  => '',
+        'Pod::Simple::XHTML' => '.xhtml',
+    };
+
+    my $class = $self->translation_class;
+    if (defined $class) {
+        if (my $ext = $extensions->{$class}) {
+            $name .= $ext;
+        }
+    } else {
+        $name .= '.pod';
+    }
+
+    file($self->base_dir, $name);
+}
+
+sub translate {
+    my ($self) = @_;
+
+    $self->filter_file;
+
+    if (my $class = $self->translation_class) {
+
+        load $class;
+        my $converter = $class->new()
+            or croak "Cannot instantiate a ${class} object";
+
+        if ($converter->isa('Pod::Simple')) {
+
+            my $tmp_file = $self->output_file->stringify;
+
+            close $self->output_fh
+                or croak "Unable to close file ${tmp_file}";
+
+            $converter->output_fh($self->translate_to_fh);
+            $converter->parse_file( $tmp_file );
+
+        } else {
+
+            croak "Don't know how to translate POD using ${class}";
+
+        }
+
+    }
+}
 
 use namespace::autoclean;
 
 1;
+
+=for readme start
 
 =head1 CAVEATS
 

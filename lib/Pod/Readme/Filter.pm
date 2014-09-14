@@ -67,20 +67,22 @@ has output_fh => (
     isa     => IO,
     lazy    => 1,
     coerce  => 1,
-    default => sub {
-        my ($self) = @_;
-        if ( $self->output_file ) {
-            $self->output_file->openw;
-        } else {
-            my $fh = IO::Handle->new;
-            if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
-                return $fh;
-            } else {
-                croak "Cannot get a filehandle for STDOUT";
-            }
-        }
-    },
+    builder => '_build_output_fh',
 );
+
+sub _build_output_fh {
+    my ($self) = @_;
+    if ( $self->output_file ) {
+        $self->output_file->openw;
+    } else {
+        my $fh = IO::Handle->new;
+        if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+            return $fh;
+        } else {
+            croak "Cannot get a filehandle for STDOUT";
+        }
+    }
+}
 
 # TODO: target format names should be \w+
 

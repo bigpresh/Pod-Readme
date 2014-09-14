@@ -84,7 +84,7 @@ This distribution requires the following modules:
 - Added a "changes" plugin for parsing Changes files.
 - Added a "version" plugin for including the current version.
 - Added a "requires" plugin for listing module requirements.
-- The pod2readme script has been rewritten to take a variety of options, and can generate Markdown, POD or HTML files.
+- The pod2readme script has been rewritten to take a variety of options, and can various formats, such as HTML, Markdown, POD or RTF.
 
 ## Other Changes
 

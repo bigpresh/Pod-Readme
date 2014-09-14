@@ -6,7 +6,7 @@ use strict;
 use warnings;
 
 use Getopt::Long::Descriptive;
-use Module::Load qw/ load /;
+use IO::Handle;
 use Path::Class;
 use Pod::Readme;
 
@@ -18,12 +18,12 @@ pod2readme - Generate a README file from POD
 
     pod2readme [-cfho] [long options...] input-file [output-file] [target]
 
-	Generate a README file from POD
+        Generate a README file from POD
 
+        -t --target     target type (default: 'readme')
+        -f --format     output format (default: 'text')
         -b --backup     backup output file
-        -o --output     output filename
-        -t --target     target type
-        -f --format     output format
+        -o --output     output filename (default based on target)
         -c --stdout     output to stdout (console)
         -h --help       print usage and exit
 
@@ -79,21 +79,19 @@ L<pod2text>, L<pod2markdown>.
 
 =cut
 
-# TODO: App::Pod::Readme should handle this functionality
-
 # TODO: format should optionally take a class name, and load the
 # class. There should be a (repeatable) --format-arg option to specify
 # additional arguments (e.g. for Pod::Simple::Wiki)
 
 my %FORMATS = (
-    'html'     => { class => 'Pod::Simple::HTML',  ext => '.html' },
-    'latex'    => { class => 'Pod::Simple::LaTeX',  ext => '.tex' },
-    'man'      => { class => 'Pod::Man',  ext => '.1' },
-    'markdown' => { class => 'Pod::Markdown', ext => '.md' },
-    'pod'      => { class => undef, ext => '.pod' },
-    'rtf'      => { class => 'Pod::Simple::RTF', ext => '.rtf' },
-    'text'     => { class => 'Pod::Simple::Text', ext => '' },
-    'xhtml'    => { class => 'Pod::Simple::XHTML',  ext => '.xhtml' },
+    'html'     => { class => 'Pod::Simple::HTML', },
+    'latex'    => { class => 'Pod::Simple::LaTeX' },
+    'man'      => { class => 'Pod::Man' },
+    'markdown' => { class => 'Pod::Markdown' },
+    'pod'      => { class => undef },
+    'rtf'      => { class => 'Pod::Simple::RTF' },
+    'text'     => { class => 'Pod::Simple::Text' },
+    'xhtml'    => { class => 'Pod::Simple::XHTML' },
 );
 
 sub validate_format {
@@ -110,13 +108,13 @@ my ($opt, $usage) = describe_options(
     [],
     ['Generate a README file from POD'],
     [],
-    [ 'backup|b!'  => "backup output file", { default => 1 } ],
-    [ 'output|o'   => "output filename" ],
-    [ 'target|t=s' => "target type" ],
-    [ 'format|f=s' => "output format",
+    [ 'target|t=s' => "target type (default: 'readme')" ],
+    [ 'format|f=s' => "output format (default: 'text')",
       { default   => 'text',
         callbacks => { format => \&validate_format },
       } ],
+    [ 'backup|b!'  => "backup output file", { default => 1 } ],
+    [ 'output|o'   => "output filename (default based on target)" ],
     [ 'stdout|c'   => "output to stdout (console)" ],
     [ 'help|h'     => "print usage and exit" ],
 );
@@ -138,46 +136,29 @@ unless ($format) {
 my $output = $opt->output || shift @ARGV;
 my $target = $opt->target || shift @ARGV || 'readme';
 
-$output ||=  uc($target) . $format->{ext};
+$args{target} = $target;
 
-if ($opt->backup && -e $output) {
+if (my $class = $format->{class}) {
+    $args{translation_class} = $class;
+}
+
+if ($opt->stdout) {
+    my $fh = IO::Handle->new;
+    if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+        $args{translate_to_fh} = $fh;
+    } else {
+        die "Cannot get a filehandle for STDOUT";
+    }
+} else {
+    $args{translate_to_file} = $output if $output;
+}
+
+my $pr = Pod::Readme->new(%args);
+
+$output ||= $pr->translate_to_file;
+
+if ($opt->backup && $output && -e $output) {
     file($output)->copy_to($output . '.bak');
 }
 
-my $tmp_dir = dir( $ENV{TMP} || '/tmp' );
-
-unless (!$format->{class} && $opt->stdout) {
-    $args{output_file} =
-        $format->{class} ?
-        ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 0 ))[1]
-        : $output;
-}
-
-my $pf = Pod::Readme->new(%args);
-
-$pf->filter_file;
-
-if (my $class = $format->{class}) {
-    load $class;
-    my $converter = $class->new()
-        or die "Cannot instantiate a ${class} object";
-
-    if ($converter->isa('Pod::Simple')) {
-
-        my $tmp_file = $pf->output_file->stringify;
-
-        close $pf->output_fh
-            or die "Unable to close file ${tmp_file}";
-
-        $converter->output_fh($opt->stdout ? \*STDOUT : file($output)->openw );
-
-        $converter->parse_file( $tmp_file );
-
-    } else {
-
-        die "Don't know how to handle a ${class}\n";
-
-    }
-
-
-}
+$pr->translate();
