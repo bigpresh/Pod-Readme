@@ -55,8 +55,7 @@ This distribution requires the following modules:
 - [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta)
 - [Exporter::Lite](https://metacpan.org/pod/Exporter::Lite)
 - [File::Slurp](https://metacpan.org/pod/File::Slurp)
-- [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive) (version 0.097)
-- [IPC::System::Simple](https://metacpan.org/pod/IPC::System::Simple)
+- [Getopt::Long::Descriptive](https://metacpan.org/pod/Getopt::Long::Descriptive)
 - [Moose](https://metacpan.org/pod/Moose)
 - [MooseX::Object::Pluggable](https://metacpan.org/pod/MooseX::Object::Pluggable)
 - [MooseX::Types::IO](https://metacpan.org/pod/MooseX::Types::IO)
@@ -65,6 +64,12 @@ This distribution requires the following modules:
 - [Path::Class](https://metacpan.org/pod/Path::Class) (version 0.33)
 - [Test::Most](https://metacpan.org/pod/Test::Most)
 - [Try::Tiny](https://metacpan.org/pod/Try::Tiny)
+
+This distribution recommends the following modules:
+
+- [Pod::Man](https://metacpan.org/pod/Pod::Man)
+- [Pod::Markdown](https://metacpan.org/pod/Pod::Markdown)
+- [Pod::Simple::LaTeX](https://metacpan.org/pod/Pod::Simple::LaTeX)
 
 # RECENT CHANGES
 

@@ -89,23 +89,8 @@ sub cmd_requires {
     my $meta = CPAN::Meta->load_file(
         file( $self->base_dir, $self->requires_from_file ) );
 
-    my %prereqs;
-    foreach my $type ( values %{ $meta->prereqs } ) {
-        # TODO: max version
-        $prereqs{$_} = $type->{requires}->{$_}
-            for ( keys %{ $type->{requires} } );
-    }
-    my $perl = delete $prereqs{perl};
-    if ( $self->requires_omit_core && $perl ) {
-        foreach ( keys %prereqs ) {
-            delete $prereqs{$_}
-                if Module::CoreList->first_release($_)
-                && version->parse( Module::CoreList->first_release($_) )
-                <= version->parse($perl);
-        }
-    }
-
-    if (%prereqs) {
+    my ($prereqs, $perl) = $self->_get_prereqs($meta, 'requires');
+    if (%{$prereqs}) {
 
         my $heading = $self->can("write_head" . $self->requires_heading_level)
             or die "Invalid heading level: " . $self->requires_heading_level;
@@ -122,17 +107,52 @@ sub cmd_requires {
         $self->write_para(
             'This distribution requires the following modules:');
 
-        $self->write_over(4);
-        foreach my $module ( sort { lc($a) cmp lc($b) } keys %prereqs ) {
-            my $version = $prereqs{$module};
-            my $text    = $version ? " (version ${version})" : '';
-            $self->write_item( sprintf( '* L<%s>', $module ) . $text );
+        $self->_write_modules($prereqs);
+
+        my ($recommends) = $self->_get_prereqs($meta, 'recommends');
+        if (%{$recommends}) {
+
+            $self->write_para('This distribution recommends the following modules:');
+
+            $self->_write_modules($recommends);
+
         }
-        $self->write_back;
+
     }
 
-    # TODO: show recommended modules
 
+}
+
+sub _get_prereqs {
+    my ($self, $meta, $key) = @_;
+
+    my %prereqs;
+    foreach my $type ( values %{ $meta->prereqs } ) {
+        # TODO: max version
+        $prereqs{$_} = $type->{$key}->{$_}
+            for ( keys %{ $type->{$key} } );
+    }
+    my $perl = delete $prereqs{perl};
+    if ( $self->requires_omit_core && $perl ) {
+        foreach ( keys %prereqs ) {
+            delete $prereqs{$_}
+                if Module::CoreList->first_release($_)
+                && version->parse( Module::CoreList->first_release($_) )
+                <= version->parse($perl);
+        }
+    }
+    return (\%prereqs, $perl);
+}
+
+sub _write_modules {
+    my ($self, $prereqs) = @_;
+    $self->write_over(4);
+    foreach my $module ( sort { lc($a) cmp lc($b) } keys %{$prereqs} ) {
+        my $version = $prereqs->{$module};
+        my $text    = $version ? " (version ${version})" : '';
+        $self->write_item( sprintf( '* L<%s>', $module ) . $text );
+    }
+    $self->write_back;
 }
 
 use namespace::autoclean;
