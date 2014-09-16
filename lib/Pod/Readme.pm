@@ -285,17 +285,14 @@ sub default_readme_file {
     file($self->base_dir, $name);
 }
 
-=head2 C<translate>
+=head2 C<translate_file>
 
-This method runs the C<filter_file> method and then translates the
-resulting POD.
+This method runs translates the resulting POD from C<filter_file>.
 
 =cut
 
-sub translate {
+sub translate_file {
     my ($self) = @_;
-
-    $self->filter_file;
 
     if (my $class = $self->translation_class) {
 
@@ -321,6 +318,18 @@ sub translate {
 
     }
 }
+
+=head2 C<run>
+
+This method runs C<filter_file> and then L</translate_file>.
+
+=cut
+
+around 'run' => sub {
+    my ($orig, $self) = @_;
+    $self->$orig();
+    $self->translate_file();
+};
 
 use namespace::autoclean;
 

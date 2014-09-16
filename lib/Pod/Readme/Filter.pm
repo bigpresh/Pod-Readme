@@ -302,6 +302,11 @@ sub filter_file {
     }
 }
 
+sub run {
+    my ($self) = @_;
+    $self->filter_file;
+}
+
 sub cmd_continue {
     my ($self) = @_;
     $self->cmd_start;

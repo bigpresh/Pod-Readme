@@ -161,4 +161,4 @@ if ($opt->backup && $output && -e $output) {
     file($output)->copy_to($output . '.bak');
 }
 
-$pr->translate();
+$pr->run();
