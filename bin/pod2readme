@@ -79,10 +79,6 @@ L<pod2text>, L<pod2markdown>.
 
 =cut
 
-# TODO: format should optionally take a class name, and load the
-# class. There should be a (repeatable) --format-arg option to specify
-# additional arguments (e.g. for Pod::Simple::Wiki)
-
 my %FORMATS = (
     'html'     => { class => 'Pod::Simple::HTML', },
     'latex'    => { class => 'Pod::Simple::LaTeX' },
