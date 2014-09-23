@@ -4,6 +4,10 @@ v1.0.0_02
   [Other Changes]
   - Added more tests.
 
+  - The bugtracker URL now refers to the GitHub issues list at
+    https://rt.cpan.org/Public/Dist/Display.html?Name=Pod-Readme
+    instead of RT.
+
   [Documentation]
   - Added missing date to Changes.
 

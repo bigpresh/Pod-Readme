@@ -14,7 +14,7 @@ tests_recursive('t');
 resources(
     license    => 'http://www.perlfoundation.org/artistic_license_2_0',
     repository => 'git://github.com/bigpresh/Pod-Readme.git',
-    bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Pod-Readme',
+    bugtracker => 'https://github.com/bigpresh/Pod-Readme/issues',
 );
 
 configure_requires();
