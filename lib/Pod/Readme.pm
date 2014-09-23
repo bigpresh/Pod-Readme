@@ -392,11 +392,11 @@ sub parse_from_filehandle {
 
     my $class = ref($self) || __PACKAGE__;
 
-    my $src_io  = IO::Handle->new_from_fd( $source_fh ?
+    my $src_io  = IO::Handle->new_from_fd( (defined $source_fh) ?
 					  fileno($source_fh) : 0, 'r');
 
-    my $dest_io = IO::Handle->new_from_fd( $dest_fh ?
-					  fileno($dest_fh) : 0, 'w');
+    my $dest_io = IO::Handle->new_from_fd( (defined $dest_fh) ?
+					  fileno($dest_fh) : 1, 'w');
 
     my $prf = $class->new(
 	input_fh		=> $src_io,
