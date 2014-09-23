@@ -88,7 +88,7 @@ This distribution recommends the following modules:
 
 ## Enhancements
 
-- Added parse\_from\_file method for backwards compatability.
+- Added parse\_from\_file and parse\_from\_filehandle methods for backwards compatability.
 
 ## Other Changes
 

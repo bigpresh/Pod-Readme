@@ -2,7 +2,8 @@ Revision history for Pod-Readme
 
 v1.0.0_02
   [Enhancements]
-  - Added parse_from_file method for backwards compatability.
+  - Added parse_from_file and parse_from_filehandle methods for
+    backwards compatability.
 
   [Other Changes]
   - Added more tests.
