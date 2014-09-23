@@ -70,7 +70,7 @@ Start (or continue to) include the POD that follows in the F<README>.
 Note that the C<start> command was added as a synonym in version
 1.0.0.
 
-=head C<=for readme include>
+=head2 C<=for readme include>
 
   =for readme include file="INSTALL" type="text"
 
