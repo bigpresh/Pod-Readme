@@ -84,6 +84,7 @@ This distribution recommends the following modules:
 - Added missing date to Changes.
 - Fixed typos in POD and README.
 - Added stub POD to Pod::Readme::Filter.
+- Fixed a daft typo in the Changes file.
 
 ## Enhancements
 
@@ -92,7 +93,8 @@ This distribution recommends the following modules:
 ## Other Changes
 
 - Added more tests.
-- The bugtracker URL now refers to the GitHub issues list at https://rt.cpan.org/Public/Dist/Display.html?Name=Pod-Readme instead of RT.
+- The bugtracker URL now refers to the GitHub issues list at https://github.com/bigpresh/Pod-Readme/issues instead of RT.
+- Added a version to all modules in the distribution, and a version QA test to the repo.
 
 See the `Changes` file for a longer revision history.
 
