@@ -2,8 +2,6 @@ package Pod::Readme::Filter;
 
 use v5.10.1;
 
-# TODO: change to use Moo as per ETHER's suggestion
-
 use Moose;
 with 'MooseX::Object::Pluggable';
 with 'Pod::Readme::Plugin';
@@ -14,6 +12,29 @@ use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
 use Try::Tiny;
+
+=head1 NAME
+
+Pod::Readme::Filter - filter readme from POD
+
+=head1 SYNOPSIS
+
+  use Pod::Readme::Filter;
+
+  my $prf = Pod::Readme::Filter->new(
+    target	=> 'readme',
+    base_dir	=> '.',
+    input_file	=> 'lib/MyApp.pm',
+    output_file => 'README.pod',
+  );
+
+=head1 DESCRIPTION
+
+This module provides the basic filtering and minimal processing to
+extract a F<README.pod> from a module's POD.  It is used by
+L<Pod::Readme>.
+
+=cut
 
 has encoding => (
     is      => 'ro',
