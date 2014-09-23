@@ -360,8 +360,9 @@ around 'run' => sub {
 
   Pod::Readme->parse_from_file( 'README.pod', 'README' );
 
-This is a class method that acts as a compatability shim for software
-that is designed for versions of L<Pod::Readme> prior to v1.0.
+This is a class method that acts as a L<Pod::Select> compatability
+shim for software that is designed for versions of L<Pod::Readme>
+prior to v1.0.
 
 Its use is deprecated, and will be deleted in later versions.
 
