@@ -65,7 +65,7 @@ isa_ok $prf = $class->new(
 
   lives_ok {
 
-    my $dest   = (tempfile( UNLINK => 0))[1];
+    my $dest   = (tempfile( UNLINK => 1))[1];
     note $dest;
 
     ok my $parser = Pod::Readme->new, 'new (no args)';
@@ -73,18 +73,47 @@ isa_ok $prf = $class->new(
 
     ok !compare($dest, 't/data/README.txt'), 'expected output';
 
-  } 'compatability shim';
+  } 'parse_from_file';
 
   lives_ok {
 
-    my $dest   = (tempfile( UNLINK => 0))[1];
+    my $dest   = (tempfile( UNLINK => 1))[1];
     note $dest;
 
     Pod::Readme->parse_from_file($source, $dest);
 
     ok !compare($dest, 't/data/README.txt'), 'expected output';
 
-  } 'compatability shim (class method)';
+  } 'parse_from_file (class method)';
+
+  lives_ok {
+
+    open my $source_fh, '<', $source;
+    my ($dest_fh, $dest)   = tempfile( UNLINK => 1);
+    note $dest;
+
+    ok my $parser = Pod::Readme->new, 'new (no args)';
+    $parser->parse_from_filehandle($source_fh, $dest_fh);
+
+    ok !compare($dest, 't/data/README.txt'), 'expected output';
+
+    close $source_fh;
+
+  } 'parse_from_filehandle';
+
+  lives_ok {
+
+    open my $source_fh, '<', $source;
+    my ($dest_fh, $dest)   = tempfile( UNLINK => 1);
+    note $dest;
+
+    Pod::Readme->parse_from_filehandle($source_fh, $dest_fh);
+
+    ok !compare($dest, 't/data/README.txt'), 'expected output';
+
+    close $source_fh;
+
+  } 'parse_from_filehandle (class method)';
 
 }
 

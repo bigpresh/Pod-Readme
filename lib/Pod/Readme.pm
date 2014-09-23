@@ -379,6 +379,33 @@ sub parse_from_file {
     $prf->run();
 }
 
+=head2 C<parse_from_filehandle>
+
+Like L</parse_from_file>, this exists as a compatability shim.
+
+Its use is deprecated, and will be deleted in later versions.
+
+=cut
+
+sub parse_from_filehandle {
+    my ($self, $source_fh, $dest_fh) = @_;
+
+    my $class = ref($self) || __PACKAGE__;
+
+    my $src_io  = IO::Handle->new_from_fd( $source_fh ?
+					  fileno($source_fh) : 0, 'r');
+
+    my $dest_io = IO::Handle->new_from_fd( $dest_fh ?
+					  fileno($dest_fh) : 0, 'w');
+
+    my $prf = $class->new(
+	input_fh		=> $src_io,
+	translate_to_fh		=> $dest_io,
+        translation_class	=> 'Pod::Simple::Text',
+    );
+    $prf->run();
+}
+
 use namespace::autoclean;
 
 1;
