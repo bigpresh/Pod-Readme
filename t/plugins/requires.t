@@ -19,6 +19,8 @@ isa_ok $prf = $class->new(
         'description';
 
     reset_out();
+
+    $prf->requires_run(0);
 }
 
 {
@@ -38,6 +40,8 @@ isa_ok $prf = $class->new(
     # - test no-omit-core option
 
     reset_out();
+
+    $prf->requires_run(0);
 }
 
 done_testing;
