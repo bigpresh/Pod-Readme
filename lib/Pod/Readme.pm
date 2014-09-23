@@ -1,541 +1,370 @@
+package Pod::Readme;
+
 =head1 NAME
 
-Pod::Readme - Convert POD to README file
+Pod::Readme - generate README files from POD
 
-=begin readme
-
-=head1 REQUIREMENTS
-
-This module should run on Perl 5.005 or newer.  The following non-core
-modules (depending on your Perl version) are required:
-
-  Pod::PlainText
-  Test::More
-
-=head1 INSTALLATION
-
-Installation can be done using the traditional Makefile.PL or the newer
-Build.PL methods.
-
-Using Makefile.PL:
-
-  perl Makefile.PL
-  make test
-  make install
-
-(On Windows platforms you should use C<nmake> instead.)
-
-Using Build.PL (if you have Module::Build installed):
-
-  perl Build.PL
-  perl Build test
-  perl Build install
-
-=end readme
+=for readme plugin version
 
 =head1 SYNOPSIS
 
-  use Pod::Readme;
-  my $parser = Pod::Readme->new();
+  =head1 NAME
 
-  # Read POD from STDIN and write to STDOUT
-  $parser->parse_from_filehandle;
+  MyApp - my nifty app
 
-  # Read POD from Module.pm and write to README
-  $parser->parse_from_file('Module.pm', 'README');
+  =for readme plugin version
 
-=cut
+  =head1 DESCRIPTION
 
-package Pod::Readme;
+  This is a nifty app.
 
-use 5.005;
-use strict;
+  =begin :readme
 
-use Carp;
-use IO::File;
-use Pod::PlainText;
-use Regexp::Common qw( URI );
+  =for readme plugin requires
 
-use vars qw( @ISA $VERSION );
+  =head1 INSTALLATION
 
-@ISA = qw( Pod::PlainText );
+  ...
 
-$VERSION = '0.11';
-
-=begin internal
-
-=over 12
-
-=item initialize
-
-Override adds the C<readme_type> and <debug> options, and initializes
-the "README_SKIP" flag.
-
-=back
-
-=end internal
-
-=cut
-
-{
-  my %INVALID_TYPES = map { $_ => 1, } (qw(
-    test testing tests
-    html xhtml xml docbook rtf man nroff dsr rno latex tex code
-  ));
-
-  sub initialize {
-    my $self = shift;
-
-    $$self{README_SKIP} ||= 0;
-    $$self{readme_type} ||= "readme";
-
-    $$self{debug}       ||= 0;
-
-    $self->SUPER::initialize;
-
-    croak "$$self{readme_type} is an invalid readme_type",
-      if ($INVALID_TYPES{ $$self{readme_type} });
-  }
-}
-
-=begin internal
-
-=over 12 
-
-=item output
-
-Override does not output anything if the "README_SKIP" flag is enabled.
-
-=back
-
-=end internal
-
-=cut
-
-sub output {
-  my $self = shift;
-  return if $$self{README_SKIP};
-  $self->SUPER::output(@_);
-}
-
-
-=begin internal
-
-=over
-
-=item _parse_args
-
-Parses destination and name="value" arguments passed for L</cmd_for>.
-
-=back
-
-=end internal
-
-=cut
-
-sub _parse_args {
-  my $self   = shift;
-  my $string = shift;
-  my @values = ( );
-
-  my $arg      = "";
-  my $in_quote = 0;
-  my $last;
-  foreach (split //, $string) {
-    if (/\s/) {
-      if ($in_quote) {
-        $arg .= $_;
-      }
-      else {
-        if ($arg ne "") {
-          push @values, $arg;
-          $arg = "";
-        }
-      }
-    }
-    else {
-      $arg .= $_;
-      if (/\"/) {
-        if ($in_quote) {
-          $in_quote = 0 unless ($last eq "\\");
-        }
-        else {
-          # croak "expected \"name=\" before quotes" unless ($last eq "=");
-          $in_quote = 1;
-        }
-      }
-    }
-    $last = $_;
-  }
-  push @values, $arg if ($arg ne "");
-  return @values;
-}
-
-
-
-=begin internal
-
-=over
-
-=item cmd_begin
-
-Overrides support for "begin" command.
-
-=back
-
-=end internal
-
-=cut
-
-sub cmd_begin {
-  my $self = shift;
-  my $sec  = $$self{readme_type} || "readme";
-  my @fmt  = $self->_parse_args($_[0]);
-  my %secs = map { $_ => 1, } split /,/, $fmt[0];
-  if ($secs{$sec}) {
-    $$self{README_SKIP} = 0;
-    if (($fmt[1]||"pod") eq "pod") {
-    }
-    elsif ($fmt[1] eq "text") {
-      $$self{VERBATIM} = 1;
-    }
-    else {
-      # TODO - return error
-      $$self{EXCLUDE}  = 1;
-    }
-  }
-  else {
-    carp "Ignoring document type(s) \"$fmt[0]\" in POD line $_[1]"
-      if ($$self{debug});
-    $self->SUPER::cmd_begin(@_);
-  }
-}
-
-
-=begin internal
-
-=over
-
-=item cmd_for
-
-Overrides support for "for" command.
-
-=back
-
-=end internal
-
-=cut
-
-sub cmd_for {
-  my $self = shift;
-  my $sec  = $$self{readme_type} || "readme";
-  my @fmt  = $self->_parse_args($_[0]);
-  my %secs = map { $_ => 1, } split /,/, $fmt[0];
-  if ($secs{$sec}) {
-    my $cmd = $fmt[1] || "continue";
-    if ($cmd eq "stop") {
-      $$self{README_SKIP} = 1;
-    } elsif ($cmd eq "continue") {
-      $$self{README_SKIP} = 0;
-    } elsif ($cmd eq "include") {
-
-      my %arg = map {
-        s/\"//g;
-        my ($k,$v) = split /\=/;
-        $k => $v;
-      } @fmt[2..$#fmt];
-      $arg{type} ||= "pod";
-
-      my $text =
-	$self->_include_file( map { $arg{$_} } (qw( type file start stop )) );
-      if ($arg{type} eq "text") {
-        $self->verbatim($text, $_[1], $_[2]);
-      } else {
-        $self->textblock($text, $_[1], $_[2]);
-      }
-    } else {
-      croak "Don\'t know how to \"$cmd\" in POD line $_[1]";
-    }
-  }
-  else {
-    carp "Ignoring document type(s) \"$fmt[0]\" in POD line $_[1]"
-      if ($$self{debug});
-    $self->SUPER::cmd_for(@_);
-  }
-}
-
-=begin internal
-
-=over
-
-=item cmd_encoding
-
-Handle =encoding directive.
-
-TODO: actually change the encoding of the output file.
-
-=back
-
-=end internal
-
-=cut
-
-sub cmd_encoding {
-    my $self = shift;
-    my $encoding = (split /\s+/, shift)[0];
-    if ($self->{_encoding}) {
-        die "=encoding option must occur only once!";
-    }
-    $self->{_encoding} = $encoding;
-    # TODO: Need to actually do something with this option
-    # At least recognising it and not dying is a step in the right direction.
-}
-
-=begin internal
-
-=over
-
-=item _include_file
-
-Includes a file.
-
-=back
-
-=end internal
-
-=cut
-
-sub _include_file {
-  my $self = shift;
-  my $type = shift || "pod";
-  my $file = shift;
-  my $mark = shift || "";
-  my $stop = shift || "";
-
-  my $fh   = IO::File->new("<$file")
-    || croak "Unable to open file \"$file\"";
-
-  my $buffer = "";
-  while (my $line = <$fh>) {
-    next if (($mark ne "") && ($line !~ /$mark/));
-    $mark = "" if ($mark ne "");
-    last if (($stop ne "") && ($line =~ /$stop/));
-    $buffer .= $line;
-  }
-  close $fh;
-
-  if ($type ne "pod") {
-    my $indent = " " x $$self{MARGIN};
-    $buffer =~ s/([\r\n]+)(\t)?/$1 . $indent x (1+length($2||""))/ge;
-    $buffer =~ s/($indent)+$//;
-  }
-
-  return $buffer;
-}
-
-
-=begin internal
-
-=over
-
-=item seq_l
-
-Overrides support for "L" markup.
-
-=back
-
-=end internal
-
-=cut
-
-# This code is based on code from Pod::PlainText 2.02
-
-sub seq_l {
-  my $self = shift;
-  local $_ = shift;
-    # Smash whitespace in case we were split across multiple lines.
-    s/\s+/ /g;
-
-    # If we were given any explicit text, just output it.
-    if (/^([^|]+)\|/) { return $1 }
-
-    # Okay, leading and trailing whitespace isn't important; get rid of it.
-    s/^\s+//;
-    s/\s+$//;
-
-    # Default to using the whole content of the link entry as a section
-    # name.  Note that L<manpage/> forces a manpage interpretation, as does
-    # something looking like L<manpage(section)>.  The latter is an
-    # enhancement over the original Pod::Text.
-
-
-    my ($manpage, $section) = ('', $_);
-    if (/$RE{URI}/ || /^(?:https?|ftps?|svn):/) {
-        # a URL
-        return $_;
-    } elsif (/^"\s*(.*?)\s*"$/) {
-        $section = '"' . $1 . '"';
-    } elsif (m/^[-:.\w]+(?:\(\S+\))?$/) {
-        ($manpage, $section) = ($_, '');
-    } elsif (m%/%) {
-        ($manpage, $section) = split (/\s*\/\s*/, $_, 2);
-    }
-
-    if (length $manpage) {
-      return $manpage;
-    } else {
-      return $section;
-    }
-}
-
-=head1 DESCRIPTION
-
-This module is a subclass of L<Pod::PlainText> which provides additional
-POD markup for generating F<README> files.
-
-Why should one bother with this? One can simply use
-
-  pod2text Module.pm > README
-
-A problem with doing that is that the default L<pod2text> converter will
-add text to links, so that "LZ<><Module>" is translated to
-"the Module manpage".
-
-Another problem is that the F<README> includes the entirety of
-the module documentation!  Most people browsing the F<README> file do not
-need all of this information.
-
-Likewise, including installation and requirement information in the 
-module documentation is not necessary either, since the module is already
-installed.
-
-This module allows authors to mark portions of the POD to be included only
-in, or to be excluded from the F<README> file.  It also allows you to
-include portions of another file (such as a separate F<ChangeLog>).
-
-=begin readme
-
-See the module documentation for more details.
-
-=end readme
-
-=for readme stop
-
-=head2 Markup
-
-Special POD markup options are described below:
-
-=over
-
-=item begin/end
-
-  =begin readme
-
-  =head1 README ONLY
-
-  This section will only show up in the README file.
-
-  =end readme
-
-Delineates a POD section that is only available in README file. If
-you prefer to include plain text instead, add the C<text> modifier:
-
-  =begin readme text
-
-  README ONLY (PLAINTEXT)
-
-      This section will only show up in the README file.
-
-  =end readme
-
-Note that placing a colon before the section to indicate that it is
-POD (e.g. C<begin :readme>) is not supported in this version.
-
-=item stop/continue
+  =end :readme
 
   =for readme stop
 
-All POD that follows will not be included in the README, until
-a C<continue> command occurs:
+  =head1 METHODS
 
-  =for readme continue
+  ...
 
-=item include
+=head1 DESCRIPTION
 
-  =for readme include file=filename type=type start=Regexp stop=Regexp
+This module filters POD to generate a F<README> file, by using POD
+commands to specify what parts of included or excluded from the
+F<README> file.
 
-  =for readme include file=Changes start=^0.09 stop=^0.081 type=text
+=begin :readme
 
-Includes a plaintext file named F<filename>, starting with the line
-that contains the start C<Regexp> and ending at the line that begins
-with the stop C<Regexp>.  (The start and stop Regexps are optional: one
-or both may be omitted.)
+See the L<Pod::Readme> documentation for more details on the POD
+syntax that this module recognizes.
 
-Type may be C<text> or C<pod>. If omitted, C<pod> will be assumed.
+See L<pod2readme> for command-line usage.
 
-Quotes may be used when the filename or marks contains spaces:
+=for readme plugin requires
 
-  =for readme include file="another file.pod"
+=for readme plugin changes
+
+=end :readme
+
+=for readme stop
+
+=head1 POD COMMANDS
+
+=head2 C<=for readme stop>
+
+Stop including the POD that follows in the F<README>.
+
+=head2 C<=for readme start>
+
+=head2 C<=for readme continue>
+
+Start (or continue to) include the POD that follows in the F<README>.
+
+Note that the C<start> command was added as a synonym in version
+1.0.0.
+
+=head C<=for readme include>
+
+  =for readme include file="INSTALL" type="text"
+
+Include a text or POD file in the F<README>.  It accepts the following
+options:
+
+=over
+
+=item C<file>
+
+Required. This is the file name to include.
+
+=item C<type>
+
+Can be "text" or "pod" (default).
+
+=item C<start>
+
+An optional regex of where to start including the file.
+
+=item C<stop>
+
+An optional regex of where to stop including the file.
 
 =back
 
-One can also using maintain multiple file types (such as including F<TODO>,
-or F<COPYING>) by using a modified constructor:
+=head2 C<=for readme plugin>
 
-  $parser = Pod::Readme->new( readme_type => "copying" );
+Loads a plugin, e.g.
 
-In the above L</Markup> commands replace "readme" with the tag specified
-instead (such as "copying"):
+  =for readme plugin version
 
-  =begin copying
+Note that specific plugins may add options, e.g.
 
-As of version 0.03 you can specify multiple sections by separating them
-with a comma:
+  =for readme plugin changes title='CHANGES'
 
-  =begin copying,readme
+See L<Pod::Readme::Plugin> for more information.
 
-There is also no standard list of type names.  Some names might be recognized
-by other POD processors (such as "testing" or "html").  L<Pod::Readme> will
-reject the following "known" type names when they are specified in the
-constructor:
+=head2 C<=begin :readme>
 
-    testing html xhtml xml docbook rtf man nroff dsr rno latex tex code
+=head2 C<=end :readme>
 
-You can also use a "debug" mode to diagnose any problems, such as mistyped
-format names:
+Specify a block of POD to include only in the F<README>.
 
-  $parser = Pod::Readme->new( debug => 1 );
+You can also specify a block in another format:
 
-Warnings will be issued for any ignored formatting commands.
+  =begin readme text
 
-=head2 Example
+  ...
 
-For an example, see the F<Readme.pm> file in this distribution.
+  =end readme text
+
+This will be translated into
+
+  =begin text
+
+  ...
+
+  =end text
+
+and will only be included in F<README> files of that format.
+
+Note: earlier versions of this module suggested using
+
+  =begin readme
+
+  ...
+
+  =end readme
+
+While this version supports that syntax for backwards compatability,
+it is not standard POD.
+
+=cut
+
+use v5.10.1;
+
+use Moose;
+extends 'Pod::Readme::Filter';
+
+use Carp;
+use IO qw/ File Handle /;
+use Module::Load qw/ load /;
+use MooseX::Types::IO 'IO';
+use MooseX::Types::Path::Class;
+use Path::Class;
+
+use version 0.77; our $VERSION = version->declare('v1.0.0_01');
+
+=head1 ATTRIBUTES
+
+This module extends L<Pod::Readme::Filter> with the following
+attributes:
+
+=head2 C<translation_class>
+
+The class used to translate the filtered POD into another format,
+e.g. L<Pod::Simple::Text>.
+
+If it is C<undef>, then there is no translation.
+
+Only subclasses of L<Pod::Simple> are supported.
+
+=cut
+
+has translation_class => (
+    is      => 'ro',
+    isa     => 'Maybe[Str]',
+    default => undef,
+);
+
+=head2 C<translate_to_fh>
+
+The L<IO::Handle> to save the translated file to.
+
+=cut
+
+has translate_to_fh => (
+    is      => 'ro',
+    isa     => IO,
+    lazy    => 1,
+    coerce  => 1,
+    default => sub {
+        my ($self) = @_;
+        if ( $self->translate_to_file ) {
+            $self->translate_to_file->openw;
+        } else {
+            my $fh = IO::Handle->new;
+            if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+                return $fh;
+            } else {
+                croak "Cannot get a filehandle for STDOUT";
+            }
+        }
+    },
+);
+
+=head2 C<translate_to_file>
+
+The L<Path::Class::File> to save the translated file to. If omitted,
+then it will be saved to C<STDOUT>.
+
+=cut
+
+has translate_to_file => (
+    is       => 'ro',
+    isa      => 'Path::Class::File',
+    coerce   => 1,
+    lazy     => 1,
+    builder  => 'default_readme_file',
+);
+
+=head2 C<output_file>
+
+The L<Pod::Readme::Filter> C<output_file> will default to a temporary
+file.
+
+=cut
+
+has '+output_file' => (
+    lazy => 1,
+    default => sub {
+        my $tmp_dir = dir( $ENV{TMP} || $ENV{TEMP} || '/tmp' );
+        file( ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ))[1] );
+    },
+);
+
+around '_build_output_fh' => sub {
+    my ($orig, $self) = @_;
+    if (defined $self->translation_class) {
+        $self->$orig();
+    } else {
+        $self->translate_to_fh;
+    }
+};
+
+=head1 METHODS
+
+This module extends L<Pod::Readme::Filter> with the following methods:
+
+=head2 C<default_readme_file>
+
+The default name of the F<README> file, which depends on the
+L</translation_class>.
+
+=cut
+
+sub default_readme_file {
+    my ($self) = @_;
+
+    my $name = uc($self->target);
+
+    state $extensions = {
+        'Pod::Man'           => '.1',
+        'Pod::Markdown'      => '.md',
+        'Pod::Simple::HTML'  => '.html',
+        'Pod::Simple::LaTeX' => '.tex',
+        'Pod::Simple::RTF'   => '.rtf',
+        'Pod::Simple::Text'  => '',
+        'Pod::Simple::XHTML' => '.xhtml',
+    };
+
+    my $class = $self->translation_class;
+    if (defined $class) {
+        if (my $ext = $extensions->{$class}) {
+            $name .= $ext;
+        }
+    } else {
+        $name .= '.pod';
+    }
+
+    file($self->base_dir, $name);
+}
+
+=head2 C<translate_file>
+
+This method runs translates the resulting POD from C<filter_file>.
+
+=cut
+
+sub translate_file {
+    my ($self) = @_;
+
+    if (my $class = $self->translation_class) {
+
+        load $class;
+        my $converter = $class->new()
+            or croak "Cannot instantiate a ${class} object";
+
+        if ($converter->isa('Pod::Simple')) {
+
+            my $tmp_file = $self->output_file->stringify;
+
+            close $self->output_fh
+                or croak "Unable to close file ${tmp_file}";
+
+            $converter->output_fh($self->translate_to_fh);
+            $converter->parse_file( $tmp_file );
+
+        } else {
+
+            croak "Don't know how to translate POD using ${class}";
+
+        }
+
+    }
+}
+
+=head2 C<run>
+
+This method runs C<filter_file> and then L</translate_file>.
+
+=cut
+
+around 'run' => sub {
+    my ($orig, $self) = @_;
+    $self->$orig();
+    $self->translate_file();
+};
+
+use namespace::autoclean;
+
+1;
+
+=for readme start
+
+=head1 CAVEATS
+
+This module is intended to be used by module authors for their own
+modules.  It is not recommended for generating F<README> files from
+arbitrary Perl modules from untrusted sources.
 
 =head1 SEE ALSO
 
 See L<perlpod>, L<perlpodspec> and L<podlators>.
 
-=head1 AUTHOR
+=head1 AUTHORS
 
-Originally by Robert Rothenberg <rrwo at cpan.org>
+The original version was by Robert Rothenberg <rrwo@cpan.org> until
+2010, when maintenance was taken over by David Precious
+<davidp@preshweb.co.uk>.
 
-Now maintained by David Precious <davidp@preshweb.co.uk>
-
+In 2014, Robert Rothenberg rewrote the module to use filtering instead
+of subclassing a POD parser.
 
 =head2 Suggestions, Bug Reporting and Contributing
 
-This module is developed on GitHub at:
-
-http://github.com/bigpresh/Pod-Readme
-
+This module is developed on GitHub at
+L<http://github.com/bigpresh/Pod-Readme>
 
 =head1 LICENSE
 
-Copyright (c) 2005,2006 Robert Rothenberg. All rights reserved.
+Copyright (c) 2005-2014 Robert Rothenberg. All rights reserved.
 This program is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
-
-Some portions are based on L<Pod::PlainText> 2.02.
 
 =cut

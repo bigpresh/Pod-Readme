@@ -1,61 +1,122 @@
-Revision history for Perl extension Pod::Readme.
+Revision history for Pod-Readme
+
+v1.0.0_01
+  [Incompatabilities]
+  - Major rewrite, using modern Perl v5.10.1.
+
+  - This module is no longer a subclass of a POD parsing
+    module. Instead, it is a simple POD filter.
+
+  [New Features]
+  - Added support for plugins.
+
+  - Added a "changes" plugin for parsing Changes files.
+
+  - Added a "version" plugin for including the current version.
+
+  - Added a "requires" plugin for listing module requirements.
+
+  - The pod2readme script has been rewritten to take a variety of
+    options, and can various formats, such as HTML, Markdown, POD or
+    RTF.
+
+  [Documentation]
+  - Changes rewritten to conform to CPAN::Changes::Spec.
+
+  - README is now in Markdown format.
+
+  [Other Changes]
+  - Switched to semantic versioning.
+
+  - Added MANIFEST.SKIP to distribution.
+
+  - QA tests are no longer part of the distribution.
+
+  - Makefile.PL uses Module::Install.
 
 0.11  2010-12-09
-        - Recognise the =encoding directive, rather than dying when it's
-          encountered.
-          TODO: actually take heed of it.
-          Thanks to Ivan Bessarabov for bringing this to my attention!
+
+  - Recognise the =encoding directive, rather than dying when it's
+    encountered.
+    TODO: actually take heed of it.
+    Thanks to Ivan Bessarabov for bringing this to my attention!
 
 0.10  2010-05-19
-        - David Precious <davidp@preshweb.co.uk> taking over maintainership
-        - Apply POD fix patch from RT #38328, thanks to David A. Desrosiers
 
-0.09  Sat Nov 25 2006
-	- uses Regexp::Common for URI parsing for L<> tag
-	- added separate check for https, ftps, and svn URIs
-          (rt.cpan.org bugs 23585 and 23613)
+  - David Precious <davidp@preshweb.co.uk> taking over maintainership
 
-0.081 Sun May  7 2006
-	- released package without signature, due to Module::Signature
-          issues
+  - Apply POD fix patch from RT #38328, thanks to David A. Desrosiers
 
-0.08  Mon May  1 2006
-	- head3/4 headings not recognized
-	- went back to using Pod::PlainText
+0.09  2006-11-25
 
-0.07  Sat Feb 11 2006
-	- added min version to use Pod::Text statement in source
-	- removed multiple plans from the podcover test
+  - uses Regexp::Common for URI parsing for L<> tag
 
-0.06  Thu Feb  9 2006
-	- eliminated a warning about uninitialized values
-	- recognizes =head3 and =head4 headings (from Pod::Text)
-	- uses Pod::Text instead of Pod::PlainText
-	- added internal documentation
-	- added various QA tests
-	- added "test" and "tests" as a rejected format
+  - added separate check for https, ftps, and svn URIs (rt.cpan.org
+    bugs 23585 and 23613)
 
-0.05  Tue Jun  7 2005
-	- pod2readme will backup an existing README file
-	- minor updates to the documentation
+0.081 2006-05-07
 
-0.04  Wed May 18 2005
-	- known other formats such as "html" are rejected
-	- added missing prereq IO::File in Build.PL
-	- added debug option
-	- typos and tweaks for documentation
+  - released package without signature, due to Module::Signature
+    issues
 
-0.03  Sun May  8 2005
-	- added documentation to pod2readme script
-	- include file start/stop marks are now Regexps
-	- added more tests
-	- multiple readme types can be specified in a command
+0.08  2006-05-01
 
-0.02  Fri May  6 2005
-	- added tests (much needed!)
-	- fixed issue with links being changed to refer to manpages
+  - head3/4 headings not recognized
 
-0.01  Sat Apr 30 19:22:33 2005
-	- original version; created by h2xs 1.23 with options
-		-X -v 0.01 -b 5.5.0 -n Pod::Readme -P
+  - went back to using Pod::PlainText
 
+0.07  2006-02-11
+
+  - added min version to use Pod::Text statement in source
+
+  - removed multiple plans from the podcover test
+
+0.06  2006-02-09
+
+  - eliminated a warning about uninitialized values
+
+  - recognizes =head3 and =head4 headings (from Pod::Text)
+
+  - uses Pod::Text instead of Pod::PlainText
+
+  - added internal documentation
+
+  - added various QA tests
+
+  - added "test" and "tests" as a rejected format
+
+0.05 2005-06-07
+
+  - pod2readme will backup an existing README file
+
+  - minor updates to the documentation
+
+0.04  2005-05-18
+
+  - known other formats such as "html" are rejected
+
+  - added missing prereq IO::File in Build.PL
+
+  - added debug option
+
+  - typos and tweaks for documentation
+
+0.03  2005-05-08
+
+  - added documentation to pod2readme script
+
+  - include file start/stop marks are now Regexps
+
+  - added more tests
+
+  - multiple readme types can be specified in a command
+
+0.02  2005-05-06
+
+  - added tests (much needed!)
+
+  - fixed issue with links being changed to refer to manpages
+
+0.01  2005-04-20
+
+  - original version
