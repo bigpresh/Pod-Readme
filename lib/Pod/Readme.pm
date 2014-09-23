@@ -4,6 +4,8 @@ package Pod::Readme;
 
 Pod::Readme - generate README files from POD
 
+=for readme plugin version
+
 =head1 SYNOPSIS
 
   =head1 NAME
@@ -43,9 +45,7 @@ F<README> file.
 See the L<Pod::Readme> documentation for more details on the POD
 syntax that this module recognizes.
 
-See L<pod2readme> command-line usage.
-
-=for readme plugin version
+See L<pod2readme> for command-line usage.
 
 =for readme plugin requires
 

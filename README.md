@@ -2,6 +2,10 @@
 
 Pod::Readme - generate README files from POD
 
+# VERSION
+
+v1.0.0\_01
+
 # SYNOPSIS
 
     =head1 NAME
@@ -39,11 +43,7 @@ commands to specify what parts of included or excluded from the
 See the [Pod::Readme](https://metacpan.org/pod/Pod::Readme) documentation for more details on the POD
 syntax that this module recognizes.
 
-See [pod2readme](https://metacpan.org/pod/pod2readme) command-line usage.
-
-# VERSION
-
-v1.0.0\_01
+See [pod2readme](https://metacpan.org/pod/pod2readme) for command-line usage.
 
 # REQUIREMENTS
 
