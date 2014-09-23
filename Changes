@@ -1,6 +1,6 @@
 Revision history for Pod-Readme
 
-v1.0.0_01
+v1.0.0_01 2014-09-23
   [Incompatabilities]
   - Major rewrite, using modern Perl v5.10.1.
 
