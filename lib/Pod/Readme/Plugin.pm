@@ -300,6 +300,20 @@ writes output using the write methods noted above.
 See some of the included plugins, such as
 L<Pod::Readme::Plugin::version> for examples.
 
+Any attributes it the plugin should be prefixed with the name of the
+plugin, to avoid any conflicts with attribute and method names from
+other plugins, e.g.
+
+  has 'myplugin_heading_level' => (
+    is      => 'rw',
+    isa     => 'Int',
+    default => 1,
+  );
+
+Be aware that changing default values of an attribute based on
+arguments means that the next time a plugin method is run, the
+defaults will be changed.
+
 =cut
 
 use namespace::autoclean;
