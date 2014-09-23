@@ -14,7 +14,7 @@ v1.0.0_02
   [Documentation]
   - Added missing date to Changes.
 
-  - Fixed typo in POD.
+  - Fixed typos in POD and README.
 
   - Added stub POD to Pod::Readme::Filter.
 

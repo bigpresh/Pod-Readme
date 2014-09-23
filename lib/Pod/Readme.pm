@@ -37,7 +37,7 @@ Pod::Readme - generate README files from POD
 =head1 DESCRIPTION
 
 This module filters POD to generate a F<README> file, by using POD
-commands to specify what parts of included or excluded from the
+commands to specify which parts are included or excluded from the
 F<README> file.
 
 =begin :readme
