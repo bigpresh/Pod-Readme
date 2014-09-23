@@ -331,6 +331,32 @@ around 'run' => sub {
     $self->translate_file();
 };
 
+=head2 C<parse_from_file>
+
+  my $parser = Pod::Readme->new();
+  $parser->parse_from_file( 'README.pod', 'README' );
+
+  Pod::Readme->parse_from_file( 'README.pod', 'README' );
+
+This is a class method that acts as a compatability shim for software
+that is designed for versions of L<Pod::Readme> prior to v1.0.
+
+Its use is deprecated, and will be deleted in later versions.
+
+=cut
+
+sub parse_from_file {
+    my ($self, $source, $dest) = @_;
+
+    my $class = ref($self) || __PACKAGE__;
+    my $prf = $class->new(
+	input_file		=> $source,
+	translate_to_file	=> $dest,
+        translation_class	=> 'Pod::Simple::Text',
+    );
+    $prf->run();
+}
+
 use namespace::autoclean;
 
 1;

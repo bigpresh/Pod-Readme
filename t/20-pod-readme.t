@@ -2,6 +2,8 @@ use Test::Most;
 
 use lib 't/lib';
 use Pod::Readme::Test;
+use File::Temp qw/ tempfile /;
+use File::Compare qw/ compare /;
 
 my $class = 'Pod::Readme';
 use_ok $class;
@@ -57,6 +59,34 @@ isa_ok $prf = $class->new(
         filter_lines('=for readme plugin noop no-bool bad-attr="this"', '');
     } qr/Invalid argument key 'bad-attr' at input line \d+/;
 };
+
+{
+  my $source = 't/data/README-1.pod';
+
+  lives_ok {
+
+    my $dest   = (tempfile( UNLINK => 0))[1];
+    note $dest;
+
+    ok my $parser = Pod::Readme->new, 'new (no args)';
+    $parser->parse_from_file($source, $dest);
+
+    ok !compare($dest, 't/data/README.txt'), 'expected output';
+
+  } 'compatability shim';
+
+  lives_ok {
+
+    my $dest   = (tempfile( UNLINK => 0))[1];
+    note $dest;
+
+    Pod::Readme->parse_from_file($source, $dest);
+
+    ok !compare($dest, 't/data/README.txt'), 'expected output';
+
+  } 'compatability shim (class method)';
+
+}
 
 
 done_testing;
