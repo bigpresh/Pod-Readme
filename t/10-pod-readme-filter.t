@@ -173,4 +173,41 @@ isa_ok $prf = $class->new(
     reset_out();
 }
 
+{
+  can_ok $prf, qw/ parse_cmd_args /;
+
+  lives_ok {
+    my $res = $prf->parse_cmd_args(undef,
+              'arg1',
+              'no-arg2',
+              'arg3="This is a string"',
+              'arg4=value',
+    );
+
+    note(explain $res);
+
+    is_deeply $res,
+	      {
+	       'arg1' => 1,
+	       'arg2' => 0,
+	       'arg3' => 'This is a string',
+	       'arg4' => 'value'
+	      }, 'expected parsing of arguments list';
+
+
+  } 'parse_cmd_args';
+
+
+  throws_ok {
+    my $res = $prf->parse_cmd_args([qw/ arg1 arg2 arg3 /],
+              'arg1',
+              'no-arg2',
+              'arg3="This is a string"',
+              'arg4=value',
+    );
+  } qr/Invalid argument key 'arg4'/, 'bad arguments';
+
+}
+
+
 done_testing;
