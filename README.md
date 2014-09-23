@@ -37,7 +37,7 @@ v1.0.0\_02
 # DESCRIPTION
 
 This module filters POD to generate a `README` file, by using POD
-commands to specify what parts of included or excluded from the
+commands to specify which parts are included or excluded from the
 `README` file.
 
 See the [Pod::Readme](https://metacpan.org/pod/Pod::Readme) documentation for more details on the POD
@@ -76,7 +76,7 @@ This distribution recommends the following modules:
 ## Documentation
 
 - Added missing date to Changes.
-- Fixed typo in POD.
+- Fixed typos in POD and README.
 - Added stub POD to Pod::Readme::Filter.
 
 ## Enhancements
