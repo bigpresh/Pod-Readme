@@ -52,6 +52,8 @@ recommends(
 
 test_requires(
     'Exporter::Lite' => 0,
+    'File::Compare'  => 0,
+    'File::Temp'     => 0,
     'Test::Most'     => 0,
 );
 
