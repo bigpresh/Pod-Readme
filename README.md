@@ -32,9 +32,9 @@ Pod::Readme - generate README files from POD
 
 # DESCRIPTION
 
-This module filters POD to generate a `README` file. It supports a
-series of POD commands for specifying what is included or excluded
-from the `README` file.
+This module filters POD to generate a `README` file, by using POD
+commands to specify what parts of included or excluded from the
+`README` file.
 
 See the [Pod::Readme](https://metacpan.org/pod/Pod::Readme) documentation for more details on the POD
 syntax that this module recognizes.
