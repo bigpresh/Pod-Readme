@@ -11,6 +11,9 @@ v1.0.0_02
     https://rt.cpan.org/Public/Dist/Display.html?Name=Pod-Readme
     instead of RT.
 
+  - Added a version to all modules in the distribution, and a version
+    QA test to the repo.
+
   [Documentation]
   - Added missing date to Changes.
 

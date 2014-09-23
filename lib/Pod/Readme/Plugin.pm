@@ -7,6 +7,8 @@ use Moose::Role;
 use Hash::Util qw/ lock_keys /;
 use Try::Tiny;
 
+use version 0.77; our $VERSION = version->declare('v1.0.0_02');
+
 =head1 NAME
 
 Pod::Readme::Plugin - plugin role for Pod::Readme

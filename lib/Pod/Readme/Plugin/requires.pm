@@ -2,11 +2,11 @@ package Pod::Readme::Plugin::requires;
 
 use Moose::Role;
 
-use version 0.77;
-
 use CPAN::Meta;
 use Module::CoreList;
 use Path::Class;
+
+use version 0.77; our $VERSION = version->declare('v1.0.0_02');
 
 =head1 NAME
 

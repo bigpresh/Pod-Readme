@@ -6,6 +6,8 @@ use CPAN::Changes;
 use MooseX::Types::Path::Class;
 use Path::Class;
 
+use version 0.77; our $VERSION = version->declare('v1.0.0_02');
+
 =head1 NAME
 
 Pod::Readme::Plugin::changes - include latest Changes in README

@@ -13,6 +13,8 @@ use MooseX::Types::IO 'IO';
 use MooseX::Types::Path::Class;
 use Try::Tiny;
 
+use version 0.77; our $VERSION = version->declare('v1.0.0_02');
+
 =head1 NAME
 
 Pod::Readme::Filter - filter readme from POD
