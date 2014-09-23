@@ -4,7 +4,7 @@ Pod::Readme - generate README files from POD
 
 # VERSION
 
-v1.0.0\_01
+v1.0.0\_02
 
 # SYNOPSIS
 
@@ -75,28 +75,18 @@ This distribution recommends the following modules:
 
 ## Documentation
 
-- Changes rewritten to conform to CPAN::Changes::Spec.
-- README is now in Markdown format.
+- Added missing date to Changes.
+- Fixed typo in POD.
+- Added stub POD to Pod::Readme::Filter.
 
-## Incompatabilities
+## Enhancements
 
-- Major rewrite, using modern Perl v5.10.1.
-- This module is no longer a subclass of a POD parsing module. Instead, it is a simple POD filter.
-
-## New Features
-
-- Added support for plugins.
-- Added a "changes" plugin for parsing Changes files.
-- Added a "version" plugin for including the current version.
-- Added a "requires" plugin for listing module requirements.
-- The pod2readme script has been rewritten to take a variety of options, and can various formats, such as HTML, Markdown, POD or RTF.
+- Added parse\_from\_file method for backwards compatability.
 
 ## Other Changes
 
-- Switched to semantic versioning.
-- Added MANIFEST.SKIP to distribution.
-- QA tests are no longer part of the distribution.
-- Makefile.PL uses Module::Install.
+- Added more tests.
+- The bugtracker URL now refers to the GitHub issues list at https://rt.cpan.org/Public/Dist/Display.html?Name=Pod-Readme instead of RT.
 
 See the `Changes` file for a longer revision history.
 
