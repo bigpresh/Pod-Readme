@@ -49,10 +49,11 @@ This option allows you to change the title of the heading.
 
   =for readme plugin changes verbatim
 
+If you prefer, you can display a verbatim section of the F<Changes>
+file.
+
 By default, the F<Changes> file will be parsed and reformatted as POD
 (equivalent to the C<no-verbatim> option).
-
-If you prefer, you can display a verbatim section of the changes file.
 
 =cut
 
@@ -83,8 +84,16 @@ has 'changes_heading_level' => (
     default => 1,
 );
 
+has 'changes_run' => (
+    is		=> 'rw',
+    isa		=> 'Bool',
+    default	=> 0,
+);
+
 sub cmd_changes {
     my ( $self, @args ) = @_;
+
+    die "The changes plugin can only be used once" if $self->changes_run;
 
     my $res = $self->parse_cmd_args([qw/ file title verbatim no-verbatim heading-level /],
                                     @args);
@@ -135,6 +144,7 @@ sub cmd_changes {
         sprintf( 'See the F<%s> file for a longer revision history.',
                  $file->basename ) );
 
+    $self->changes_run(1);
 }
 
 use namespace::autoclean;

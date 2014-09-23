@@ -60,8 +60,16 @@ has 'version_heading_level' => (
     default => 1,
 );
 
+has 'version_run' => (
+    is		=> 'rw',
+    isa		=> 'Bool',
+    default	=> 0,
+);
+
 sub cmd_version {
     my ( $self, @args ) = @_;
+
+    die "The version plugin can only be used once" if $self->version_run;
 
     my $res = $self->parse_cmd_args([qw/ file title heading-level /], @args);
     foreach my $key (keys %{$res}) {
@@ -80,6 +88,8 @@ sub cmd_version {
 
         $self->$heading($self->version_title);
         $self->write_para( MM->parse_version($file) );
+
+	$self->version_run(1);
 
     } else {
 

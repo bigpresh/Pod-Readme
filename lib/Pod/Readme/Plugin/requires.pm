@@ -72,8 +72,16 @@ has 'requires_heading_level' => (
     default => 1,
 );
 
+has 'requires_run' => (
+    is		=> 'rw',
+    isa		=> 'Bool',
+    default	=> 0,
+);
+
 sub cmd_requires {
     my ( $self, @args ) = @_;
+
+    die "The requires plugin can only be used once" if $self->requires_run;
 
     my $res = $self->parse_cmd_args(
         [qw/ from-file title omit-core no-omit-core heading-level /], @args );
@@ -120,7 +128,7 @@ sub cmd_requires {
 
     }
 
-
+    $self->requires_run(1);
 }
 
 sub _get_prereqs {
