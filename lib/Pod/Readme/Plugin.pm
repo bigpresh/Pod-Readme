@@ -67,9 +67,43 @@ sub _parse_arguments {
 
 =head2 C<parse_cmd_args>
 
-  $self->parse_cmd_args( \@allowed_keys, @args);
+  my $hash_ref = $self->parse_cmd_args( \@allowed_keys, @args);
 
-TODO
+This command parses arguments for a plugin and returns a hash
+reference containing the argument values.
+
+The C<@args> parameter is a list of arguments passed to the command
+method by L<Pod::Readme::Filter>.
+
+If an argument contains an equals sign, then it is assumed to take a
+string.  (Strings containing whitespace should be surrounded by
+quotes.)
+
+Otherwise, an argument is assumed to be boolean, which defaults to
+true. If the argument is prefixed by "no-" or "no_" then it is given a
+false value.
+
+If the C<@allowed_keys> parameter is given, then it will reject
+argument keys that are not in that list.
+
+For example,
+
+  my $res = $self->parse_cmd_args(
+              undef,
+              'arg1',
+              'no-arg2',
+              'arg3="This is a string"',
+              'arg4=value',
+  );
+
+will return a hash reference containing
+
+  {
+     arg1 => 1,
+     arg2 => 0,
+     arg3 => 'This is a string',
+     arg4 => 'value',
+  }
 
 =cut
 
@@ -234,7 +268,8 @@ compatability with older POD parsers.
 
 =head1 WRITING PLUGINS
 
-Writing plugins is straightforward.  For example,
+Writing plugins is straightforward. Plugins are L<Moose::Role> modules
+in the C<Pod::Readme::Plugin> namespace.  For example,
 
   package Pod::Readme::Plugin::myplugin;
 
@@ -242,6 +277,8 @@ Writing plugins is straightforward.  For example,
 
   sub cmd_myplugin {
       my ($self, @args) = @_;
+      my $res = $self->parse_cmd_args( [qw/ arg1 arg2 /], @args );
+
       ...
   }
 
@@ -259,6 +296,9 @@ using the C<=for readme command> syntax.
 
 A plugin parses arguments using the L</parse_cmd_arguments> method and
 writes output using the write methods noted above.
+
+See some of the included plugins, such as
+L<Pod::Readme::Plugin::version> for examples.
 
 =cut
 
