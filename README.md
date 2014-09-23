@@ -8,6 +8,8 @@ v1.0.0\_02
 
 # SYNOPSIS
 
+In a module's POD:
+
     =head1 NAME
 
     MyApp - my nifty app
@@ -33,6 +35,10 @@ v1.0.0\_02
     =head1 METHODS
 
     ...
+
+Then from the command-line:
+
+    pod2readme lib/MyModule.pm README
 
 # DESCRIPTION
 

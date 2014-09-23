@@ -8,6 +8,8 @@ Pod::Readme - generate README files from POD
 
 =head1 SYNOPSIS
 
+In a module's POD:
+
   =head1 NAME
 
   MyApp - my nifty app
@@ -33,6 +35,26 @@ Pod::Readme - generate README files from POD
   =head1 METHODS
 
   ...
+
+Then from the command-line:
+
+  pod2readme lib/MyModule.pm README
+
+=for readme stop
+
+From within Perl:
+
+  use Pod::Readme;
+
+  my $prf = Pod::Readme->new(
+    input_file		=> 'lib/MyModule.pm',
+    translate_to_file	=> $dest,
+    translation_class	=> 'Pod::Simple::Text',
+  );
+
+  $prf->run();
+
+=for readme start
 
 =head1 DESCRIPTION
 
