@@ -126,6 +126,16 @@ Consistent names in POD
 
 =back
 
+=head2 Enhancements
+
+=over 4
+
+=item * 
+
+Show path of missing META.yml file in requires plugin.
+
+=back
+
 =head2 Other Changes
 
 =over 4

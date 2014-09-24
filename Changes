@@ -5,6 +5,9 @@ v1.0.0_03
   - The requires plugin properly stringifies the filename before
     loading.
 
+  [Enhancements]
+  - Show path of missing META.yml file in requires plugin.
+
   [Documentation]
   - Consistent names in POD
 
