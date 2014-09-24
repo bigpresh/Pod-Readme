@@ -64,7 +64,7 @@ This distribution requires the following modules:
 
 =over 4
 
-=item * L<CPAN::Changes>
+=item * L<CPAN::Changes> (version 0.30)
 
 =item * L<CPAN::Meta>
 
@@ -139,6 +139,10 @@ Fixed a daft typo in the Changes file.
 =item * 
 
 Documented known issue in the requires plugin.
+
+=item * 
+
+The README is now a POD document.
 
 =back
 
