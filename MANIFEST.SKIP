@@ -1,5 +1,5 @@
 .*~$
-.*\.(bak|old)$
+.*\.(bak|old|tmp)$
 \.git/.*
 \.gitignore
 
@@ -32,3 +32,5 @@ Pod-Readme-v\d+\.\d+\.\d+/
 # Module::Install
 
 ^inc/\.author/
+
+^tags$

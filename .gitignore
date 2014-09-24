@@ -16,3 +16,5 @@ META.yml
 MYMETA.*
 
 .build/
+
+tags
