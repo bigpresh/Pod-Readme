@@ -2,7 +2,8 @@ package Pod::Readme::Test;
 
 use Exporter::Lite;
 use IO::String;
-use Test::Most;
+
+require Test::More;
 
 our $out;
 our $io = IO::String->new($out);
@@ -13,7 +14,7 @@ our @EXPORT = qw/ $prf $out $io filter_lines reset_out /;
 sub filter_lines {
     my @lines = @_;
     foreach my $line (@lines) {
-        note $line if $line =~ /^=(?:\w+)/;
+        Test::More::note $line if $line =~ /^=(?:\w+)/;
         $prf->filter_line($line . "\n");
     }
 }
