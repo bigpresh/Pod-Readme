@@ -122,7 +122,11 @@ The tests for the requires plugin handle non-author builds.
 
 =item * 
 
-Consistent names in POD
+Consistent names in POD.
+
+=item * 
+
+Fixed typos in Changes file.
 
 =back
 
