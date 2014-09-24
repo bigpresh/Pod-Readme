@@ -28,3 +28,7 @@ Pod-Readme-v\d+\.\d+\.\d+/
 # Misc
 
 ^tmp/
+
+# Module::Install
+
+^inc/\.author/
