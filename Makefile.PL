@@ -57,19 +57,23 @@ test_requires(
 
 install_script(qw{ bin/pod2readme });
 
-author_requires(
-    'Module::Install::AuthorRequires' => 0.02,
-    'Module::Install::AuthorTests'    => 0,
-    'Test::CheckManifest'             => 0.9,
-    'Test::Perl::Critic'              => 0,
-    'Test::Portability::Files'        => 0,
-    'Test::Pod'                       => '1.00',
-    'Test::CleanNamespaces'           => 0,
-    'Test::Pod::Coverage'             => 0,
-    'Test::MinimumVersion'            => 0,
-);
+if ($Module::Install::AUTHOR) { # Make Travis-CI happy
 
-recursive_author_tests('xt');
+    author_requires(
+        'Module::Install::AuthorRequires' => 0.02,
+        'Module::Install::AuthorTests'    => 0,
+        'Test::CheckManifest'             => 0.9,
+        'Test::Perl::Critic'              => 0,
+        'Test::Portability::Files'        => 0,
+        'Test::Pod'                       => '1.00',
+        'Test::CleanNamespaces'           => 0,
+        'Test::Pod::Coverage'             => 0,
+        'Test::MinimumVersion'            => 0,
+    );
+
+    recursive_author_tests('xt');
+
+}
 
 install_as_cpan;
 auto_install;
