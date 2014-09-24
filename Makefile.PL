@@ -5,7 +5,7 @@ use inc::Module::Install;
 author 'Robert Rothenberg <rrwo@cpan.org>';
 name 'Pod-Readme';
 all_from 'lib/Pod/Readme.pm';
-license 'artistic_2';
+license 'perl';
 
 tests_recursive('t');
 

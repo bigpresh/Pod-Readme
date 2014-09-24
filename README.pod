@@ -156,7 +156,7 @@ Added hooks for author tests in Makefile.PL.
 
 =item * 
 
-Fixed license metadata error to make CPANTS happy.
+Fixed license metadata error to make CPANTS happy, and to be consistent with license in the POD.
 
 =item * 
 
@@ -165,6 +165,10 @@ Tests use Exporter instead of Exporter::Lite.
 =item * 
 
 Tests use Test::Kit rather than Test::Most, and explicitly import the tests modules that they use.
+
+=item * 
+
+Removed redundant prereqs from Makefile.PL.
 
 =back
 
