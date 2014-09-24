@@ -32,6 +32,7 @@ t/data/README-1.pod
 t/data/README.txt
 t/lib/Pod/Readme/Plugin/noop.pm
 t/lib/Pod/Readme/Test.pm
+t/lib/Pod/Readme/Test/Kit.pm
 t/plugins/changes.t
 t/plugins/requires.t
 t/plugins/version.t

@@ -21,6 +21,9 @@ v1.0.0_03
 
   - Tests use Exporter instead of Exporter::Lite.
 
+  - Tests use Test::Kit rather than Test::Most, and explicitly import
+    the tests modules that they use.
+
 v1.0.0_02 2014-09-24 14:14 BST
   [Bug Fixes]
   - Fixed minimum version of some prerequisites for tests.

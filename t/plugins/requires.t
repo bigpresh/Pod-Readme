@@ -1,9 +1,5 @@
-use Test::Most;
-use Cwd;
-use Path::Class;
-
 use lib 't/lib';
-use Pod::Readme::Test;
+use Pod::Readme::Test::Kit;
 
 my $class = 'Pod::Readme';
 use_ok $class;

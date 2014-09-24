@@ -1,9 +1,5 @@
-use Test::Most;
-
 use lib 't/lib';
-use Pod::Readme::Test;
-use File::Temp qw/ tempfile /;
-use File::Compare qw/ compare /;
+use Pod::Readme::Test::Kit;
 
 my $class = 'Pod::Readme';
 use_ok $class;

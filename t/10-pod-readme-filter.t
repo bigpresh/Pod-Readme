@@ -1,7 +1,5 @@
-use Test::Most;
-
 use lib 't/lib';
-use Pod::Readme::Test;
+use Pod::Readme::Test::Kit;
 
 my $class = 'Pod::Readme::Filter';
 use_ok $class;

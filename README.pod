@@ -84,7 +84,11 @@ This distribution requires the following modules:
 
 =item * L<Path::Class> (version 0.33)
 
-=item * L<Test::Most>
+=item * L<Test::Deep>
+
+=item * L<Test::Exception>
+
+=item * L<Test::Kit> (version 2.10)
 
 =item * L<Try::Tiny>
 
@@ -157,6 +161,10 @@ Fixed license metadata error to make CPANTS happy.
 =item * 
 
 Tests use Exporter instead of Exporter::Lite.
+
+=item * 
+
+Tests use Test::Kit rather than Test::Most, and explicitly import the tests modules that they use.
 
 =back
 
