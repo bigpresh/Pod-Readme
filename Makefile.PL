@@ -10,6 +10,7 @@ license 'artistic2';
 tests_recursive('t');
 
 resources(
+    homepage   => 'https://metacpan.org/pod/Pod::Readme',
     license    => 'http://www.perlfoundation.org/artistic_license_2_0',
     repository => 'git://github.com/bigpresh/Pod-Readme.git',
     bugtracker => 'https://github.com/bigpresh/Pod-Readme/issues',
