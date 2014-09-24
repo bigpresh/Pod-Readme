@@ -33,6 +33,6 @@ Pod-Readme-v\d+\.\d+\.\d+/
 
 ^inc/\.author/
 
-^tags$
-^TAGS$
+tags
+TAGS$
 
