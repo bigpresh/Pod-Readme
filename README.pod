@@ -144,6 +144,10 @@ Show path of missing META.yml file in requires plugin.
 
 Added hooks for author tests in Makefile.PL.
 
+=item * 
+
+Fixed license metadata error to make CPANTS happy.
+
 =back
 
 See the F<Changes> file for a longer revision history.

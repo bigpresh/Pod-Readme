@@ -13,6 +13,8 @@ v1.0.0_03
   [Other Changes]
   - Added hooks for author tests in Makefile.PL.
 
+  - Fixed license metadata error to make CPANTS happy.
+
 v1.0.0_02 2014-09-24
   [Bug Fixes]
   - Fixed minimum version of some prerequisites for tests.
