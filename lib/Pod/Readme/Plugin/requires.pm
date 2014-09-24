@@ -116,7 +116,7 @@ sub cmd_requires {
     }
 
     my $meta = CPAN::Meta->load_file(
-        file( $self->base_dir, $self->requires_from_file ) );
+        file( $self->base_dir, $self->requires_from_file )->stringify );
 
     my ( $prereqs, $perl ) = $self->_get_prereqs( $meta, 'requires' );
     if ( %{$prereqs} ) {

@@ -1,6 +1,10 @@
 Revision history for Pod-Readme
 
 v1.0.0_03
+  [Bug Fixes]
+  - The requires plugin properly stringifies the filename before
+    loading.
+
   [Documentation]
   - Consistent names in POD
 

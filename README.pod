@@ -1,10 +1,10 @@
 =head1 NAME
 
-Pod::Readme - generate README files from POD
+Pod::Readme - Generate a README file from POD
 
 =head1 VERSION
 
-v1.0.0_02
+v1.0.0_03
 
 =head1 SYNOPSIS
 
@@ -112,7 +112,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-Fixed minimum version of some prerequisites for tests.
+The requires plugin properly stringifies the filename before loading.
 
 =back
 
@@ -122,37 +122,7 @@ Fixed minimum version of some prerequisites for tests.
 
 =item * 
 
-Added missing date to Changes.
-
-=item * 
-
-Fixed typos in POD and README.
-
-=item * 
-
-Added stub POD to Pod::Readme::Filter.
-
-=item * 
-
-Fixed a daft typo in the Changes file.
-
-=item * 
-
-Documented known issue in the requires plugin.
-
-=item * 
-
-The README is now a POD document.
-
-=back
-
-=head2 Enhancements
-
-=over 4
-
-=item * 
-
-Added parse_from_file and parse_from_filehandle methods for backwards compatability.
+Consistent names in POD
 
 =back
 
@@ -162,15 +132,7 @@ Added parse_from_file and parse_from_filehandle methods for backwards compatabil
 
 =item * 
 
-Added more tests.
-
-=item * 
-
-The bugtracker URL now refers to the GitHub issues list at https://github.com/bigpresh/Pod-Readme/issues instead of RT.
-
-=item * 
-
-Added a version to all modules in the distribution, and a version QA test to the repo.
+Added hooks for author tests in Makefile.PL.
 
 =back
 
