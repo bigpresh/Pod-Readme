@@ -17,7 +17,7 @@ use version 0.77; our $VERSION = version->declare('v1.0.0_03');
 
 =head1 NAME
 
-Pod::Readme::Filter - filter readme from POD
+Pod::Readme::Filter - Filter README from POD
 
 =head1 SYNOPSIS
 
@@ -33,7 +33,7 @@ Pod::Readme::Filter - filter readme from POD
 =head1 DESCRIPTION
 
 This module provides the basic filtering and minimal processing to
-extract a F<README.pod> from a module's POD.  It is used by
+extract a F<README.pod> from a module's POD.  It is used internally by
 L<Pod::Readme>.
 
 =cut
