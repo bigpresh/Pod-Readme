@@ -22,7 +22,7 @@ Makefile.PL
 MANIFEST
 MANIFEST.SKIP
 META.yml
-README.md
+README.pod
 t/10-pod-readme-filter.t
 t/20-pod-readme.t
 t/data/META-1.yml

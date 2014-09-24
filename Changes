@@ -29,6 +29,8 @@ v1.0.0_02
 
   - Documented known issue in the requires plugin.
 
+  - The README is now a POD document.
+
 v1.0.0_01 2014-09-23
   [Incompatabilities]
   - Major rewrite, using modern Perl v5.10.1.
