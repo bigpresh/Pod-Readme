@@ -57,7 +57,7 @@ This distribution requires Perl v5.10.1.
 
 This distribution requires the following modules:
 
-- [CPAN::Changes](https://metacpan.org/pod/CPAN::Changes)
+- [CPAN::Changes](https://metacpan.org/pod/CPAN::Changes) (version 0.30)
 - [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta)
 - [Exporter::Lite](https://metacpan.org/pod/Exporter::Lite)
 - [File::Slurp](https://metacpan.org/pod/File::Slurp)

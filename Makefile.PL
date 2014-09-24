@@ -25,7 +25,7 @@ build_requires(
 );
 
 requires(
-    'CPAN::Changes'              => 0,
+    'CPAN::Changes'              => '0.30',
     'CPAN::Meta'                 => 0,
     'ExtUtils::MakeMaker'        => 6.56,
     'File::Slurp'                => 0,

@@ -2,7 +2,7 @@ package Pod::Readme::Plugin::changes;
 
 use Moose::Role;
 
-use CPAN::Changes;
+use CPAN::Changes 0.30;
 use MooseX::Types::Path::Class;
 use Path::Class;
 

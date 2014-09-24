@@ -1,6 +1,9 @@
 Revision history for Pod-Readme
 
 v1.0.0_02
+  [Bug Fixes]
+  - Fixed minimum version of some prerequisites for tests.
+
   [Enhancements]
   - Added parse_from_file and parse_from_filehandle methods for
     backwards compatability.
