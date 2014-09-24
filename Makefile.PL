@@ -19,8 +19,8 @@ resources(
 configure_requires();
 
 build_requires(
-    'Exporter::Lite' => 0,
-    'Test::Most'     => 0,
+    'Exporter'   => 0,
+    'Test::Most' => 0,
 );
 
 requires(
@@ -50,11 +50,11 @@ recommends(
 );
 
 test_requires(
-    'Exporter::Lite' => 0,
-    'File::Compare'  => 0,
-    'File::Temp'     => 0,
-    'Test::Most'     => 0,
-    'Test::More'     => 0,
+    'Exporter'      => 0,
+    'File::Compare' => 0,
+    'File::Temp'    => 0,
+    'Test::Most'    => 0,
+    'Test::More'    => 0,
 );
 
 install_script(qw{ bin/pod2readme });

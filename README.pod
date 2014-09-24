@@ -68,8 +68,6 @@ This distribution requires the following modules:
 
 =item * L<CPAN::Meta>
 
-=item * L<Exporter::Lite>
-
 =item * L<File::Slurp>
 
 =item * L<Getopt::Long::Descriptive>
@@ -155,6 +153,10 @@ Added hooks for author tests in Makefile.PL.
 =item * 
 
 Fixed license metadata error to make CPANTS happy.
+
+=item * 
+
+Tests use Exporter instead of Exporter::Lite.
 
 =back
 

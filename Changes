@@ -19,6 +19,8 @@ v1.0.0_03
 
   - Fixed license metadata error to make CPANTS happy.
 
+  - Tests use Exporter instead of Exporter::Lite.
+
 v1.0.0_02 2014-09-24 14:14 BST
   [Bug Fixes]
   - Fixed minimum version of some prerequisites for tests.
