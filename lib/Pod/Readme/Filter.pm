@@ -74,11 +74,13 @@ has input_fh => (
         my ($self) = @_;
         if ( $self->input_file ) {
             $self->input_file->openr;
-        } else {
+        }
+        else {
             my $fh = IO::Handle->new;
             if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
                 return $fh;
-            } else {
+            }
+            else {
                 croak "Cannot get a filehandle for STDIN";
             }
         }
@@ -97,11 +99,13 @@ sub _build_output_fh {
     my ($self) = @_;
     if ( $self->output_file ) {
         $self->output_file->openw;
-    } else {
+    }
+    else {
         my $fh = IO::Handle->new;
         if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
             return $fh;
-        } else {
+        }
+        else {
             croak "Cannot get a filehandle for STDOUT";
         }
     }
@@ -200,10 +204,11 @@ sub process_for {
                 }
                 catch {
                     s/\n$//;
-                    die sprintf( "\%s at input line \%d\n",
-                        $_, $self->_line_no );
+                    die
+                      sprintf( "\%s at input line \%d\n", $_, $self->_line_no );
                 };
-            } else {
+            }
+            else {
                 die sprintf( "Unknown command: '\%s' at input line \%d\n",
                     $cmd, $self->_line_no );
             }
@@ -238,11 +243,13 @@ sub filter_line {
         if ( $line =~ $blank ) {
             $self->process_for( $self->_for_buffer );
             $mode = $self->mode('pod');
-        } else {
+        }
+        else {
             $self->_append_for_buffer($line);
         }
         return 1;
-    } elsif ( $mode eq 'pod:begin' ) {
+    }
+    elsif ( $mode eq 'pod:begin' ) {
 
         unless ( $line =~ $blank ) {
             die sprintf( "Expected new paragraph after command at line \%d\n",
@@ -264,10 +271,11 @@ sub filter_line {
                 $self->mode('pod:for');
                 $self->_for_buffer( substr( $line, 4 ) );
 
-            } elsif ( $cmd eq 'begin' ) {
+            }
+            elsif ( $cmd eq 'begin' ) {
 
-                my ( $target, @args )
-                    = $self->_parse_arguments( substr( $line, 6 ) );
+                my ( $target, @args ) =
+                  $self->_parse_arguments( substr( $line, 6 ) );
 
                 if ( $target =~ $self->_target_regex ) {
 
@@ -285,14 +293,16 @@ sub filter_line {
 
                     $self->mode('pod:begin');
 
-                } else {
+                }
+                else {
                     $self->mode( 'target:' . $target );
                 }
 
-            } elsif ( $cmd eq 'end' ) {
+            }
+            elsif ( $cmd eq 'end' ) {
 
-                my ( $target, @args )
-                    = $self->_parse_arguments( substr( $line, 4 ) );
+                my ( $target, @args ) =
+                  $self->_parse_arguments( substr( $line, 4 ) );
 
                 if ( $target =~ $self->_target_regex ) {
                     my $buffer = $self->_begin_args;
@@ -317,10 +327,10 @@ sub filter_file {
     my ($self) = @_;
 
     foreach
-        my $line ( read_file( $self->input_fh, binmode => $self->encoding ) )
+      my $line ( read_file( $self->input_fh, binmode => $self->encoding ) )
     {
         $self->filter_line($line)
-            or last;
+          or last;
         $self->_inc_line_no;
     }
 }
@@ -352,7 +362,7 @@ sub cmd_include {
 
     my $file = $res->{file};
     my $fh = IO::File->new( $file, 'r' )
-        or die "Unable to open file '${file}': $!\n";
+      or die "Unable to open file '${file}': $!\n";
 
     $self->write("\n");
 
@@ -365,7 +375,8 @@ sub cmd_include {
 
         if ( $type eq 'text' ) {
             $self->write_verbatim($line);
-        } else {
+        }
+        else {
             $self->write($line);
         }
 

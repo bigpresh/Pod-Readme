@@ -219,11 +219,13 @@ has translate_to_fh => (
         my ($self) = @_;
         if ( $self->translate_to_file ) {
             $self->translate_to_file->openw;
-        } else {
+        }
+        else {
             my $fh = IO::Handle->new;
             if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
                 return $fh;
-            } else {
+            }
+            else {
                 croak "Cannot get a filehandle for STDOUT";
             }
         }
@@ -238,11 +240,11 @@ then it will be saved to C<STDOUT>.
 =cut
 
 has translate_to_file => (
-    is       => 'ro',
-    isa      => 'Path::Class::File',
-    coerce   => 1,
-    lazy     => 1,
-    builder  => 'default_readme_file',
+    is      => 'ro',
+    isa     => 'Path::Class::File',
+    coerce  => 1,
+    lazy    => 1,
+    builder => 'default_readme_file',
 );
 
 =head2 C<output_file>
@@ -253,18 +255,19 @@ file.
 =cut
 
 has '+output_file' => (
-    lazy => 1,
+    lazy    => 1,
     default => sub {
         my $tmp_dir = dir( $ENV{TMP} || $ENV{TEMP} || '/tmp' );
-        file( ($tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ))[1] );
+        file( ( $tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ) )[1] );
     },
 );
 
 around '_build_output_fh' => sub {
-    my ($orig, $self) = @_;
-    if (defined $self->translation_class) {
+    my ( $orig, $self ) = @_;
+    if ( defined $self->translation_class ) {
         $self->$orig();
-    } else {
+    }
+    else {
         $self->translate_to_fh;
     }
 };
@@ -283,7 +286,7 @@ L</translation_class>.
 sub default_readme_file {
     my ($self) = @_;
 
-    my $name = uc($self->target);
+    my $name = uc( $self->target );
 
     state $extensions = {
         'Pod::Man'           => '.1',
@@ -296,15 +299,16 @@ sub default_readme_file {
     };
 
     my $class = $self->translation_class;
-    if (defined $class) {
-        if (my $ext = $extensions->{$class}) {
+    if ( defined $class ) {
+        if ( my $ext = $extensions->{$class} ) {
             $name .= $ext;
         }
-    } else {
+    }
+    else {
         $name .= '.pod';
     }
 
-    file($self->base_dir, $name);
+    file( $self->base_dir, $name );
 }
 
 =head2 C<translate_file>
@@ -316,23 +320,24 @@ This method runs translates the resulting POD from C<filter_file>.
 sub translate_file {
     my ($self) = @_;
 
-    if (my $class = $self->translation_class) {
+    if ( my $class = $self->translation_class ) {
 
         load $class;
         my $converter = $class->new()
-            or croak "Cannot instantiate a ${class} object";
+          or croak "Cannot instantiate a ${class} object";
 
-        if ($converter->isa('Pod::Simple')) {
+        if ( $converter->isa('Pod::Simple') ) {
 
             my $tmp_file = $self->output_file->stringify;
 
             close $self->output_fh
-                or croak "Unable to close file ${tmp_file}";
+              or croak "Unable to close file ${tmp_file}";
 
-            $converter->output_fh($self->translate_to_fh);
-            $converter->parse_file( $tmp_file );
+            $converter->output_fh( $self->translate_to_fh );
+            $converter->parse_file($tmp_file);
 
-        } else {
+        }
+        else {
 
             croak "Don't know how to translate POD using ${class}";
 
@@ -348,7 +353,7 @@ This method runs C<filter_file> and then L</translate_file>.
 =cut
 
 around 'run' => sub {
-    my ($orig, $self) = @_;
+    my ( $orig, $self ) = @_;
     $self->$orig();
     $self->translate_file();
 };
@@ -369,13 +374,13 @@ Its use is deprecated, and will be deleted in later versions.
 =cut
 
 sub parse_from_file {
-    my ($self, $source, $dest) = @_;
+    my ( $self, $source, $dest ) = @_;
 
     my $class = ref($self) || __PACKAGE__;
     my $prf = $class->new(
-	input_file		=> $source,
-	translate_to_file	=> $dest,
-        translation_class	=> 'Pod::Simple::Text',
+        input_file        => $source,
+        translate_to_file => $dest,
+        translation_class => 'Pod::Simple::Text',
     );
     $prf->run();
 }
@@ -389,20 +394,22 @@ Its use is deprecated, and will be deleted in later versions.
 =cut
 
 sub parse_from_filehandle {
-    my ($self, $source_fh, $dest_fh) = @_;
+    my ( $self, $source_fh, $dest_fh ) = @_;
 
     my $class = ref($self) || __PACKAGE__;
 
-    my $src_io  = IO::Handle->new_from_fd( (defined $source_fh) ?
-					  fileno($source_fh) : 0, 'r');
+    my $src_io =
+      IO::Handle->new_from_fd( ( defined $source_fh ) ? fileno($source_fh) : 0,
+        'r' );
 
-    my $dest_io = IO::Handle->new_from_fd( (defined $dest_fh) ?
-					  fileno($dest_fh) : 1, 'w');
+    my $dest_io =
+      IO::Handle->new_from_fd( ( defined $dest_fh ) ? fileno($dest_fh) : 1,
+        'w' );
 
     my $prf = $class->new(
-	input_fh		=> $src_io,
-	translate_to_fh		=> $dest_io,
-        translation_class	=> 'Pod::Simple::Text',
+        input_fh          => $src_io,
+        translate_to_fh   => $dest_io,
+        translation_class => 'Pod::Simple::Text',
     );
     $prf->run();
 }

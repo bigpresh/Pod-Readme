@@ -92,40 +92,44 @@ my %FORMATS = (
 
 sub validate_format {
     my $value = shift;
-    if (exists $FORMATS{$value}) {
+    if ( exists $FORMATS{$value} ) {
         return $value;
-    } else {
+    }
+    else {
         die "Invalid format: '${value}'\n";
     }
 }
 
-my ($opt, $usage) = describe_options(
+my ( $opt, $usage ) = describe_options(
     '%c %o input-file [output-file] [target]',
     [],
     ['Generate a README file from POD'],
     [],
     [ 'target|t=s' => "target type (default: 'readme')" ],
-    [ 'format|f=s' => "output format (default: 'text')",
-      { default   => 'text',
-        callbacks => { format => \&validate_format },
-      } ],
-    [ 'backup|b!'  => "backup output file", { default => 1 } ],
-    [ 'output|o'   => "output filename (default based on target)" ],
-    [ 'stdout|c'   => "output to stdout (console)" ],
-    [ 'help|h'     => "print usage and exit" ],
+    [
+        'format|f=s' => "output format (default: 'text')",
+        {
+            default   => 'text',
+            callbacks => { format => \&validate_format },
+        }
+    ],
+    [ 'backup|b!' => "backup output file", { default => 1 } ],
+    [ 'output|o' => "output filename (default based on target)" ],
+    [ 'stdout|c' => "output to stdout (console)" ],
+    [ 'help|h'   => "print usage and exit" ],
 );
 
 die $usage if $opt->help;
 
 my %args = ();
 
-if (my $input = shift @ARGV) {
+if ( my $input = shift @ARGV ) {
     $args{input_file} = $input;
 }
 
 my $format = $FORMATS{ $opt->format };
 unless ($format) {
-    say sprintf("Unknown format: '\%s'", $opt->format);
+    say sprintf( "Unknown format: '\%s'", $opt->format );
     die $usage;
 }
 
@@ -134,18 +138,20 @@ my $target = $opt->target || shift @ARGV || 'readme';
 
 $args{target} = $target;
 
-if (my $class = $format->{class}) {
+if ( my $class = $format->{class} ) {
     $args{translation_class} = $class;
 }
 
-if ($opt->stdout) {
+if ( $opt->stdout ) {
     my $fh = IO::Handle->new;
     if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
         $args{translate_to_fh} = $fh;
-    } else {
+    }
+    else {
         die "Cannot get a filehandle for STDOUT";
     }
-} else {
+}
+else {
     $args{translate_to_file} = $output if $output;
 }
 
@@ -153,8 +159,8 @@ my $pr = Pod::Readme->new(%args);
 
 $output ||= $pr->translate_to_file;
 
-if ($opt->backup && $output && -e $output) {
-    file($output)->copy_to($output . '.bak');
+if ( $opt->backup && $output && -e $output ) {
+    file($output)->copy_to( $output . '.bak' );
 }
 
 $pr->run();

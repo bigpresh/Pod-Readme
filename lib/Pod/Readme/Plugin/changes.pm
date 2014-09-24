@@ -82,14 +82,14 @@ has 'changes_verbatim' => (
 
 has 'changes_heading_level' => (
     is      => 'rw',
-    isa     => 'Int', # 1..3
+    isa     => 'Int',    # 1..3
     default => 1,
 );
 
 has 'changes_run' => (
-    is		=> 'rw',
-    isa		=> 'Bool',
-    default	=> 0,
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 0,
 );
 
 sub cmd_changes {
@@ -97,37 +97,39 @@ sub cmd_changes {
 
     die "The changes plugin can only be used once" if $self->changes_run;
 
-    my $res = $self->parse_cmd_args([qw/ file title verbatim no-verbatim heading-level /],
-                                    @args);
-    foreach my $key (keys %{$res}) {
-        (my $name = "changes_${key}")  =~ s/-/_/g;
-        if (my $method = $self->can($name)) {
+    my $res = $self->parse_cmd_args(
+        [qw/ file title verbatim no-verbatim heading-level /], @args );
+    foreach my $key ( keys %{$res} ) {
+        ( my $name = "changes_${key}" ) =~ s/-/_/g;
+        if ( my $method = $self->can($name) ) {
             $self->$method( $res->{$key} );
-        } else {
+        }
+        else {
             die "Invalid key: '${key}'";
         }
     }
 
-    my $file = file($self->base_dir, $self->changes_file);
+    my $file = file( $self->base_dir, $self->changes_file );
 
     my $changes = CPAN::Changes->load($file);
     my $latest  = ( $changes->releases )[-1];
 
-    my $heading = $self->can("write_head" . $self->changes_heading_level)
-        or die "Invalid heading level: " . $self->changes_heading_level;
+    my $heading = $self->can( "write_head" . $self->changes_heading_level )
+      or die "Invalid heading level: " . $self->changes_heading_level;
 
     $self->$heading( $self->changes_title );
 
     if ( $self->changes_verbatim ) {
 
-        $self->write_verbatim($latest->serialize);
+        $self->write_verbatim( $latest->serialize );
 
-    } else {
+    }
+    else {
 
         foreach my $group ( $latest->groups ) {
 
             $self->write_head2($group)
-                if ( $group ne '' );
+              if ( $group ne '' );
 
             $self->write_over(4);
             foreach my $items ( $latest->get_group($group)->changes ) {
@@ -144,7 +146,8 @@ sub cmd_changes {
 
     $self->write_para(
         sprintf( 'See the F<%s> file for a longer revision history.',
-                 $file->basename ) );
+            $file->basename )
+    );
 
     $self->changes_run(1);
 }

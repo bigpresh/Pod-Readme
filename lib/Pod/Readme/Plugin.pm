@@ -52,7 +52,8 @@ sub _parse_arguments {
             if ( $curr =~ /["']/ && $prev ne "\\" ) {
                 $in_quote = ( $curr eq $in_quote ) ? '' : $curr;
             }
-        } elsif ( $arg_buff ne '' ) {
+        }
+        elsif ( $arg_buff ne '' ) {
             push @args, $arg_buff;
             $arg_buff = '';
         }
@@ -125,12 +126,14 @@ sub parse_cmd_args {
                 $val = $2 // '';
             }
 
-        } else {
+        }
+        else {
             $val = 1;
             if ( $arg =~ /^no[_-](\w+(?:[-_]\w+)*)$/ ) {
                 $key = $1;
                 $val = 0;
-            } else {
+            }
+            else {
                 $key = $arg;
             }
         }
@@ -145,7 +148,8 @@ sub parse_cmd_args {
         catch {
             if (/Hash has key '(.+)' which is not in the new key set/) {
                 die sprintf( "Invalid argument key '\%s'\n", $1 );
-            } else {
+            }
+            else {
                 die "Unknown error checking argument keys\n";
             }
         };
@@ -246,7 +250,7 @@ compatability with older POD parsers.
     foreach my $cmd (
         qw/ head1 head2 head3 head4
         over item begin end for encoding /
-        )
+      )
     {
         $meta->add_method(
             "write_${cmd}" => sub {

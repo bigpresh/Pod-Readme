@@ -45,9 +45,9 @@ requires(
 );
 
 recommends(
-  'Pod::Simple::LaTeX' => 0,
-  'Pod::Man'           => 0,
-  'Pod::Markdown'      => 0,
+    'Pod::Simple::LaTeX' => 0,
+    'Pod::Man'           => 0,
+    'Pod::Markdown'      => 0,
 );
 
 test_requires(
@@ -57,7 +57,7 @@ test_requires(
     'Test::Most'     => 0,
 );
 
-install_script( qw{ bin/pod2readme } );
+install_script(qw{ bin/pod2readme });
 
 install_as_cpan;
 auto_install;

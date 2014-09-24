@@ -88,14 +88,14 @@ has 'requires_omit_core' => (
 
 has 'requires_heading_level' => (
     is      => 'rw',
-    isa     => 'Int', # 1..3
+    isa     => 'Int',    # 1..3
     default => 1,
 );
 
 has 'requires_run' => (
-    is		=> 'rw',
-    isa		=> 'Bool',
-    default	=> 0,
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 0,
 );
 
 sub cmd_requires {
@@ -109,7 +109,8 @@ sub cmd_requires {
         ( my $name = "requires_${key}" ) =~ s/-/_/g;
         if ( my $method = $self->can($name) ) {
             $self->$method( $res->{$key} );
-        } else {
+        }
+        else {
             die "Invalid key: '${key}'";
         }
     }
@@ -117,11 +118,11 @@ sub cmd_requires {
     my $meta = CPAN::Meta->load_file(
         file( $self->base_dir, $self->requires_from_file ) );
 
-    my ($prereqs, $perl) = $self->_get_prereqs($meta, 'requires');
-    if (%{$prereqs}) {
+    my ( $prereqs, $perl ) = $self->_get_prereqs( $meta, 'requires' );
+    if ( %{$prereqs} ) {
 
-        my $heading = $self->can("write_head" . $self->requires_heading_level)
-            or die "Invalid heading level: " . $self->requires_heading_level;
+        my $heading = $self->can( "write_head" . $self->requires_heading_level )
+          or die "Invalid heading level: " . $self->requires_heading_level;
 
         $self->$heading( $self->requires_title );
 
@@ -132,15 +133,15 @@ sub cmd_requires {
             );
         }
 
-        $self->write_para(
-            'This distribution requires the following modules:');
+        $self->write_para('This distribution requires the following modules:');
 
         $self->_write_modules($prereqs);
 
-        my ($recommends) = $self->_get_prereqs($meta, 'recommends');
-        if (%{$recommends}) {
+        my ($recommends) = $self->_get_prereqs( $meta, 'recommends' );
+        if ( %{$recommends} ) {
 
-            $self->write_para('This distribution recommends the following modules:');
+            $self->write_para(
+                'This distribution recommends the following modules:');
 
             $self->_write_modules($recommends);
 
@@ -152,32 +153,32 @@ sub cmd_requires {
 }
 
 sub _get_prereqs {
-    my ($self, $meta, $key) = @_;
+    my ( $self, $meta, $key ) = @_;
 
     my %prereqs;
     foreach my $type ( values %{ $meta->prereqs } ) {
+
         # TODO: max version
-        $prereqs{$_} = $type->{$key}->{$_}
-            for ( keys %{ $type->{$key} } );
+        $prereqs{$_} = $type->{$key}->{$_} for ( keys %{ $type->{$key} } );
     }
     my $perl = delete $prereqs{perl};
     if ( $self->requires_omit_core && $perl ) {
         foreach ( keys %prereqs ) {
             delete $prereqs{$_}
-                if Module::CoreList->first_release($_)
-                && version->parse( Module::CoreList->first_release($_) )
-                <= version->parse($perl);
+              if Module::CoreList->first_release($_)
+              && version->parse( Module::CoreList->first_release($_) ) <=
+              version->parse($perl);
         }
     }
-    return (\%prereqs, $perl);
+    return ( \%prereqs, $perl );
 }
 
 sub _write_modules {
-    my ($self, $prereqs) = @_;
+    my ( $self, $prereqs ) = @_;
     $self->write_over(4);
     foreach my $module ( sort { lc($a) cmp lc($b) } keys %{$prereqs} ) {
         my $version = $prereqs->{$module};
-        my $text    = $version ? " (version ${version})" : '';
+        my $text = $version ? " (version ${version})" : '';
         $self->write_item( sprintf( '* L<%s>', $module ) . $text );
     }
     $self->write_back;

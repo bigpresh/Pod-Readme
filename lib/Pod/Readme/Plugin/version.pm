@@ -58,14 +58,14 @@ has 'version_title' => (
 
 has 'version_heading_level' => (
     is      => 'rw',
-    isa     => 'Int', # 1..3
+    isa     => 'Int',    # 1..3
     default => 1,
 );
 
 has 'version_run' => (
-    is		=> 'rw',
-    isa		=> 'Bool',
-    default	=> 0,
+    is      => 'rw',
+    isa     => 'Bool',
+    default => 0,
 );
 
 sub cmd_version {
@@ -73,27 +73,29 @@ sub cmd_version {
 
     die "The version plugin can only be used once" if $self->version_run;
 
-    my $res = $self->parse_cmd_args([qw/ file title heading-level /], @args);
-    foreach my $key (keys %{$res}) {
-        (my $name = "version_${key}")  =~ s/-/_/g;
-        if (my $method = $self->can($name)) {
+    my $res = $self->parse_cmd_args( [qw/ file title heading-level /], @args );
+    foreach my $key ( keys %{$res} ) {
+        ( my $name = "version_${key}" ) =~ s/-/_/g;
+        if ( my $method = $self->can($name) ) {
             $self->$method( $res->{$key} );
-        } else {
+        }
+        else {
             die "Invalid key: '${key}'";
         }
     }
 
-    if (my $file = $self->version_file) {
+    if ( my $file = $self->version_file ) {
 
-        my $heading = $self->can("write_head" . $self->version_heading_level)
-            or die "Invalid heading level: " . $self->version_heading_level;
+        my $heading = $self->can( "write_head" . $self->version_heading_level )
+          or die "Invalid heading level: " . $self->version_heading_level;
 
-        $self->$heading($self->version_title);
+        $self->$heading( $self->version_title );
         $self->write_para( MM->parse_version($file) );
 
-	$self->version_run(1);
+        $self->version_run(1);
 
-    } else {
+    }
+    else {
 
         die "Don't know what file to determine the version from";
 
