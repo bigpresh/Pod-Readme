@@ -51,13 +51,18 @@ syntax that this module recognizes.
 
 See [pod2readme](https://metacpan.org/pod/pod2readme) for command-line usage.
 
-# REQUIREMENTS
+# INSTALLATION
+
+See
+[How to install CPAN modules](http://www.cpan.org/modules/INSTALL.html).
+
+## Required Modules
 
 This distribution requires Perl v5.10.1.
 
 This distribution requires the following modules:
 
-- [CPAN::Changes](https://metacpan.org/pod/CPAN::Changes) (version 0.30)
+- [CPAN::Changes](https://metacpan.org/pod/CPAN::Changes)
 - [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta)
 - [Exporter::Lite](https://metacpan.org/pod/Exporter::Lite)
 - [File::Slurp](https://metacpan.org/pod/File::Slurp)
@@ -79,12 +84,17 @@ This distribution recommends the following modules:
 
 # RECENT CHANGES
 
+## Bug Fixes
+
+- Fixed minimum version of some prerequisites for tests.
+
 ## Documentation
 
 - Added missing date to Changes.
 - Fixed typos in POD and README.
 - Added stub POD to Pod::Readme::Filter.
 - Fixed a daft typo in the Changes file.
+- Documented known issue in the requires plugin.
 
 ## Enhancements
 

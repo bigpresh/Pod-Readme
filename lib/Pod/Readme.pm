@@ -69,7 +69,12 @@ syntax that this module recognizes.
 
 See L<pod2readme> for command-line usage.
 
-=for readme plugin requires
+=head1 INSTALLATION
+
+See
+L<How to install CPAN modules|http://www.cpan.org/modules/INSTALL.html>.
+
+=for readme plugin requires heading-level=2 title="Required Modules"
 
 =for readme plugin changes
 
