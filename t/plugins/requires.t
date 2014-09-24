@@ -1,4 +1,5 @@
 use Test::Most;
+use Cwd;
 
 use lib 't/lib';
 use Pod::Readme::Test;
@@ -9,6 +10,7 @@ use_ok $class;
 isa_ok $prf = $class->new(
     input_file => $0,
     output_fh  => $io,
+    base_dir   => cwd,
 ), $class;
 
 {

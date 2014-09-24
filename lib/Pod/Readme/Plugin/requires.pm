@@ -115,8 +115,12 @@ sub cmd_requires {
         }
     }
 
-    my $meta = CPAN::Meta->load_file(
-        file( $self->base_dir, $self->requires_from_file )->stringify );
+    my $file = file( $self->base_dir, $self->requires_from_file )->stringify;
+    unless (-e $file) {
+        die "Cannot find META.yml file at '${file}";
+    }
+
+    my $meta = CPAN::Meta->load_file($file);
 
     my ( $prereqs, $perl ) = $self->_get_prereqs( $meta, 'requires' );
     if ( %{$prereqs} ) {
