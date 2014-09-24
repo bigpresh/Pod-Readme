@@ -4,7 +4,7 @@ use Moose::Role;
 
 use ExtUtils::MakeMaker;
 
-use version 0.77; our $VERSION = version->declare('v1.0.0_02');
+use version 0.77; our $VERSION = version->declare('v1.0.0_03');
 
 =head1 NAME
 
