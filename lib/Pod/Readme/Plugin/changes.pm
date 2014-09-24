@@ -6,7 +6,7 @@ use CPAN::Changes 0.30;
 use MooseX::Types::Path::Class;
 use Path::Class;
 
-use version 0.77; our $VERSION = version->declare('v1.0.0_03');
+use version 0.77; our $VERSION = version->declare('v1.0.0_04');
 
 =head1 NAME
 
