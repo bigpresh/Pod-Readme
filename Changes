@@ -27,6 +27,8 @@ v1.0.0_02
 
   - Fixed a daft typo in the Changes file.
 
+  - Documented known issue in the requires plugin.
+
 v1.0.0_01 2014-09-23
   [Incompatabilities]
   - Major rewrite, using modern Perl v5.10.1.

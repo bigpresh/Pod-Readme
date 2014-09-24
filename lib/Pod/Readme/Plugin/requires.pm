@@ -43,6 +43,26 @@ all requirements, then specify this option.
 
 This argument allows you to change the title of the heading.
 
+=head1 KNOWN ISSUES
+
+=over
+
+=item *
+
+Trailing zeros in module versions may be dropped.
+
+If you specify a minimum version of a module with a trailing zero,
+e.g. "0.30", then it may be shown as "0.3".  A workaround is to
+specify the module version in your F<Makefile.PL> as a string instead
+of number:
+
+  requires(
+    'CPAN::Changes' => '0.30',
+    ...
+  );
+
+=back
+
 =cut
 
 requires 'parse_cmd_args';
