@@ -55,16 +55,8 @@ recommends(
     'Pod::Markdown'      => 0,
 );
 
-test_requires(
-    'Exporter'        => 0,
-    'File::Compare'   => 0,
-    'File::Temp'      => 0,
-    'Test::Deep'      => 0,
-    'Test::Exception' => 0,
-    'Test::Kit'       => '2.10',
-    'Test::More'      => 0,
-    'lib'             => 0,
-);
+# Note: test_requires is an alias for build_requires, so we don't need
+# to explicitly include it.
 
 install_script(qw{ bin/pod2readme });
 
