@@ -19,7 +19,7 @@ v1.0.0_03
 
   - Fixed license metadata error to make CPANTS happy.
 
-v1.0.0_02 2014-09-24
+v1.0.0_02 2014-09-24 14:14 BST
   [Bug Fixes]
   - Fixed minimum version of some prerequisites for tests.
 
@@ -50,7 +50,7 @@ v1.0.0_02 2014-09-24
 
   - The README is now a POD document.
 
-v1.0.0_01 2014-09-23
+v1.0.0_01 2014-09-23 13:58 BST
   [Incompatabilities]
   - Major rewrite, using modern Perl v5.10.1.
 
