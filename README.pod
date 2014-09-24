@@ -114,6 +114,10 @@ This distribution recommends the following modules:
 
 The tests for the requires plugin handle non-author builds.
 
+=item * 
+
+Fix for tests on some systems.
+
 =back
 
 =head2 Documentation

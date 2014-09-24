@@ -4,6 +4,8 @@ v1.0.0_03
   [Bug Fixes]
   - The tests for the requires plugin handle non-author builds.
 
+  - Fix for tests on some systems.
+
   [Enhancements]
   - Show path of missing META.yml file in requires plugin.
 
