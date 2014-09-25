@@ -8,7 +8,7 @@ use warnings;
 use Exporter qw/ import /;
 use Type::Tiny;
 
-use version 0.77; our $VERSION = version->declare('v1.0.0_04');
+use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
 our @EXPORT_OK = qw/ Indentation HeadingLevel TargetName /;
 

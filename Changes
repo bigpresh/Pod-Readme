@@ -1,6 +1,6 @@
 Revision history for Pod-Readme
 
-v1.0.0_04
+v1.0.1_01
   [Bug Fixes]
   - Fixed argument name for include command.
 
@@ -10,10 +10,11 @@ v1.0.0_04
   [Documentation]
   - Fixed POD errors.
 
+  [Enhancements]
+  - Use types with stricter constraints.
+
   [Other Changes]
   - Minor internal code tweaks.
-
-  - Use types with stricter constraints.
 
 v1.0.0_03 2014-09-24 21:14 BST
   [Bug Fixes]

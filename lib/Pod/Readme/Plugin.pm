@@ -7,7 +7,7 @@ use Moose::Role;
 use Hash::Util qw/ lock_keys /;
 use Try::Tiny;
 
-use version 0.77; our $VERSION = version->declare('v1.0.0_04');
+use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
 use Pod::Readme::Types qw/ Indentation /;
 
