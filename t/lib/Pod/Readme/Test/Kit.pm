@@ -15,6 +15,8 @@ include 'File::Temp' => {
     import => [qw/ tempfile /],
 };
 
+# TODO: will this still work on Windows?
+
 include 'File::Compare' => {
     import => [qw/ compare_text /],
 };
