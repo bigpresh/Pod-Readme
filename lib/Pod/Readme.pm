@@ -181,13 +181,12 @@ extends 'Pod::Readme::Filter';
 use Carp;
 use IO qw/ File Handle /;
 use Module::Load qw/ load /;
-use MooseX::Types::IO 'IO';
 use Path::Class;
 use Types::Standard qw/ Maybe Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
-use Pod::Readme::Types qw/ File /;
+use Pod::Readme::Types qw/ File WriteIO /;
 
 =head1 ATTRIBUTES
 
@@ -218,26 +217,27 @@ The L<IO::Handle> to save the translated file to.
 =cut
 
 has translate_to_fh => (
-    is      => 'ro',
-    isa     => IO,
-    lazy    => 1,
-    coerce  => 1,
-    default => sub {
-        my ($self) = @_;
-        if ( $self->translate_to_file ) {
-            $self->translate_to_file->openw;
+    is         => 'ro',
+    isa        => WriteIO,
+    lazy_build => 1,
+    coerce     => 1,
+);
+
+sub _build_translate_to_fh {
+    my ($self) = @_;
+    if ( $self->translate_to_file ) {
+        $self->translate_to_file->openw;
+    }
+    else {
+        my $fh = IO::Handle->new;
+        if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
+            return $fh;
         }
         else {
-            my $fh = IO::Handle->new;
-            if ( $fh->fdopen( fileno(STDOUT), 'w' ) ) {
-                return $fh;
-            }
-            else {
-                croak "Cannot get a filehandle for STDOUT";
-            }
+            croak "Cannot get a filehandle for STDOUT";
         }
-    },
-);
+    }
+}
 
 =head2 C<translate_to_file>
 

@@ -6,14 +6,16 @@ use strict;
 use warnings;
 
 use Exporter qw/ import /;
+use IO qw/ Handle /;
 use Path::Class;
 use Scalar::Util qw/ blessed /;
 use Type::Tiny;
-use Types::Standard qw/ Str /;
+use Types::Standard qw/ GlobRef FileHandle Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
-our @EXPORT_OK = qw/ Dir File Indentation HeadingLevel TargetName /;
+our @EXPORT_OK =
+  qw/ Dir File Indentation IO ReadIO WriteIO HeadingLevel TargetName /;
 
 =head1 NAME
 
@@ -105,9 +107,7 @@ sub Dir {
         },
         message => sub { 'must be be a directory' },
     );
-    return $type->plus_coercions(
-      Str, sub { dir($_) },
-    );
+    return $type->plus_coercions( Str, sub { dir($_) }, );
 }
 
 =head2 C<File>
@@ -125,9 +125,35 @@ sub File {
         },
         message => sub { 'must be be a file' },
     );
-    return $type->plus_coercions(
-      Str, sub { file($_) },
+    return $type->plus_coercions( Str, sub { file($_) }, );
+}
+
+sub IO {
+    state $type = Type::Tiny->new(
+        name       => 'IO',
+        constraint => sub {
+            blessed($_)
+              && ( $_->isa('IO::Handle') || $_->isa('IO::String') );
+        },
+        message => sub { 'must be be an IO::Handle or IO::String' },
     );
+    return $type;
+}
+
+sub ReadIO {
+    state $type = IO->plus_coercions(    #
+        FileHandle, sub { IO::Handle->new_from_fd( $_, 'r' ) },
+        GlobRef,    sub { IO::Handle->new_from_fd( $_, 'w' ) },
+    );
+    return $type;
+}
+
+sub WriteIO {
+    state $type = IO->plus_coercions(    #
+        FileHandle, sub { IO::Handle->new_from_fd( $_, 'w' ) },
+        GlobRef,    sub { IO::Handle->new_from_fd( $_, 'w' ) },
+    );
+    return $type;
 }
 
 1;

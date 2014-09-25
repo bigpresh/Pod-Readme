@@ -9,14 +9,13 @@ with 'Pod::Readme::Plugin';
 use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
-use MooseX::Types::IO 'IO';
 use Path::Class;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
-use Pod::Readme::Types qw/ Dir File TargetName /;
+use Pod::Readme::Types qw/ Dir File ReadIO WriteIO TargetName /;
 
 =head1 NAME
 
@@ -70,7 +69,7 @@ has output_file => (
 
 has input_fh => (
     is         => 'ro',
-    isa        => IO,
+    isa        => ReadIO,
     lazy_build => 1,
     coerce     => 1,
 );
@@ -93,7 +92,7 @@ sub _build_input_fh {
 
 has output_fh => (
     is         => 'ro',
-    isa        => IO,
+    isa        => WriteIO,
     lazy_build => 1,
     coerce     => 1,
 );

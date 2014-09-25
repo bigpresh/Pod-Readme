@@ -41,7 +41,6 @@ requires(
     'Module::CoreList'           => 0,
     'Moose'                      => 0,
     'MooseX::Object::Pluggable'  => 0,
-    'MooseX::Types::IO'          => 0,
     'namespace::autoclean'       => 0,
     'Path::Class'                => 0.33,
     'Pod::Simple'                => 0,
