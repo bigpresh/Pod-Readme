@@ -68,33 +68,33 @@ has output_file => (
 );
 
 has input_fh => (
-    is      => 'ro',
-    isa     => IO,
-    lazy    => 1,
-    coerce  => 1,
-    default => sub {
-        my ($self) = @_;
-        if ( $self->input_file ) {
-            $self->input_file->openr;
-        }
-        else {
-            my $fh = IO::Handle->new;
-            if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
-                return $fh;
-            }
-            else {
-                croak "Cannot get a filehandle for STDIN";
-            }
-        }
-    },
+    is         => 'ro',
+    isa        => IO,
+    lazy_build => 1,
+    coerce     => 1,
 );
 
+sub _build_input_fh {
+    my ($self) = @_;
+    if ( $self->input_file ) {
+        $self->input_file->openr;
+    }
+    else {
+        my $fh = IO::Handle->new;
+        if ( $fh->fdopen( fileno(STDIN), 'r' ) ) {
+            return $fh;
+        }
+        else {
+            croak "Cannot get a filehandle for STDIN";
+        }
+    }
+}
+
 has output_fh => (
-    is      => 'ro',
-    isa     => IO,
-    lazy    => 1,
-    coerce  => 1,
-    builder => '_build_output_fh',
+    is         => 'ro',
+    isa        => IO,
+    lazy_build => 1,
+    coerce     => 1,
 );
 
 sub _build_output_fh {
@@ -260,7 +260,7 @@ sub filter_line {
         return 1;
     }
 
-    if ( my ($cmd) = ($line =~ /^=(\w+)\s/) ) {
+    if ( my ($cmd) = ( $line =~ /^=(\w+)\s/ ) ) {
         $mode = $self->mode( $cmd eq 'cut' ? 'default' : 'pod' );
 
         if ( $self->in_pod ) {
