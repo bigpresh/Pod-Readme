@@ -4,7 +4,7 @@ Pod::Readme - Generate a README file from POD
 
 =head1 VERSION
 
-v1.0.0_03
+v1.0.0_04
 
 =head1 SYNOPSIS
 
