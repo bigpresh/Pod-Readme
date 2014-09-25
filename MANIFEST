@@ -20,6 +20,7 @@ lib/Pod/Readme/Plugin.pm
 lib/Pod/Readme/Plugin/changes.pm
 lib/Pod/Readme/Plugin/requires.pm
 lib/Pod/Readme/Plugin/version.pm
+lib/Pod/Readme/Types.pm
 Makefile.PL
 MANIFEST
 MANIFEST.SKIP

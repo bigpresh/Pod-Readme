@@ -9,6 +9,8 @@ use Try::Tiny;
 
 use version 0.77; our $VERSION = version->declare('v1.0.0_04');
 
+use Pod::Readme::Types qw/ Indentation /;
+
 =head1 NAME
 
 Pod::Readme::Plugin - plugin role for Pod::Readme
@@ -20,7 +22,7 @@ capabilities of the module.
 
 =head1 ATTRIBUTES
 
-=head2 c<verbatim_indent>
+=head2 C<verbatim_indent>
 
 The number of columns to indent a verbatim paragraph.
 
@@ -28,8 +30,8 @@ The number of columns to indent a verbatim paragraph.
 
 has verbatim_indent => (
     is      => 'ro',
-    isa     => 'Int',
-    default => 2,       # TODO: a minimum of 2
+    isa     => Indentation,
+    default => 2,
 );
 
 =head1 METHODS
@@ -129,7 +131,7 @@ sub parse_cmd_args {
         }
         else {
             $val = 1;
-            if ( ($key) = ($arg =~ /^no[_-](\w+(?:[-_]\w+)*)$/) ) {
+            if ( ($key) = ( $arg =~ /^no[_-](\w+(?:[-_]\w+)*)$/ ) ) {
                 $val = 0;
             }
             else {
@@ -319,7 +321,13 @@ Be aware that changing default values of an attribute based on
 arguments means that the next time a plugin method is run, the
 defaults will be changed.
 
+=head1 SEE ALSO
+
+Custom types in L<Pod::Readme::Types> may be useful for writing
+plugins.
+
 =cut
+
 
 use namespace::autoclean;
 

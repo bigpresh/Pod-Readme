@@ -1,5 +1,14 @@
 Revision history for Pod-Readme
 
+v1.0.0_04
+  [Documentation]
+  - Fixed POD errors.
+
+  [Other Changes]
+  - Minor internal code tweaks.
+
+  - Use types with stricter constraints.
+
 v1.0.0_03 2014-09-24 21:14 BST
   [Bug Fixes]
   - The tests for the requires plugin handle non-author builds.

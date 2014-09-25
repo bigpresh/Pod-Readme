@@ -8,6 +8,8 @@ use Path::Class;
 
 use version 0.77; our $VERSION = version->declare('v1.0.0_04');
 
+use Pod::Readme::Types qw/ HeadingLevel /;
+
 =head1 NAME
 
 Pod::Readme::Plugin::changes - include latest Changes in README
@@ -82,7 +84,7 @@ has 'changes_verbatim' => (
 
 has 'changes_heading_level' => (
     is      => 'rw',
-    isa     => 'Int',    # 1..3
+    isa     => HeadingLevel,
     default => 1,
 );
 

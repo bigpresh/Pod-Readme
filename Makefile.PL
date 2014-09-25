@@ -46,6 +46,7 @@ requires(
     'Path::Class'                => 0.33,
     'Pod::Simple'                => 0,
     'Try::Tiny'                  => 0,
+    'Type::Tiny'                 => 0,
     'version'                    => 0.77,
 );
 
@@ -53,6 +54,7 @@ recommends(
     'Pod::Simple::LaTeX' => 0,
     'Pod::Man'           => 0,
     'Pod::Markdown'      => 0,
+    'Type::Tiny::XS'     => 0,
 );
 
 # Note: test_requires is an alias for build_requires, so we don't need

@@ -15,6 +15,8 @@ use Try::Tiny;
 
 use version 0.77; our $VERSION = version->declare('v1.0.0_04');
 
+use Pod::Readme::Types qw/ TargetName /;
+
 =head1 NAME
 
 Pod::Readme::Filter - Filter README from POD
@@ -111,11 +113,9 @@ sub _build_output_fh {
     }
 }
 
-# TODO: target format names should be \w+
-
 has target => (
     is      => 'ro',
-    isa     => 'Str',
+    isa     => TargetName,
     default => 'readme',
 );
 

@@ -92,6 +92,8 @@ This distribution requires the following modules:
 
 =item * L<Try::Tiny>
 
+=item * L<Type::Tiny>
+
 =back
 
 This distribution recommends the following modules:
@@ -104,23 +106,11 @@ This distribution recommends the following modules:
 
 =item * L<Pod::Simple::LaTeX>
 
+=item * L<Type::Tiny::XS>
+
 =back
 
 =head1 RECENT CHANGES
-
-=head2 Bug Fixes
-
-=over 4
-
-=item * 
-
-The tests for the requires plugin handle non-author builds.
-
-=item * 
-
-Fix for tests on some systems.
-
-=back
 
 =head2 Documentation
 
@@ -128,21 +118,7 @@ Fix for tests on some systems.
 
 =item * 
 
-Consistent names in POD.
-
-=item * 
-
-Fixed typos in Changes file.
-
-=back
-
-=head2 Enhancements
-
-=over 4
-
-=item * 
-
-Show path of missing META.yml file in requires plugin.
+Fixed POD errors.
 
 =back
 
@@ -152,23 +128,11 @@ Show path of missing META.yml file in requires plugin.
 
 =item * 
 
-Added hooks for author tests in Makefile.PL.
+Minor internal code tweaks.
 
 =item * 
 
-Fixed license metadata error to make CPANTS happy, and to be consistent with license in the POD.
-
-=item * 
-
-Tests use Exporter instead of Exporter::Lite.
-
-=item * 
-
-Tests use Test::Kit rather than Test::Most, and explicitly import the tests modules that they use.
-
-=item * 
-
-Removed redundant prereqs from Makefile.PL.
+Use types with stricter constraints.
 
 =back
 
