@@ -10,7 +10,7 @@ use IO qw/ Handle /;
 use Path::Class;
 use Scalar::Util qw/ blessed /;
 use Type::Tiny;
-use Types::Standard qw/ GlobRef FileHandle Str /;
+use Types::Standard qw/ FileHandle Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
@@ -128,6 +128,12 @@ sub File {
     return $type->plus_coercions( Str, sub { file($_) }, );
 }
 
+=head2 C<IO>
+
+An L<IO::Handle> or L<IO::String> object.
+
+=cut
+
 sub IO {
     state $type = Type::Tiny->new(
         name       => 'IO',
@@ -140,10 +146,18 @@ sub IO {
     return $type;
 }
 
+=head2 C<ReadIO>
+
+=head2 C<WriteIO>
+
+L</IO> types, which coerce filehandles to read/write L<IO:Handles>,
+respectively.
+
+=cut
+
 sub ReadIO {
     state $type = IO->plus_coercions(    #
         FileHandle, sub { IO::Handle->new_from_fd( $_, 'r' ) },
-        GlobRef,    sub { IO::Handle->new_from_fd( $_, 'w' ) },
     );
     return $type;
 }
@@ -151,7 +165,6 @@ sub ReadIO {
 sub WriteIO {
     state $type = IO->plus_coercions(    #
         FileHandle, sub { IO::Handle->new_from_fd( $_, 'w' ) },
-        GlobRef,    sub { IO::Handle->new_from_fd( $_, 'w' ) },
     );
     return $type;
 }
