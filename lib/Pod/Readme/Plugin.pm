@@ -129,8 +129,7 @@ sub parse_cmd_args {
         }
         else {
             $val = 1;
-            if ( $arg =~ /^no[_-](\w+(?:[-_]\w+)*)$/ ) {
-                $key = $1;
+            if ( ($key) = ($arg =~ /^no[_-](\w+(?:[-_]\w+)*)$/) ) {
                 $val = 0;
             }
             else {

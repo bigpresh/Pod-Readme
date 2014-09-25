@@ -260,8 +260,7 @@ sub filter_line {
         return 1;
     }
 
-    if ( $line =~ /^=(\w+)\s/ ) {
-        my $cmd = $1;
+    if ( my ($cmd) = ($line =~ /^=(\w+)\s/) ) {
         $mode = $self->mode( $cmd eq 'cut' ? 'default' : 'pod' );
 
         if ( $self->in_pod ) {
