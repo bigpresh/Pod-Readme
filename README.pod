@@ -112,6 +112,16 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
+=head2 Bug Fixes
+
+=over 4
+
+=item * 
+
+Fixed argument name for include command.
+
+=back
+
 =head2 Documentation
 
 =over 4

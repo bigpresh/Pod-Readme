@@ -347,7 +347,7 @@ sub cmd_continue {
 sub cmd_include {
     my ( $self, @args ) = @_;
 
-    my $res = $self->parse_cmd_args( [qw/ file stype start stop /], @args );
+    my $res = $self->parse_cmd_args( [qw/ file type start stop /], @args );
 
     my $start = $res->{start};
     $start = qr/${start}/ if $start;
