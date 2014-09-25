@@ -67,7 +67,7 @@ isa_ok $prf = $class->new(
     ok my $parser = Pod::Readme->new, 'new (no args)';
     $parser->parse_from_file($source, $dest);
 
-    ok !compare($dest, 't/data/README.txt'), 'expected output';
+    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
 
   } 'parse_from_file';
 
@@ -78,7 +78,7 @@ isa_ok $prf = $class->new(
 
     Pod::Readme->parse_from_file($source, $dest);
 
-    ok !compare($dest, 't/data/README.txt'), 'expected output';
+    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
 
   } 'parse_from_file (class method)';
 
@@ -91,7 +91,7 @@ isa_ok $prf = $class->new(
     ok my $parser = Pod::Readme->new, 'new (no args)';
     $parser->parse_from_filehandle($source_fh, $dest_fh);
 
-    ok !compare($dest, 't/data/README.txt'), 'expected output';
+    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
 
     close $source_fh;
 
@@ -105,7 +105,7 @@ isa_ok $prf = $class->new(
 
     Pod::Readme->parse_from_filehandle($source_fh, $dest_fh);
 
-    ok !compare($dest, 't/data/README.txt'), 'expected output';
+    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
 
     close $source_fh;
 

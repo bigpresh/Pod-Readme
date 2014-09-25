@@ -16,7 +16,7 @@ include 'File::Temp' => {
 };
 
 include 'File::Compare' => {
-    import => [qw/ compare /],
+    import => [qw/ compare_text /],
 };
 
 include 'Path::Class';

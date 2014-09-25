@@ -120,6 +120,10 @@ This distribution recommends the following modules:
 
 Fixed argument name for include command.
 
+=item * 
+
+Changed tests to compare files with handle different Windows line endings.
+
 =back
 
 =head2 Documentation

@@ -4,6 +4,9 @@ v1.0.0_04
   [Bug Fixes]
   - Fixed argument name for include command.
 
+  - Changed tests to compare files with handle different Windows line
+    endings.
+
   [Documentation]
   - Fixed POD errors.
 
