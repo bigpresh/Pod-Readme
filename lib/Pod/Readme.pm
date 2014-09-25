@@ -182,10 +182,12 @@ use Carp;
 use IO qw/ File Handle /;
 use Module::Load qw/ load /;
 use MooseX::Types::IO 'IO';
-use MooseX::Types::Path::Class;
 use Path::Class;
+use Types::Standard qw/ Maybe Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
+
+use Pod::Readme::Types qw/ File /;
 
 =head1 ATTRIBUTES
 
@@ -205,7 +207,7 @@ Only subclasses of L<Pod::Simple> are supported.
 
 has translation_class => (
     is      => 'ro',
-    isa     => 'Maybe[Str]',
+    isa     => Maybe [Str],
     default => undef,
 );
 
@@ -246,7 +248,7 @@ then it will be saved to C<STDOUT>.
 
 has translate_to_file => (
     is      => 'ro',
-    isa     => 'Path::Class::File',
+    isa     => File,
     coerce  => 1,
     lazy    => 1,
     builder => 'default_readme_file',

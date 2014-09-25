@@ -3,10 +3,11 @@ package Pod::Readme::Plugin::version;
 use Moose::Role;
 
 use ExtUtils::MakeMaker;
+use Types::Standard qw/ Bool Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
-use Pod::Readme::Types qw/ HeadingLevel /;
+use Pod::Readme::Types qw/ File HeadingLevel /;
 
 =head1 NAME
 
@@ -42,7 +43,7 @@ requires 'parse_cmd_args';
 
 has 'version_file' => (
     is       => 'rw',
-    isa      => 'Path::Class::File',
+    isa      => File,
     required => 0,
     coerce   => 1,
     lazy     => 1,
@@ -54,7 +55,7 @@ has 'version_file' => (
 
 has 'version_title' => (
     is      => 'rw',
-    isa     => 'Str',
+    isa     => Str,
     default => 'VERSION',
 );
 
@@ -66,7 +67,7 @@ has 'version_heading_level' => (
 
 has 'version_run' => (
     is      => 'rw',
-    isa     => 'Bool',
+    isa     => Bool,
     default => 0,
 );
 

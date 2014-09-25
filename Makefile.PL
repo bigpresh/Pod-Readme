@@ -30,6 +30,7 @@ build_requires(
 );
 
 requires(
+    'Carp'                       => 0,
     'CPAN::Changes'              => '0.30',
     'CPAN::Meta'                 => 0,
     'ExtUtils::MakeMaker'        => 6.56,
@@ -41,12 +42,13 @@ requires(
     'Moose'                      => 0,
     'MooseX::Object::Pluggable'  => 0,
     'MooseX::Types::IO'          => 0,
-    'MooseX::Types::Path::Class' => 0,
     'namespace::autoclean'       => 0,
     'Path::Class'                => 0.33,
     'Pod::Simple'                => 0,
+    'Scalar::Util'               => 0,
     'Try::Tiny'                  => 0,
     'Type::Tiny'                 => 0,
+    'Types::Standard'            => 0,
     'version'                    => 0.77,
 );
 

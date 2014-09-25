@@ -10,12 +10,13 @@ use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
 use MooseX::Types::IO 'IO';
-use MooseX::Types::Path::Class;
+use Path::Class;
 use Try::Tiny;
+use Types::Standard qw/ Bool Int RegexpRef Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
-use Pod::Readme::Types qw/ TargetName /;
+use Pod::Readme::Types qw/ Dir File TargetName /;
 
 =head1 NAME
 
@@ -42,27 +43,27 @@ L<Pod::Readme>.
 
 has encoding => (
     is      => 'ro',
-    isa     => 'Str',
+    isa     => Str,
     default => ':utf8',
 );
 
 has base_dir => (
     is      => 'ro',
-    isa     => 'Path::Class::Dir',
+    isa     => Dir,
     coerce  => 1,
     default => '.',
 );
 
 has input_file => (
     is       => 'ro',
-    isa      => 'Path::Class::File',
+    isa      => File,
     required => 0,
     coerce   => 1,
 );
 
 has output_file => (
     is       => 'ro',
-    isa      => 'Path::Class::File',
+    isa      => File,
     required => 0,
     coerce   => 1,
 );
@@ -121,7 +122,7 @@ has target => (
 
 has in_target => (
     is       => 'ro',
-    isa      => 'Bool',
+    isa      => Bool,
     traits   => [qw/ Bool /],
     init_arg => undef,
     default  => 1,
@@ -133,7 +134,7 @@ has in_target => (
 
 has _target_regex => (
     is       => 'ro',
-    isa      => 'Regexp',
+    isa      => RegexpRef,
     init_arg => undef,
     lazy     => 1,
     default  => sub {
@@ -145,14 +146,14 @@ has _target_regex => (
 
 has mode => (
     is       => 'rw',
-    isa      => 'Str',
+    isa      => Str,
     default  => 'default',
     init_arg => undef,
 );
 
 has _line_no => (
     is      => 'ro',
-    isa     => 'Int',
+    isa     => Int,
     traits  => [qw/ Counter /],
     default => 0,
     handles => { _inc_line_no => 'inc', },
@@ -171,7 +172,7 @@ sub in_pod {
 
 has _for_buffer => (
     is       => 'rw',
-    isa      => 'Str',
+    isa      => Str,
     init_arg => undef,
     default  => '',
     traits   => [qw/ String /],
@@ -183,7 +184,7 @@ has _for_buffer => (
 
 has _begin_args => (
     is       => 'rw',
-    isa      => 'Str',
+    isa      => Str,
     init_arg => undef,
     default  => '',
     traits   => [qw/ String /],

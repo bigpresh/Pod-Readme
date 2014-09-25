@@ -13,6 +13,8 @@ v1.0.1_01
   [Enhancements]
   - Use types with stricter constraints.
 
+  - Switched to use Type::Tiny-based types.
+
   [Other Changes]
   - Minor internal code tweaks.
 

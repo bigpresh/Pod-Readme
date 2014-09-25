@@ -78,8 +78,6 @@ This distribution requires the following modules:
 
 =item * L<MooseX::Types::IO>
 
-=item * L<MooseX::Types::Path::Class>
-
 =item * L<namespace::autoclean>
 
 =item * L<Path::Class> (version 0.33)
@@ -93,6 +91,8 @@ This distribution requires the following modules:
 =item * L<Try::Tiny>
 
 =item * L<Type::Tiny>
+
+=item * L<Types::Standard>
 
 =back
 
@@ -143,6 +143,10 @@ Fixed POD errors.
 =item * 
 
 Use types with stricter constraints.
+
+=item * 
+
+Switched to use Type::Tiny-based types.
 
 =back
 

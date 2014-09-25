@@ -6,11 +6,14 @@ use strict;
 use warnings;
 
 use Exporter qw/ import /;
+use Path::Class;
+use Scalar::Util qw/ blessed /;
 use Type::Tiny;
+use Types::Standard qw/ Str /;
 
 use version 0.77; our $VERSION = version->declare('v1.0.1_01');
 
-our @EXPORT_OK = qw/ Indentation HeadingLevel TargetName /;
+our @EXPORT_OK = qw/ Dir File Indentation HeadingLevel TargetName /;
 
 =head1 NAME
 
@@ -84,6 +87,47 @@ sub TargetName {
         message    => sub { 'must be an alphanumeric string' },
     );
     return $type;
+}
+
+=head2 C<Dir>
+
+A directory. Can be a string or L<Path::Class::Dir> object.
+
+=cut
+
+sub Dir {
+    state $type = Type::Tiny->new(
+        name       => 'Dir',
+        constraint => sub {
+            blessed($_)
+              && $_->isa('Path::Class::Dir')
+              && -d $_;
+        },
+        message => sub { 'must be be a directory' },
+    );
+    return $type->plus_coercions(
+      Str, sub { dir($_) },
+    );
+}
+
+=head2 C<File>
+
+A file. Can be a string or L<Path::Class::File> object.
+
+=cut
+
+sub File {
+    state $type = Type::Tiny->new(
+        name       => 'File',
+        constraint => sub {
+            blessed($_)
+              && $_->isa('Path::Class::File');
+        },
+        message => sub { 'must be be a file' },
+    );
+    return $type->plus_coercions(
+      Str, sub { file($_) },
+    );
 }
 
 1;
