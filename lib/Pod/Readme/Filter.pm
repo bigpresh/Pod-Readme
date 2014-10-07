@@ -3,6 +3,12 @@ package Pod::Readme::Filter;
 use v5.10.1;
 
 use Moo;
+
+{
+    use version 0.77;
+    $Pod::Readme::Filter::VERSION = version->declare('v1.0.1_02');
+}
+
 use MooX::HandlesVia;
 with 'Pod::Readme::Plugin';
 
@@ -13,8 +19,6 @@ use Module::Load qw/ load /;
 use Path::Class;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
-
-use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 use Pod::Readme::Types qw/ Dir File ReadIO WriteIO TargetName /;
 

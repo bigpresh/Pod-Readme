@@ -2,12 +2,15 @@ package Pod::Readme::Plugin::requires;
 
 use Moo::Role;
 
+{
+    use version 0.77;
+    $Pod::Readme::Plugin::requires::VERSION = version->declare('v1.0.1_02');
+}
+
 use CPAN::Meta;
 use Module::CoreList;
 use Path::Class;
 use Types::Standard qw/ Bool Str /;
-
-use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 use Pod::Readme::Types qw/ File HeadingLevel /;
 

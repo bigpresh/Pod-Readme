@@ -6,6 +6,10 @@ v1.0.1_02
 
   - Updated README.pod.
 
+  [Other Changes]
+  - Changed how versions are defined in modules, to handle quirks of
+    namespace::autoclean.
+
 v1.0.1_01 2014-10-08 00:26 BST
   [Bug Fixes]
   - Fixed argument name for include command.

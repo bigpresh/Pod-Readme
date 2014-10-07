@@ -2,10 +2,13 @@ package Pod::Readme::Plugin::version;
 
 use Moo::Role;
 
+{
+    use version 0.77;
+    $Pod::Readme::Plugin::version::VERSION = version->declare('v1.0.1_02');
+}
+
 use ExtUtils::MakeMaker;
 use Types::Standard qw/ Bool Str /;
-
-use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 use Pod::Readme::Types qw/ File HeadingLevel /;
 

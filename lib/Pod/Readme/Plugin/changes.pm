@@ -2,11 +2,14 @@ package Pod::Readme::Plugin::changes;
 
 use Moo::Role;
 
+{
+    use version 0.77;
+    $Pod::Readme::Plugin::changes::VERSION = version->declare('v1.0.1_02');
+}
+
 use CPAN::Changes 0.30;
 use Path::Class;
 use Types::Standard qw/ Bool Str /;
-
-use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 use Pod::Readme::Types qw/ File HeadingLevel /;
 
