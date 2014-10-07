@@ -8,7 +8,7 @@ use Class::Method::Modifiers qw/ fresh /;
 use Hash::Util qw/ lock_keys /;
 use Try::Tiny;
 
-use version 0.77; our $VERSION = version->declare('v1.0.1_01');
+use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 use Pod::Readme::Types qw/ Indentation /;
 

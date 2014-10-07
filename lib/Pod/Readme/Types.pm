@@ -12,7 +12,7 @@ use Scalar::Util qw/ blessed /;
 use Type::Tiny;
 use Types::Standard qw/ FileHandle Str /;
 
-use version 0.77; our $VERSION = version->declare('v1.0.1_01');
+use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 our @EXPORT_OK =
   qw/ Dir File Indentation IO ReadIO WriteIO HeadingLevel TargetName /;

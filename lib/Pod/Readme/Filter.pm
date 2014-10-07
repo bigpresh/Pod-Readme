@@ -14,7 +14,7 @@ use Path::Class;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
 
-use version 0.77; our $VERSION = version->declare('v1.0.1_01');
+use version 0.77; our $VERSION = version->declare('v1.0.1_02');
 
 use Pod::Readme::Types qw/ Dir File ReadIO WriteIO TargetName /;
 
