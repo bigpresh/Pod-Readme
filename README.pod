@@ -4,7 +4,7 @@ Pod::Readme - Generate a README file from POD
 
 =head1 VERSION
 
-v1.0.1_01
+v1.0.1_02
 
 =head1 SYNOPSIS
 
@@ -64,6 +64,8 @@ This distribution requires the following modules:
 
 =over 4
 
+=item * L<Class::Method::Modifiers>
+
 =item * L<CPAN::Changes> (version 0.30)
 
 =item * L<CPAN::Meta>
@@ -72,9 +74,11 @@ This distribution requires the following modules:
 
 =item * L<Getopt::Long::Descriptive>
 
-=item * L<Moose>
+=item * L<Moo>
 
-=item * L<MooseX::Object::Pluggable>
+=item * L<Moo::Role>
+
+=item * L<MooX::HandlesVia>
 
 =item * L<namespace::autoclean>
 
@@ -130,7 +134,7 @@ Changed tests to compare files so they handle different Windows line endings.
 
 =item * 
 
-Fixed POD errors.
+Fixed POD errors and typos.
 
 =back
 
@@ -140,11 +144,11 @@ Fixed POD errors.
 
 =item * 
 
-Use types with stricter constraints.
+Switched to use Type::Tiny-based types, with stricter constraints.
 
 =item * 
 
-Switched to use Type::Tiny-based types.
+Switched to use Moo instead of Moose.
 
 =back
 
