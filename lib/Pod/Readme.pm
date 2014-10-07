@@ -219,8 +219,9 @@ The L<IO::Handle> to save the translated file to.
 has translate_to_fh => (
     is         => 'ro',
     isa        => WriteIO,
-    lazy_build => 1,
-    coerce     => 1,
+    lazy => 1,
+    builder => '_build_translate_to_fh',
+    coerce     => sub { WriteIO->coerce(@_) },
 );
 
 sub _build_translate_to_fh {
@@ -249,7 +250,7 @@ then it will be saved to C<STDOUT>.
 has translate_to_file => (
     is      => 'ro',
     isa     => File,
-    coerce  => 1,
+    coerce  => sub { File->coerce(@_) },
     lazy    => 1,
     builder => 'default_readme_file',
 );

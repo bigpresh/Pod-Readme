@@ -275,12 +275,12 @@ compatability with older POD parsers.
 
 =head1 WRITING PLUGINS
 
-Writing plugins is straightforward. Plugins are L<Moose::Role> modules
+Writing plugins is straightforward. Plugins are L<Moo::Role> modules
 in the C<Pod::Readme::Plugin> namespace.  For example,
 
   package Pod::Readme::Plugin::myplugin;
 
-  use Moose::Role;
+  use Moo::Role;
 
   sub cmd_myplugin {
       my ($self, @args) = @_;
@@ -307,15 +307,19 @@ writes output using the write methods noted above.
 See some of the included plugins, such as
 L<Pod::Readme::Plugin::version> for examples.
 
-Any attributes it the plugin should be prefixed with the name of the
+Any attributes in the plugin should be prefixed with the name of the
 plugin, to avoid any conflicts with attribute and method names from
 other plugins, e.g.
 
   has 'myplugin_heading_level' => (
     is      => 'rw',
-    isa     => 'Int',
+    isa     => Int,
     default => 1,
+    lazy    => 1,
   );
+
+Attributes should be lazy to ensure that their defaults are properly
+set.
 
 Be aware that changing default values of an attribute based on
 arguments means that the next time a plugin method is run, the

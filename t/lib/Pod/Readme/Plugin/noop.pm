@@ -24,12 +24,14 @@ requires 'parse_cmd_args';
 has noop_bool => (
     is      => 'rw',
     isa     => Bool,
+    lazy    => 1,
     default => 0,
 );
 
 has noop_str => (
     is      => 'rw',
     isa     => Str,
+    lazy    => 1,
     default => '',
 );
 

@@ -9,14 +9,6 @@ isa_ok $prf = $class->new(
  ), $class;
 
 {
-   is_deeply
-        [ $prf->_plugin_app_ns ],
-        [$class, "${class}::Filter" ],
-        'plugin namespace';
-
-}
-
-{
     ok !$prf->can('cmd_noop'), 'no noop';
 
     filter_lines('=for readme plugin noop');

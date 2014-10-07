@@ -50,7 +50,7 @@ has encoding => (
 has base_dir => (
     is      => 'ro',
     isa     => Dir,
-    coerce  => sub { Dir->coerce(shift) },
+    coerce  => sub { Dir->coerce(@_) },
     default => '.',
 );
 
@@ -58,14 +58,14 @@ has input_file => (
     is       => 'ro',
     isa      => File,
     required => 0,
-#    coerce   => 1,
+    coerce   => sub { File->coerce(@_) },
 );
 
 has output_file => (
     is       => 'ro',
     isa      => File,
     required => 0,
-#    coerce   => 1,
+    coerce   => sub { File->coerce(@_) },
 );
 
 has input_fh => (
@@ -73,7 +73,7 @@ has input_fh => (
     isa        => ReadIO,
     lazy => 1,
     builder => '_build_input_fh',
-#    coerce     => 1,
+    coerce   => sub { ReadIO->coerce(@_) },
 );
 
 sub _build_input_fh {
@@ -93,11 +93,11 @@ sub _build_input_fh {
 }
 
 has output_fh => (
-    is         => 'ro',
-    isa        => WriteIO,
-    lazy => 1,
-    builder => => '_build_output_fh',
-#    coerce     => 1,
+    is      => 'ro',
+    isa     => WriteIO,
+    lazy    => 1,
+    builder => '_build_output_fh',
+    coerce  => sub { WriteIO->coerce(@_) },
 );
 
 sub _build_output_fh {
@@ -128,18 +128,7 @@ has in_target => (
     init_arg => undef,
     default  => 1,
     writer   => '_set_in_target',
-    # TODO: use handles_via
 );
-
-sub cmd_start {
-    my ($self) = @_;
-    $self->_set_in_target(1);
-}
-
-sub cmd_stop {
-    my ($self) = @_;
-    $self->_set_in_target(0);
-}
 
 has _target_regex => (
     is       => 'ro',
@@ -164,11 +153,12 @@ has _line_no => (
     is      => 'ro',
     isa     => Int,
     default => 0,
+    writer  => '_set_line_no',
 );
 
 sub _inc_line_no {
     my ($self) = @_;
-    $self->_line_no( 1 + $self->_line_no );
+    $self->_set_line_no( 1 + $self->_line_no );
 }
 
 sub write {
@@ -400,12 +390,23 @@ sub cmd_include {
 
 }
 
+sub cmd_start {
+    my ($self) = @_;
+    $self->_set_in_target(1);
+}
+
+sub cmd_stop {
+    my ($self) = @_;
+    $self->_set_in_target(0);
+}
+
 sub _load_plugin {
     my ($self, $plugin) = @_;
     try {
         my $module = "Pod::Readme::Plugin::${plugin}";
         load $module;
-        $self->with($module);
+        require Role::Tiny;
+        Role::Tiny->apply_roles_to_object($self, $module );
     } catch {
         die "Unable to locate plugin '${plugin}'\n";
     };
