@@ -70,6 +70,8 @@ This distribution requires the following modules:
 
 =item * L<CPAN::Meta>
 
+=item * L<Exporter::Lite>
+
 =item * L<File::Slurp>
 
 =item * L<Getopt::Long::Descriptive>
@@ -114,41 +116,17 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
-=head2 Bug Fixes
-
-=over 4
-
-=item * 
-
-Fixed argument name for include command.
-
-=item * 
-
-Changed tests to compare files so they handle different Windows line endings.
-
-=back
-
 =head2 Documentation
 
 =over 4
 
 =item * 
 
-Fixed POD errors and typos.
-
-=back
-
-=head2 Enhancements
-
-=over 4
+Added missing timestamp to Changes.
 
 =item * 
 
-Switched to use Type::Tiny-based types, with stricter constraints.
-
-=item * 
-
-Switched to use Moo instead of Moose.
+Updated README.pod.
 
 =back
 
@@ -158,7 +136,11 @@ Switched to use Moo instead of Moose.
 
 =item * 
 
-Minor internal code tweaks.
+Changed how versions are defined in modules, to handle quirks of namespace::autoclean.
+
+=item * 
+
+Changed to use Exporter::Lite.
 
 =back
 
