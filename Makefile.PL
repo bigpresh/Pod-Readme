@@ -19,7 +19,7 @@ resources(
 configure_requires();
 
 build_requires(
-    'Exporter'        => 0,
+    'Exporter::Lite'  => 0,
     'File::Compare'   => 0,
     'File::Temp'      => 0,
     'Test::Deep'      => 0,
@@ -34,6 +34,7 @@ requires(
     'Class::Method::Modifiers'  => 0,
     'CPAN::Changes'             => '0.30',
     'CPAN::Meta'                => 0,
+    'Exporter::Lite'            => 0,
     'ExtUtils::MakeMaker'       => 6.56,
     'File::Slurp'               => 0,
     'Getopt::Long::Descriptive' => 0,
