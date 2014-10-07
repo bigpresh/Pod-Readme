@@ -7,7 +7,7 @@ use warnings;
 
 {
     use version 0.77;
-    $Pod::Readme::Types::VERSION = version->declare('v1.0.1_02');
+    $Pod::Readme::Types::VERSION = version->declare('v1.0.1_03');
 }
 
 use Exporter::Lite;
