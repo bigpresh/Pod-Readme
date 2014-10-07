@@ -1,5 +1,11 @@
 Revision history for Pod-Readme
 
+v1.0.1_02
+  [Documentation]
+  - Added missing timestamp to Changes.
+
+  - Updated README.pod.
+
 v1.0.1_01 2014-10-08 00:26 BST
   [Bug Fixes]
   - Fixed argument name for include command.
