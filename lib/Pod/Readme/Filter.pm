@@ -2,13 +2,14 @@ package Pod::Readme::Filter;
 
 use v5.10.1;
 
-use Moose;
-with 'MooseX::Object::Pluggable';
+use Moo;
+use MooX::HandlesVia;
 with 'Pod::Readme::Plugin';
 
 use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
+use Module::Load qw/ load /;
 use Path::Class;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
@@ -49,7 +50,7 @@ has encoding => (
 has base_dir => (
     is      => 'ro',
     isa     => Dir,
-    coerce  => 1,
+    coerce  => sub { Dir->coerce(shift) },
     default => '.',
 );
 
@@ -57,21 +58,21 @@ has input_file => (
     is       => 'ro',
     isa      => File,
     required => 0,
-    coerce   => 1,
+#    coerce   => 1,
 );
 
 has output_file => (
     is       => 'ro',
     isa      => File,
     required => 0,
-    coerce   => 1,
+#    coerce   => 1,
 );
 
 has input_fh => (
     is         => 'ro',
     isa        => ReadIO,
     lazy_build => 1,
-    coerce     => 1,
+#    coerce     => 1,
 );
 
 sub _build_input_fh {
@@ -94,7 +95,7 @@ has output_fh => (
     is         => 'ro',
     isa        => WriteIO,
     lazy_build => 1,
-    coerce     => 1,
+#    coerce     => 1,
 );
 
 sub _build_output_fh {
@@ -122,7 +123,7 @@ has target => (
 has in_target => (
     is       => 'ro',
     isa      => Bool,
-    traits   => [qw/ Bool /],
+    handles_via => 'Bool',
     init_arg => undef,
     default  => 1,
     handles  => {
@@ -153,10 +154,13 @@ has mode => (
 has _line_no => (
     is      => 'ro',
     isa     => Int,
-    traits  => [qw/ Counter /],
     default => 0,
-    handles => { _inc_line_no => 'inc', },
 );
+
+sub _inc_line_no {
+    my ($self) = @_;
+    $self->_line_no( 1 + $self->_line_no );
+}
 
 sub write {
     my ( $self, $line ) = @_;
@@ -387,11 +391,14 @@ sub cmd_include {
 
 }
 
-around _build_plugin_app_ns => sub {
-    my ( $orig, $self ) = @_;
-    my $names = $self->$orig;
-    [ @{$names} ];
-};
+sub _load_plugin {
+    my ($self, $plugin) = @_;
+    try {
+        load "Pod::Readme::Plugin::${plugin}";
+    } catch {
+        die "Cannot find plugin: ${plugin}";
+    };
+}
 
 sub cmd_plugin {
     my ( $self, $plugin, @args ) = @_;

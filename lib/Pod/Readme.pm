@@ -175,7 +175,7 @@ it is not standard POD.
 
 use v5.10.1;
 
-use Moose;
+use Moo;
 extends 'Pod::Readme::Filter';
 
 use Carp;

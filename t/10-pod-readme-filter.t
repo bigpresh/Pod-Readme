@@ -12,11 +12,6 @@ isa_ok $prf = $class->new(
     can_ok($prf, "cmd_" . $_)
         for qw/ stop start continue plugin /;
 
-   is_deeply
-        [ $prf->_plugin_app_ns ],
-        [ $class],
-        'plugin namespace';
-
     ok $prf->in_target, 'default in target';
     is $prf->mode, 'default', 'mode';
 

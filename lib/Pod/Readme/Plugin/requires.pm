@@ -1,6 +1,6 @@
 package Pod::Readme::Plugin::requires;
 
-use Moose::Role;
+use Moo::Role;
 
 use CPAN::Meta;
 use Module::CoreList;

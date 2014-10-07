@@ -1,6 +1,6 @@
 package Pod::Readme::Plugin::changes;
 
-use Moose::Role;
+use Moo::Role;
 
 use CPAN::Changes 0.30;
 use Path::Class;

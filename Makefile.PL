@@ -31,6 +31,7 @@ build_requires(
 
 requires(
     'Carp'                       => 0,
+    'Class::Method::Modifiers'   => 0,
     'CPAN::Changes'              => '0.30',
     'CPAN::Meta'                 => 0,
     'ExtUtils::MakeMaker'        => 6.56,
@@ -39,8 +40,10 @@ requires(
     'Hash::Util'                 => 0,
     'IO'                         => 0,
     'Module::CoreList'           => 0,
-    'Moose'                      => 0,
-    'MooseX::Object::Pluggable'  => 0,
+    'Module::Load' => 0,
+    'Moo' => 0,
+    'Moo::Role' => 0,
+    'MooX::HandlesVia' => 0,
     'namespace::autoclean'       => 0,
     'Path::Class'                => 0.33,
     'Pod::Simple'                => 0,

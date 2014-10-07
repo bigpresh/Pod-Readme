@@ -1,6 +1,6 @@
 package Pod::Readme::Plugin::version;
 
-use Moose::Role;
+use Moo::Role;
 
 use ExtUtils::MakeMaker;
 use Types::Standard qw/ Bool Str /;

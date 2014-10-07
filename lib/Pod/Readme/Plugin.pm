@@ -2,8 +2,9 @@ package Pod::Readme::Plugin;
 
 use v5.10.1;
 
-use Moose::Role;
+use Moo::Role;
 
+use Class::Method::Modifiers qw/ fresh /;
 use Hash::Util qw/ lock_keys /;
 use Try::Tiny;
 
@@ -247,13 +248,12 @@ compatability with older POD parsers.
 =cut
 
 {
-    my $meta = __PACKAGE__->meta;
     foreach my $cmd (
         qw/ head1 head2 head3 head4
         over item begin end for encoding /
       )
     {
-        $meta->add_method(
+        fresh(
             "write_${cmd}" => sub {
                 my ( $self, $text ) = @_;
                 $text //= '';
@@ -263,7 +263,7 @@ compatability with older POD parsers.
     }
 
     foreach my $cmd (qw/ pod back cut  /) {
-        $meta->add_method(
+        fresh(
             "write_${cmd}" => sub {
                 my ($self) = @_;
                 $self->_write_cmd( '=' . $cmd );
