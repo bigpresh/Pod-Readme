@@ -450,6 +450,11 @@ The original version was by Robert Rothenberg <rrwo@cpan.org> until
 In 2014, Robert Rothenberg rewrote the module to use filtering instead
 of subclassing a POD parser.
 
+=head2 Acknowledgements
+
+Thanks to people who gave feedback and suggestions to posts about the
+rewrite of this module on L<http://blogs.perl.org>.
+
 =head2 Suggestions, Bug Reporting and Contributing
 
 This module is developed on GitHub at
