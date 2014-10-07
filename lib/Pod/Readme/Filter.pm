@@ -2,13 +2,14 @@ package Pod::Readme::Filter;
 
 use v5.10.1;
 
-use Moose;
-with 'MooseX::Object::Pluggable';
+use Moo;
+use MooX::HandlesVia;
 with 'Pod::Readme::Plugin';
 
 use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
+use Module::Load qw/ load /;
 use Path::Class;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
@@ -49,7 +50,7 @@ has encoding => (
 has base_dir => (
     is      => 'ro',
     isa     => Dir,
-    coerce  => 1,
+    coerce  => sub { Dir->coerce(@_) },
     default => '.',
 );
 
@@ -57,21 +58,22 @@ has input_file => (
     is       => 'ro',
     isa      => File,
     required => 0,
-    coerce   => 1,
+    coerce   => sub { File->coerce(@_) },
 );
 
 has output_file => (
     is       => 'ro',
     isa      => File,
     required => 0,
-    coerce   => 1,
+    coerce   => sub { File->coerce(@_) },
 );
 
 has input_fh => (
     is         => 'ro',
     isa        => ReadIO,
-    lazy_build => 1,
-    coerce     => 1,
+    lazy => 1,
+    builder => '_build_input_fh',
+    coerce   => sub { ReadIO->coerce(@_) },
 );
 
 sub _build_input_fh {
@@ -91,10 +93,11 @@ sub _build_input_fh {
 }
 
 has output_fh => (
-    is         => 'ro',
-    isa        => WriteIO,
-    lazy_build => 1,
-    coerce     => 1,
+    is      => 'ro',
+    isa     => WriteIO,
+    lazy    => 1,
+    builder => '_build_output_fh',
+    coerce  => sub { WriteIO->coerce(@_) },
 );
 
 sub _build_output_fh {
@@ -122,13 +125,9 @@ has target => (
 has in_target => (
     is       => 'ro',
     isa      => Bool,
-    traits   => [qw/ Bool /],
     init_arg => undef,
     default  => 1,
-    handles  => {
-        cmd_start => 'set',
-        cmd_stop  => 'unset',
-    },
+    writer   => '_set_in_target',
 );
 
 has _target_regex => (
@@ -153,10 +152,14 @@ has mode => (
 has _line_no => (
     is      => 'ro',
     isa     => Int,
-    traits  => [qw/ Counter /],
     default => 0,
-    handles => { _inc_line_no => 'inc', },
+    writer  => '_set_line_no',
 );
+
+sub _inc_line_no {
+    my ($self) = @_;
+    $self->_set_line_no( 1 + $self->_line_no );
+}
 
 sub write {
     my ( $self, $line ) = @_;
@@ -174,7 +177,7 @@ has _for_buffer => (
     isa      => Str,
     init_arg => undef,
     default  => '',
-    traits   => [qw/ String /],
+    handles_via => 'String',
     handles  => {
         _append_for_buffer => 'append',
         _clear_for_buffer  => 'clear',
@@ -186,7 +189,7 @@ has _begin_args => (
     isa      => Str,
     init_arg => undef,
     default  => '',
-    traits   => [qw/ String /],
+    handles_via => 'String',
     handles  => { _clear_begin_args => 'clear', },
 );
 
@@ -387,16 +390,32 @@ sub cmd_include {
 
 }
 
-around _build_plugin_app_ns => sub {
-    my ( $orig, $self ) = @_;
-    my $names = $self->$orig;
-    [ @{$names} ];
-};
+sub cmd_start {
+    my ($self) = @_;
+    $self->_set_in_target(1);
+}
+
+sub cmd_stop {
+    my ($self) = @_;
+    $self->_set_in_target(0);
+}
+
+sub _load_plugin {
+    my ($self, $plugin) = @_;
+    try {
+        my $module = "Pod::Readme::Plugin::${plugin}";
+        load $module;
+        require Role::Tiny;
+        Role::Tiny->apply_roles_to_object($self, $module );
+    } catch {
+        die "Unable to locate plugin '${plugin}'\n";
+    };
+}
 
 sub cmd_plugin {
     my ( $self, $plugin, @args ) = @_;
     my $name = "cmd_${plugin}";
-    $self->load_plugin($plugin) unless $self->can($name);
+    $self->_load_plugin($plugin) unless $self->can($name);
     if ( my $method = $self->can($name) ) {
         $self->$method(@args);
     }

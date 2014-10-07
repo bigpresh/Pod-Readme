@@ -1,6 +1,7 @@
 package Pod::Readme::Plugin::noop;
 
-use Moose::Role;
+use Moo::Role;
+use Types::Standard qw/ Bool Str /;
 
 =head1 NAME
 
@@ -22,13 +23,15 @@ requires 'parse_cmd_args';
 
 has noop_bool => (
     is      => 'rw',
-    isa     => 'Bool',
+    isa     => Bool,
+    lazy    => 1,
     default => 0,
 );
 
 has noop_str => (
     is      => 'rw',
-    isa     => 'Str',
+    isa     => Str,
+    lazy    => 1,
     default => '',
 );
 

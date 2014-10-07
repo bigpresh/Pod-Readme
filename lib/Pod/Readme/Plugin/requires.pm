@@ -1,6 +1,6 @@
 package Pod::Readme::Plugin::requires;
 
-use Moose::Role;
+use Moo::Role;
 
 use CPAN::Meta;
 use Module::CoreList;
@@ -73,32 +73,37 @@ requires 'parse_cmd_args';
 has 'requires_from_file' => (
     is      => 'rw',
     isa     => File,
-    coerce  => 1,
+    coerce  => sub { File->coerce(@_) },
     default => 'META.yml',
+    lazy => 1,
 );
 
 has 'requires_title' => (
     is      => 'rw',
     isa     => Str,
     default => 'REQUIREMENTS',
+    lazy => 1,
 );
 
 has 'requires_omit_core' => (
     is      => 'rw',
     isa     => Bool,
     default => 1,
+    lazy => 1,
 );
 
 has 'requires_heading_level' => (
     is      => 'rw',
     isa     => HeadingLevel,
     default => 1,
+    lazy => 1,
 );
 
 has 'requires_run' => (
     is      => 'rw',
     isa     => Bool,
     default => 0,
+    lazy => 1,
 );
 
 sub cmd_requires {

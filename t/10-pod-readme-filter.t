@@ -12,11 +12,6 @@ isa_ok $prf = $class->new(
     can_ok($prf, "cmd_" . $_)
         for qw/ stop start continue plugin /;
 
-   is_deeply
-        [ $prf->_plugin_app_ns ],
-        [ $class],
-        'plugin namespace';
-
     ok $prf->in_target, 'default in target';
     is $prf->mode, 'default', 'mode';
 
@@ -96,10 +91,10 @@ isa_ok $prf = $class->new(
 
 {
     throws_ok {
-        filter_lines('=for readme plugin noop');
+        filter_lines('=for readme plugin noop::invalid');
         is $prf->mode, 'pod:for', 'mode';
         filter_lines('');
-    } qr/Unable to locate plugin 'noop'/, 'bad plugin';
+    } qr/Unable to locate plugin 'noop::invalid'/, 'bad plugin';
 
     is $prf->mode('pod'), 'pod', 'mode reset';
 };

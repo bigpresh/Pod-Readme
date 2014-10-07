@@ -1,6 +1,6 @@
 package Pod::Readme::Plugin::changes;
 
-use Moose::Role;
+use Moo::Role;
 
 use CPAN::Changes 0.30;
 use Path::Class;
@@ -66,32 +66,37 @@ requires 'parse_cmd_args';
 has 'changes_file' => (
     is      => 'rw',
     isa     => File,
-    coerce  => 1,
+    coerce  => sub { File->coerce(@_) },
     default => 'Changes',
+    lazy => 1,
 );
 
 has 'changes_title' => (
     is      => 'rw',
     isa     => Str,
     default => 'RECENT CHANGES',
+    lazy => 1,
 );
 
 has 'changes_verbatim' => (
     is      => 'rw',
     isa     => Bool,
     default => 0,
+    lazy => 1,
 );
 
 has 'changes_heading_level' => (
     is      => 'rw',
     isa     => HeadingLevel,
     default => 1,
+    lazy => 1,
 );
 
 has 'changes_run' => (
     is      => 'rw',
     isa     => Bool,
     default => 0,
+    lazy => 1,
 );
 
 sub cmd_changes {
