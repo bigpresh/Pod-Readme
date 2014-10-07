@@ -71,7 +71,8 @@ has output_file => (
 has input_fh => (
     is         => 'ro',
     isa        => ReadIO,
-    lazy_build => 1,
+    lazy => 1,
+    builder => '_build_input_fh',
 #    coerce     => 1,
 );
 
@@ -94,7 +95,8 @@ sub _build_input_fh {
 has output_fh => (
     is         => 'ro',
     isa        => WriteIO,
-    lazy_build => 1,
+    lazy => 1,
+    builder => => '_build_output_fh',
 #    coerce     => 1,
 );
 
@@ -123,14 +125,21 @@ has target => (
 has in_target => (
     is       => 'ro',
     isa      => Bool,
-    handles_via => 'Bool',
     init_arg => undef,
     default  => 1,
-    handles  => {
-        cmd_start => 'set',
-        cmd_stop  => 'unset',
-    },
+    writer   => '_set_in_target',
+    # TODO: use handles_via
 );
+
+sub cmd_start {
+    my ($self) = @_;
+    $self->_set_in_target(1);
+}
+
+sub cmd_stop {
+    my ($self) = @_;
+    $self->_set_in_target(0);
+}
 
 has _target_regex => (
     is       => 'ro',
@@ -178,7 +187,7 @@ has _for_buffer => (
     isa      => Str,
     init_arg => undef,
     default  => '',
-    traits   => [qw/ String /],
+    handles_via => 'String',
     handles  => {
         _append_for_buffer => 'append',
         _clear_for_buffer  => 'clear',
@@ -190,7 +199,7 @@ has _begin_args => (
     isa      => Str,
     init_arg => undef,
     default  => '',
-    traits   => [qw/ String /],
+    handles_via => 'String',
     handles  => { _clear_begin_args => 'clear', },
 );
 
@@ -394,16 +403,18 @@ sub cmd_include {
 sub _load_plugin {
     my ($self, $plugin) = @_;
     try {
-        load "Pod::Readme::Plugin::${plugin}";
+        my $module = "Pod::Readme::Plugin::${plugin}";
+        load $module;
+        $self->with($module);
     } catch {
-        die "Cannot find plugin: ${plugin}";
+        die "Unable to locate plugin '${plugin}'\n";
     };
 }
 
 sub cmd_plugin {
     my ( $self, $plugin, @args ) = @_;
     my $name = "cmd_${plugin}";
-    $self->load_plugin($plugin) unless $self->can($name);
+    $self->_load_plugin($plugin) unless $self->can($name);
     if ( my $method = $self->can($name) ) {
         $self->$method(@args);
     }

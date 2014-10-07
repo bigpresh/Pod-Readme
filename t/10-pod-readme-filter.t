@@ -91,10 +91,10 @@ isa_ok $prf = $class->new(
 
 {
     throws_ok {
-        filter_lines('=for readme plugin noop');
+        filter_lines('=for readme plugin noopx');
         is $prf->mode, 'pod:for', 'mode';
         filter_lines('');
-    } qr/Unable to locate plugin 'noop'/, 'bad plugin';
+    } qr/Unable to locate plugin 'noopx'/, 'bad plugin';
 
     is $prf->mode('pod'), 'pod', 'mode reset';
 };
