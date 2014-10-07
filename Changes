@@ -8,12 +8,12 @@ v1.0.1_01
     line endings.
 
   [Documentation]
-  - Fixed POD errors.
+  - Fixed POD errors and typos.
 
   [Enhancements]
-  - Use types with stricter constraints.
+  - Switched to use Type::Tiny-based types, with stricter constraints.
 
-  - Switched to use Type::Tiny-based types.
+  - Switched to use Moo instead of Moose.
 
   [Other Changes]
   - Minor internal code tweaks.
