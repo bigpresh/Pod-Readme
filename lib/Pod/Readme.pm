@@ -245,7 +245,7 @@ sub _build_translate_to_fh {
 
 =head2 C<translate_to_file>
 
-The L<Path::Tiny::File> to save the translated file to. If omitted,
+The L<Path::Tiny> filename to save the translated file to. If omitted,
 then it will be saved to C<STDOUT>.
 
 =cut

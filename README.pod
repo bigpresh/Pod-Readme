@@ -4,7 +4,7 @@ Pod::Readme - Intelligently generate a README file from POD
 
 =head1 VERSION
 
-v1.0.1_04
+v1.0.1_05
 
 =head1 SYNOPSIS
 
@@ -116,23 +116,13 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
-=head2 Bug Fixes
-
-=over 4
-
-=item * 
-
-Added missing IO::String prereq to tests.
-
-=back
-
 =head2 Documentation
 
 =over 4
 
 =item * 
 
-Changed abstract to make the module's purpose more obvious.
+Corrected typos in POD.
 
 =back
 

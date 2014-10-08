@@ -96,7 +96,7 @@ sub TargetName {
 
 =head2 C<Dir>
 
-A directory. Can be a string or L<Path::Tiny::Dir> object.
+A directory. Can be a string or L<Path::Tiny> object.
 
 =cut
 
@@ -115,7 +115,7 @@ sub Dir {
 
 =head2 C<File>
 
-A file. Can be a string or L<Path::Tiny::File> object.
+A file. Can be a string or L<Path::Tiny> object.
 
 =cut
 
