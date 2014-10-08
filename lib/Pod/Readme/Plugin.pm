@@ -6,7 +6,7 @@ use Moo::Role;
 
 {
     use version 0.77;
-    $Pod::Readme::Plugin::VERSION = version->declare('v1.0.1_03');
+    $Pod::Readme::Plugin::VERSION = version->declare('v1.0.1_04');
 }
 
 use Class::Method::Modifiers qw/ fresh /;
