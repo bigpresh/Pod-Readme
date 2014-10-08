@@ -1,6 +1,8 @@
 Revision history for Pod-Readme
 
 v1.0.1_04
+  [Documentation]
+  - Changed abstract to make the module's purpose more obvious.
 
 v1.0.1_03 2014-10-08 22:42 BST
   [Documentation]

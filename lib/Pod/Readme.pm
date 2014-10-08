@@ -2,7 +2,7 @@ package Pod::Readme;
 
 =head1 NAME
 
-Pod::Readme - Generate a README file from POD
+Pod::Readme - Intelligently generate a README file from POD
 
 =for readme plugin version
 
