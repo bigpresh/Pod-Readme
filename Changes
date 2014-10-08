@@ -4,6 +4,10 @@ v1.0.1_03
   [Documentation]
   - Added Acknowledgements section to POD.
 
+  [Bug Fixes]
+  - Added minimum version prereq of Moo to fix issue with undef
+    defaults.
+
 v1.0.1_02 2014-10-08 00:49 BST
   [Documentation]
   - Added missing timestamp to Changes.

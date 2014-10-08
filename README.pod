@@ -4,7 +4,7 @@ Pod::Readme - Generate a README file from POD
 
 =head1 VERSION
 
-v1.0.1_02
+v1.0.1_03
 
 =head1 SYNOPSIS
 
@@ -116,31 +116,23 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
+=head2 Bug Fixes
+
+=over 4
+
+=item * 
+
+Added minimum version prereq of Moo to fix issue with undef defaults.
+
+=back
+
 =head2 Documentation
 
 =over 4
 
 =item * 
 
-Added missing timestamp to Changes.
-
-=item * 
-
-Updated README.pod.
-
-=back
-
-=head2 Other Changes
-
-=over 4
-
-=item * 
-
-Changed how versions are defined in modules, to handle quirks of namespace::autoclean.
-
-=item * 
-
-Changed to use Exporter::Lite.
+Added Acknowledgements section to POD.
 
 =back
 
@@ -164,6 +156,11 @@ The original version was by Robert Rothenberg <rrwo@cpan.org> until
 
 In 2014, Robert Rothenberg rewrote the module to use filtering instead
 of subclassing a POD parser.
+
+=head2 Acknowledgements
+
+Thanks to people who gave feedback and suggestions to posts about the
+rewrite of this module on L<http://blogs.perl.org>.
 
 =head2 Suggestions, Bug Reporting and Contributing
 

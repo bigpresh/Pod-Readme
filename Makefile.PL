@@ -42,7 +42,7 @@ requires(
     'IO'                        => 0,
     'Module::CoreList'          => 0,
     'Module::Load'              => 0,
-    'Moo'                       => 0,
+    'Moo'                       => 1.004005,
     'Moo::Role'                 => 0,
     'MooX::HandlesVia'          => 0,
     'namespace::autoclean'      => 0,
