@@ -21,7 +21,7 @@ configure_requires();
 build_requires(
     'Exporter::Lite'  => 0,
     'File::Compare'   => 0,
-    'File::Temp'      => 0,
+    'File::Temp'      => 0,      # included in Path::Tiny anyway
     'Test::Deep'      => 0,
     'Test::Exception' => 0,
     'Test::Kit'       => '2.10',
@@ -46,7 +46,7 @@ requires(
     'Moo::Role'                 => 0,
     'MooX::HandlesVia'          => 0,
     'namespace::autoclean'      => 0,
-    'Path::Class'               => 0.33,
+    'Path::Tiny'                => 0.018,
     'Pod::Simple'               => 0,
     'Scalar::Util'              => 0,
     'Try::Tiny'                 => 0,

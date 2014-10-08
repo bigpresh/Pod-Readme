@@ -8,7 +8,7 @@ use Moo::Role;
 }
 
 use CPAN::Changes 0.30;
-use Path::Class;
+use Path::Tiny;
 use Types::Standard qw/ Bool Str /;
 
 use Pod::Readme::Types qw/ File HeadingLevel /;
@@ -119,7 +119,7 @@ sub cmd_changes {
         }
     }
 
-    my $file = file( $self->base_dir, $self->changes_file );
+    my $file = path( $self->base_dir, $self->changes_file );
 
     my $changes = CPAN::Changes->load($file);
     my $latest  = ( $changes->releases )[-1];

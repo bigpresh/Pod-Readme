@@ -9,7 +9,7 @@ use Moo::Role;
 
 use CPAN::Meta;
 use Module::CoreList;
-use Path::Class;
+use Path::Tiny;
 use Types::Standard qw/ Bool Str /;
 
 use Pod::Readme::Types qw/ File HeadingLevel /;
@@ -126,7 +126,7 @@ sub cmd_requires {
         }
     }
 
-    my $file = file( $self->base_dir, $self->requires_from_file )->stringify;
+    my $file = path( $self->base_dir, $self->requires_from_file )->stringify;
     unless (-e $file) {
         die "Cannot find META.yml file at '${file}";
     }

@@ -186,7 +186,7 @@ extends 'Pod::Readme::Filter';
 use Carp;
 use IO qw/ File Handle /;
 use Module::Load qw/ load /;
-use Path::Class;
+use Path::Tiny qw/ path tempfile /;
 use Types::Standard qw/ Maybe Str /;
 
 use Pod::Readme::Types qw/ File WriteIO /;
@@ -245,7 +245,7 @@ sub _build_translate_to_fh {
 
 =head2 C<translate_to_file>
 
-The L<Path::Class::File> to save the translated file to. If omitted,
+The L<Path::Tiny::File> to save the translated file to. If omitted,
 then it will be saved to C<STDOUT>.
 
 =cut
@@ -267,10 +267,7 @@ file.
 
 has '+output_file' => (
     lazy    => 1,
-    default => sub {
-        my $tmp_dir = dir( $ENV{TMP} || $ENV{TEMP} || '/tmp' );
-        file( ( $tmp_dir->tempfile( SUFFIX => '.pod', UNLINK => 1 ) )[1] );
-    },
+    default => sub { tempfile( SUFFIX => '.pod', UNLINK => 1 ); },
 );
 
 around '_build_output_fh' => sub {
@@ -319,7 +316,7 @@ sub default_readme_file {
         $name .= '.pod';
     }
 
-    file( $self->base_dir, $name );
+    path( $self->base_dir, $name );
 }
 
 =head2 C<translate_file>

@@ -17,7 +17,7 @@ SKIP: {
     # because the inc dir is present, but it is not in author mode.
 
     skip "cannot find default META.yml", 3
-        unless   -e file($prf->base_dir, 'META.yml') ;
+        unless   -e path($prf->base_dir, 'META.yml') ;
 
     lives_ok {
         filter_lines( '=for readme plugin requires', '' );

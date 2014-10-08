@@ -76,7 +76,7 @@ This distribution requires the following modules:
 
 =item * L<Getopt::Long::Descriptive>
 
-=item * L<Moo>
+=item * L<Moo> (version 1.004005)
 
 =item * L<Moo::Role>
 
@@ -84,7 +84,7 @@ This distribution requires the following modules:
 
 =item * L<namespace::autoclean>
 
-=item * L<Path::Class> (version 0.33)
+=item * L<Path::Tiny> (version 0.018)
 
 =item * L<Test::Deep>
 
@@ -133,6 +133,16 @@ Added minimum version prereq of Moo to fix issue with undef defaults.
 =item * 
 
 Added Acknowledgements section to POD.
+
+=back
+
+=head2 Enhancements
+
+=over 4
+
+=item * 
+
+Changed to use Path::Tiny instead of Path::Class.
 
 =back
 

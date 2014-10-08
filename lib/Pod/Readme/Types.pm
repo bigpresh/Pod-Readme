@@ -12,7 +12,7 @@ use warnings;
 
 use Exporter::Lite;
 use IO qw/ Handle /;
-use Path::Class;
+use Path::Tiny;
 use Scalar::Util qw/ blessed /;
 use Type::Tiny;
 use Types::Standard qw/ FileHandle Str /;
@@ -96,7 +96,7 @@ sub TargetName {
 
 =head2 C<Dir>
 
-A directory. Can be a string or L<Path::Class::Dir> object.
+A directory. Can be a string or L<Path::Tiny::Dir> object.
 
 =cut
 
@@ -105,17 +105,17 @@ sub Dir {
         name       => 'Dir',
         constraint => sub {
             blessed($_)
-              && $_->isa('Path::Class::Dir')
+              && $_->isa('Path::Tiny')
               && -d $_;
         },
-        message => sub { 'must be be a directory' },
+        message => sub { "$_ must be be a directory" },
     );
-    return $type->plus_coercions( Str, sub { dir($_) }, );
+    return $type->plus_coercions( Str, sub { path($_) }, );
 }
 
 =head2 C<File>
 
-A file. Can be a string or L<Path::Class::File> object.
+A file. Can be a string or L<Path::Tiny::File> object.
 
 =cut
 
@@ -124,11 +124,11 @@ sub File {
         name       => 'File',
         constraint => sub {
             blessed($_)
-              && $_->isa('Path::Class::File');
+              && $_->isa('Path::Tiny');
         },
-        message => sub { 'must be be a file' },
+        message => sub { "$_ must be be a file" },
     );
-    return $type->plus_coercions( Str, sub { file($_) }, );
+    return $type->plus_coercions( Str, sub { path($_) }, );
 }
 
 =head2 C<IO>

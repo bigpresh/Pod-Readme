@@ -16,7 +16,7 @@ use Carp;
 use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
 use Module::Load qw/ load /;
-use Path::Class;
+use Path::Tiny;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
 
