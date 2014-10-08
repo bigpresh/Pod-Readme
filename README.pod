@@ -74,6 +74,8 @@ This distribution requires the following modules:
 
 =item * L<Getopt::Long::Descriptive>
 
+=item * L<IO::String>
+
 =item * L<Moo> (version 1.004005)
 
 =item * L<Moo::Role>
