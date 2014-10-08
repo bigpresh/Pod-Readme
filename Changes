@@ -4,6 +4,9 @@ v1.0.1_04
   [Documentation]
   - Changed abstract to make the module's purpose more obvious.
 
+  [Bug Fixes]
+  - Added missing IO::String prereq to tests.
+
 v1.0.1_03 2014-10-08 22:42 BST
   [Documentation]
   - Added Acknowledgements section to POD.

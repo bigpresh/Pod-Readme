@@ -22,6 +22,7 @@ build_requires(
     'Exporter'        => 0,
     'File::Compare'   => 0,
     'File::Temp'      => 0,      # included in Path::Tiny anyway
+    'IO::String'      => 0,
     'Test::Deep'      => 0,
     'Test::Exception' => 0,
     'Test::Kit'       => '2.10',
