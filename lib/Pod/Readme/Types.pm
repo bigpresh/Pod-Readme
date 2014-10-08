@@ -10,7 +10,7 @@ use warnings;
     $Pod::Readme::Types::VERSION = version->declare('v1.0.1_03');
 }
 
-use Exporter::Lite;
+use Exporter qw/ import /;
 use IO qw/ Handle /;
 use Path::Tiny;
 use Scalar::Util qw/ blessed /;
