@@ -11,6 +11,9 @@ v1.0.1_03
   [Enhancements]
   - Changed to use Path::Tiny instead of Path::Class.
 
+  - Reverted back to using Exporter, since most core modules already
+    use it.
+
 v1.0.1_02 2014-10-08 00:49 BST
   [Documentation]
   - Added missing timestamp to Changes.

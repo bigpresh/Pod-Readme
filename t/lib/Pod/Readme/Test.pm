@@ -1,6 +1,6 @@
 package Pod::Readme::Test;
 
-use Exporter::Lite;
+use Exporter qw/ import /;
 use IO::String;
 
 require Test::More;

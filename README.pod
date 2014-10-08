@@ -70,8 +70,6 @@ This distribution requires the following modules:
 
 =item * L<CPAN::Meta>
 
-=item * L<Exporter::Lite>
-
 =item * L<File::Slurp>
 
 =item * L<Getopt::Long::Descriptive>
@@ -143,6 +141,10 @@ Added Acknowledgements section to POD.
 =item * 
 
 Changed to use Path::Tiny instead of Path::Class.
+
+=item * 
+
+Reverted back to using Exporter, since most core modules already use it.
 
 =back
 
