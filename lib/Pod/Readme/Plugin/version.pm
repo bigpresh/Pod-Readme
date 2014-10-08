@@ -4,7 +4,7 @@ use Moo::Role;
 
 {
     use version 0.77;
-    $Pod::Readme::Plugin::version::VERSION = version->declare('v1.0.1_04');
+    $Pod::Readme::Plugin::version::VERSION = version->declare('v1.0.1_05');
 }
 
 use ExtUtils::MakeMaker;
