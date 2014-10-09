@@ -86,6 +86,8 @@ This distribution requires the following modules:
 
 =item * L<Path::Tiny> (version 0.018)
 
+=item * L<Test::Command>
+
 =item * L<Test::Deep>
 
 =item * L<Test::Exception>
@@ -135,6 +137,20 @@ Removed use of Path::Class in pod2readme utility.
 =item * 
 
 More documentation tweaks.
+
+=item * 
+
+Changed pod2readme usage text to match abstract.
+
+=back
+
+=head2 Other Changes
+
+=over 4
+
+=item * 
+
+Added rudimentary tests for pod2readme script.
 
 =back
 
