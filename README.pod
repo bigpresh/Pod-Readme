@@ -122,6 +122,10 @@ This distribution recommends the following modules:
 
 Added minimum Perl version to Makefile.PL.
 
+=item * 
+
+Removed use of Path::Class in pod2readme utility.
+
 =back
 
 =head2 Documentation
