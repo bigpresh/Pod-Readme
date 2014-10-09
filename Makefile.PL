@@ -39,6 +39,7 @@ requires(
     'CPAN::Meta'                => 0,
     'Exporter'                  => 0,
     'ExtUtils::MakeMaker'       => 6.56,
+    'File::Copy'                => 0,
     'File::Slurp'               => 0,
     'Getopt::Long::Descriptive' => 0,
     'Hash::Util'                => 0,
