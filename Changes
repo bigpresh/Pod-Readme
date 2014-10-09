@@ -4,10 +4,15 @@ v1.0.1_06
   [Documentation]
   - More documentation tweaks.
 
+  - Changed pod2readme usage text to match abstract.
+
   [Bug Fixes]
   - Added minimum Perl version to Makefile.PL.
 
   - Removed use of Path::Class in pod2readme utility.
+
+  [Other Changes]
+  - Added rudimentary tests for pod2readme script.
 
 v1.0.1_05 2014-10-09 19:36 BST
   [Documentation]
