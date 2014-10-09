@@ -25,6 +25,7 @@ build_requires(
     'File::Compare'   => 0,
     'File::Temp'      => 0,      # included in Path::Tiny anyway
     'IO::String'      => 0,
+    'Test::Command'   => 0,
     'Test::Deep'      => 0,
     'Test::Exception' => 0,
     # 'Test::Kit'       => '2.10', # Buggy with Test::Builder 1.301001_056
