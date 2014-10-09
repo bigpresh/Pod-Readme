@@ -25,7 +25,7 @@ build_requires(
     'IO::String'      => 0,
     'Test::Deep'      => 0,
     'Test::Exception' => 0,
-    'Test::Kit'       => '2.10',
+    # 'Test::Kit'       => '2.10', # Buggy with Test::Builder 1.301001_056
     'Test::More'      => 0,
     'lib'             => 0,
 );

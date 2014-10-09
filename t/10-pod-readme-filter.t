@@ -1,5 +1,19 @@
+use strict;
+use warnings;
+
+use Test::More;
+use Test::Deep;
+use Test::Exception;
+
+use Cwd;
+use File::Compare qw/ compare_text /;
+use File::Temp qw/ tempfile /;
+use Path::Tiny qw/ path /;
+
 use lib 't/lib';
-use Pod::Readme::Test::Kit;
+use Pod::Readme::Test;
+
+# use Pod::Readme::Test::Kit;
 
 my $class = 'Pod::Readme::Filter';
 use_ok $class;

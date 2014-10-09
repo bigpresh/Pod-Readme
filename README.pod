@@ -90,8 +90,6 @@ This distribution requires the following modules:
 
 =item * L<Test::Exception>
 
-=item * L<Test::Kit> (version 2.10)
-
 =item * L<Try::Tiny>
 
 =item * L<Type::Tiny>
@@ -115,6 +113,16 @@ This distribution recommends the following modules:
 =back
 
 =head1 RECENT CHANGES
+
+=head2 Bug Fixes
+
+=over 4
+
+=item * 
+
+Disabled use of Test::Kit, since it seems to have problems with Test::Builder 1.301001_056.
+
+=back
 
 =head2 Documentation
 

@@ -4,6 +4,10 @@ v1.0.1_05
   [Documentation]
   - Corrected typos in POD.
 
+  [Bug Fixes]
+  - Disabled use of Test::Kit, since it seems to have problems with
+    Test::Builder 1.301001_056.
+
 v1.0.1_04 2014-10-08 23:27 BST
   [Documentation]
   - Changed abstract to make the module's purpose more obvious.
