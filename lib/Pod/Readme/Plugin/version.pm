@@ -14,7 +14,7 @@ use Pod::Readme::Types qw/ File HeadingLevel /;
 
 =head1 NAME
 
-Pod::Readme::Plugin::version - include version in README
+Pod::Readme::Plugin::version - Include version in README
 
 =head1 SYNOPSIS
 

@@ -16,7 +16,7 @@ use Pod::Readme::Types qw/ File HeadingLevel /;
 
 =head1 NAME
 
-Pod::Readme::Plugin::requires - include requirements in README
+Pod::Readme::Plugin::requires - Include requirements in README
 
 =head1 SYNOPSIS
 

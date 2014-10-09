@@ -15,7 +15,7 @@ use Pod::Readme::Types qw/ File HeadingLevel /;
 
 =head1 NAME
 
-Pod::Readme::Plugin::changes - include latest Changes in README
+Pod::Readme::Plugin::changes - Include latest Changes in README
 
 =head1 SYNOPSIS
 

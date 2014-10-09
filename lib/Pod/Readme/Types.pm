@@ -22,7 +22,7 @@ our @EXPORT_OK =
 
 =head1 NAME
 
-Pod::Readme::Types - types used by Pod::Readme
+Pod::Readme::Types - Types used by Pod::Readme
 
 =head1 SYNOPSIS
 

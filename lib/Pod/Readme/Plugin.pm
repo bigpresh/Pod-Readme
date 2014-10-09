@@ -17,12 +17,79 @@ use Pod::Readme::Types qw/ Indentation /;
 
 =head1 NAME
 
-Pod::Readme::Plugin - plugin role for Pod::Readme
+Pod::Readme::Plugin - Plugin role for Pod::Readme
 
 =head1 DESCRIPTION
 
 L<Pod::Readme> v1.0 and later supports plugins that extend the
 capabilities of the module.
+
+=head1 WRITING PLUGINS
+
+Writing plugins is straightforward. Plugins are L<Moo::Role> modules
+in the C<Pod::Readme::Plugin> namespace.  For example,
+
+  package Pod::Readme::Plugin::myplugin;
+
+  use Moo::Role;
+
+  sub cmd_myplugin {
+      my ($self, @args) = @_;
+      my $res = $self->parse_cmd_args( [qw/ arg1 arg2 /], @args );
+
+      ...
+  }
+
+When L<Pod::Readme> encounters POD with
+
+  =for readme plugin myplugin arg1 arg2
+
+the plugin role will be loaded, and the C<cmd_myplugin> method will be
+run.
+
+Note that you do not need to specify a C<cmd_myplugin> method.
+
+Any method prefixed with "cmd_" will be a command that can be called
+using the C<=for readme command> syntax.
+
+A plugin parses arguments using the L</parse_cmd_arguments> method and
+writes output using the write methods noted above.
+
+See some of the included plugins, such as
+L<Pod::Readme::Plugin::version> for examples.
+
+Any attributes in the plugin should be prefixed with the name of the
+plugin, to avoid any conflicts with attribute and method names from
+other plugins, e.g.
+
+  use Types::Standard qw/ Int /;
+
+  has 'myplugin_heading_level' => (
+    is      => 'rw',
+    isa     => Int,
+    default => 1,
+    lazy    => 1,
+  );
+
+Attributes should be lazy to ensure that their defaults are properly
+set.
+
+Be aware that changing default values of an attribute based on
+arguments means that the next time a plugin method is run, the
+defaults will be changed.
+
+Custom types in L<Pod::Readme::Types> may be useful for attributes
+when writing plugins, e.g.
+
+  use Pod::Readme::Types qw/ File HeadingLevel /;
+
+  has 'myplugin_file' => (
+    is      => 'rw',
+    isa     => File,
+    coerce  => sub { File->coerce(@_) },
+    default => 'Changes',
+    lazy => 1,
+  );
 
 =head1 ATTRIBUTES
 
@@ -275,66 +342,6 @@ compatability with older POD parsers.
     }
 
 }
-
-=head1 WRITING PLUGINS
-
-Writing plugins is straightforward. Plugins are L<Moo::Role> modules
-in the C<Pod::Readme::Plugin> namespace.  For example,
-
-  package Pod::Readme::Plugin::myplugin;
-
-  use Moo::Role;
-
-  sub cmd_myplugin {
-      my ($self, @args) = @_;
-      my $res = $self->parse_cmd_args( [qw/ arg1 arg2 /], @args );
-
-      ...
-  }
-
-When L<Pod::Readme> encounters POD with
-
-  =for readme plugin myplugin arg1 arg2
-
-the plugin role will be loaded, and the C<cmd_myplugin> method will be
-run.
-
-Note that you do not need to specify a C<cmd_myplugin> method.
-
-Any method prefixed with "cmd_" will be a command that can be called
-using the C<=for readme command> syntax.
-
-A plugin parses arguments using the L</parse_cmd_arguments> method and
-writes output using the write methods noted above.
-
-See some of the included plugins, such as
-L<Pod::Readme::Plugin::version> for examples.
-
-Any attributes in the plugin should be prefixed with the name of the
-plugin, to avoid any conflicts with attribute and method names from
-other plugins, e.g.
-
-  has 'myplugin_heading_level' => (
-    is      => 'rw',
-    isa     => Int,
-    default => 1,
-    lazy    => 1,
-  );
-
-Attributes should be lazy to ensure that their defaults are properly
-set.
-
-Be aware that changing default values of an attribute based on
-arguments means that the next time a plugin method is run, the
-defaults will be changed.
-
-=head1 SEE ALSO
-
-Custom types in L<Pod::Readme::Types> may be useful for writing
-plugins.
-
-=cut
-
 
 use namespace::autoclean;
 
