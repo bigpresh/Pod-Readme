@@ -18,7 +18,7 @@ pod2readme - Intelligently generate a README file from POD
 
     pod2readme [-cfho] [long options...] input-file [output-file] [target]
 
-        Generate a README file from POD
+        Intelligently generate a README file from POD
 
         -t --target     target type (default: 'readme')
         -f --format     output format (default: 'text')
@@ -103,7 +103,7 @@ sub validate_format {
 my ( $opt, $usage ) = describe_options(
     '%c %o input-file [output-file] [target]',
     [],
-    ['Generate a README file from POD'],
+    ['Intelligently generate a README file from POD'],
     [],
     [ 'target|t=s' => "target type (default: 'readme')" ],
     [
