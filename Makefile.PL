@@ -7,6 +7,8 @@ name 'Pod-Readme';
 all_from 'lib/Pod/Readme.pm';
 license 'perl';
 
+perl_version '5.10.1';
+
 tests_recursive('t');
 
 resources(

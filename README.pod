@@ -4,7 +4,7 @@ Pod::Readme - Intelligently generate a README file from POD
 
 =head1 VERSION
 
-v1.0.1_05
+v1.0.1_06
 
 =head1 SYNOPSIS
 
@@ -120,7 +120,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-Disabled use of Test::Kit, since it seems to have problems with Test::Builder 1.301001_056.
+Added minimum Perl version to Makefile.PL.
 
 =back
 
@@ -130,7 +130,7 @@ Disabled use of Test::Kit, since it seems to have problems with Test::Builder 1.
 
 =item * 
 
-Corrected typos in POD.
+More documentation tweaks.
 
 =back
 
