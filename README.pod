@@ -86,6 +86,8 @@ This distribution requires the following modules:
 
 =item * L<Path::Tiny> (version 0.018)
 
+=item * L<Role::Tiny>
+
 =item * L<Test::Command>
 
 =item * L<Test::Deep>
