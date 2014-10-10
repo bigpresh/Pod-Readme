@@ -4,7 +4,7 @@ Pod::Readme - Intelligently generate a README file from POD
 
 =head1 VERSION
 
-v1.0.1_06
+v1.0.1_07
 
 =head1 SYNOPSIS
 
