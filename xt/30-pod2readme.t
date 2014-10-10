@@ -12,8 +12,6 @@ use version;
 # This test fails on various platforms, so should be marked as TODO
 # for now.
 
-plan skip_all => 'RELEASE_TESTING must be set' unless $ENV{RELEASE_TESTING};
-
 # On Travis-CI this test fails because the Pod::Readme::Types module
 # does not compile, due to state variables. It's as if some
 # side-effect of using Test::Command disabled this.

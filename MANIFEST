@@ -28,7 +28,6 @@ META.yml
 README.pod
 t/10-pod-readme-filter.t
 t/20-pod-readme.t
-t/30-pod2readme.t
 t/data/META-1.yml
 t/data/README-1.pod
 t/data/README.txt
