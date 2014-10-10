@@ -36,17 +36,18 @@ has noop_str => (
 );
 
 sub cmd_noop {
-    my ($self, @args) = @_;
+    my ( $self, @args ) = @_;
 
-    my $res = $self->parse_cmd_args([qw/ bool str /], @args);
-    foreach my $key (keys %{$res}) {
-        if (my $method = $self->can("noop_${key}")) {
+    my $res = $self->parse_cmd_args( [qw/ bool str /], @args );
+    foreach my $key ( keys %{$res} ) {
+        if ( my $method = $self->can("noop_${key}") ) {
             $self->$method( $res->{$key} );
-        } else {
+        }
+        else {
             die "Invalid key: '${key}'";
         }
     }
- }
+}
 
 use namespace::autoclean;
 

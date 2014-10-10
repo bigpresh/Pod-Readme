@@ -60,21 +60,21 @@ has 'version_title' => (
     is      => 'rw',
     isa     => Str,
     default => 'VERSION',
-    lazy => 1,
+    lazy    => 1,
 );
 
 has 'version_heading_level' => (
     is      => 'rw',
     isa     => HeadingLevel,
     default => 1,
-    lazy => 1,
+    lazy    => 1,
 );
 
 has 'version_run' => (
     is      => 'rw',
     isa     => Bool,
     default => 0,
-    lazy => 1,
+    lazy    => 1,
 );
 
 sub cmd_version {

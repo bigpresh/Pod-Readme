@@ -18,9 +18,7 @@ use Pod::Readme::Test;
 my $class = 'Pod::Readme';
 use_ok $class;
 
-isa_ok $prf = $class->new(
-    output_fh => $io,
- ), $class;
+isa_ok $prf = $class->new( output_fh => $io, ), $class;
 
 {
     ok !$prf->can('cmd_noop'), 'no noop';
@@ -34,90 +32,96 @@ isa_ok $prf = $class->new(
 
     is $out, '', 'no output';
 
-    can_ok($prf, 'cmd_noop');
-    isa_ok($prf, 'Pod::Readme::Filter');
+    can_ok( $prf, 'cmd_noop' );
+    isa_ok( $prf, 'Pod::Readme::Filter' );
 
     throws_ok {
         filter_lines('=for readme plugin noop::invalid');
         is $prf->mode, 'pod:for', 'mode';
         filter_lines('');
-    } qr/Unable to locate plugin 'noop::invalid'/, 'bad plugin';
+    }
+    qr/Unable to locate plugin 'noop::invalid'/, 'bad plugin';
 
     is $prf->mode('pod'), 'pod', 'mode reset';
 
-    filter_lines('=for readme plugin noop', '');
+    filter_lines( '=for readme plugin noop', '' );
 
-    can_ok($prf, qw/ noop_bool noop_str /);
+    can_ok( $prf, qw/ noop_bool noop_str / );
     ok !$prf->noop_bool, 'plugin accessor default';
     is $prf->noop_str, '', 'plugin accessor default';
 
-    filter_lines('=for readme plugin noop bool', '');
+    filter_lines( '=for readme plugin noop bool', '' );
     ok $prf->noop_bool, 'plugin accessor set';
-    filter_lines('=for readme plugin noop no-bool str="Isn\'t this nice?"', '');
+    filter_lines( '=for readme plugin noop no-bool str="Isn\'t this nice?"',
+        '' );
     ok !$prf->noop_bool, 'plugin accessor unset';
     is $prf->noop_str, "Isn\'t this nice?", 'plugin accessor set';
 
     throws_ok {
-        filter_lines('=for readme plugin noop no-bool bad-attr="this"', '');
-    } qr/Invalid argument key 'bad-attr' at input line \d+/;
+        filter_lines( '=for readme plugin noop no-bool bad-attr="this"', '' );
+    }
+    qr/Invalid argument key 'bad-attr' at input line \d+/;
 };
 
 {
-  my $source = 't/data/README-1.pod';
+    my $source = 't/data/README-1.pod';
 
-  lives_ok {
+    lives_ok {
 
-    my $dest   = (tempfile( UNLINK => 1))[1];
-    note $dest;
+        my $dest = ( tempfile( UNLINK => 1 ) )[1];
+        note $dest;
 
-    ok my $parser = Pod::Readme->new, 'new (no args)';
-    $parser->parse_from_file($source, $dest);
+        ok my $parser = Pod::Readme->new, 'new (no args)';
+        $parser->parse_from_file( $source, $dest );
 
-    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
+        ok !compare_text( $dest, 't/data/README.txt' ), 'expected output';
 
-  } 'parse_from_file';
+    }
+    'parse_from_file';
 
-  lives_ok {
+    lives_ok {
 
-    my $dest   = (tempfile( UNLINK => 1))[1];
-    note $dest;
+        my $dest = ( tempfile( UNLINK => 1 ) )[1];
+        note $dest;
 
-    Pod::Readme->parse_from_file($source, $dest);
+        Pod::Readme->parse_from_file( $source, $dest );
 
-    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
+        ok !compare_text( $dest, 't/data/README.txt' ), 'expected output';
 
-  } 'parse_from_file (class method)';
+    }
+    'parse_from_file (class method)';
 
-  lives_ok {
+    lives_ok {
 
-    open my $source_fh, '<', $source;
-    my ($dest_fh, $dest)   = tempfile( UNLINK => 1);
-    note $dest;
+        open my $source_fh, '<', $source;
+        my ( $dest_fh, $dest ) = tempfile( UNLINK => 1 );
+        note $dest;
 
-    ok my $parser = Pod::Readme->new, 'new (no args)';
-    $parser->parse_from_filehandle($source_fh, $dest_fh);
+        ok my $parser = Pod::Readme->new, 'new (no args)';
+        $parser->parse_from_filehandle( $source_fh, $dest_fh );
 
-    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
+        ok !compare_text( $dest, 't/data/README.txt' ), 'expected output';
 
-    close $source_fh;
+        close $source_fh;
 
-  } 'parse_from_filehandle';
+    }
+    'parse_from_filehandle';
 
-  lives_ok {
+    lives_ok {
 
-    open my $source_fh, '<', $source;
-    my ($dest_fh, $dest)   = tempfile( UNLINK => 1);
-    note $dest;
+        open my $source_fh, '<', $source;
+        my ( $dest_fh, $dest ) = tempfile( UNLINK => 1 );
+        note $dest;
 
-    Pod::Readme->parse_from_filehandle($source_fh, $dest_fh);
+        Pod::Readme->parse_from_filehandle( $source_fh, $dest_fh );
 
-    ok !compare_text($dest, 't/data/README.txt'), 'expected output';
+        ok !compare_text( $dest, 't/data/README.txt' ), 'expected output';
 
-    close $source_fh;
+        close $source_fh;
 
-  } 'parse_from_filehandle (class method)';
+    }
+    'parse_from_filehandle (class method)';
 
 }
-
 
 done_testing;

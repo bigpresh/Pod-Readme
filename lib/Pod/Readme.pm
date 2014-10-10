@@ -220,11 +220,11 @@ The L<IO::Handle> to save the translated file to.
 =cut
 
 has translate_to_fh => (
-    is         => 'ro',
-    isa        => WriteIO,
-    lazy => 1,
+    is      => 'ro',
+    isa     => WriteIO,
+    lazy    => 1,
     builder => '_build_translate_to_fh',
-    coerce     => sub { WriteIO->coerce(@_) },
+    coerce  => sub { WriteIO->coerce(@_) },
 );
 
 sub _build_translate_to_fh {

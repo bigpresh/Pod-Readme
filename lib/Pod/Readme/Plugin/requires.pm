@@ -78,35 +78,35 @@ has 'requires_from_file' => (
     isa     => File,
     coerce  => sub { File->coerce(@_) },
     default => 'META.yml',
-    lazy => 1,
+    lazy    => 1,
 );
 
 has 'requires_title' => (
     is      => 'rw',
     isa     => Str,
     default => 'REQUIREMENTS',
-    lazy => 1,
+    lazy    => 1,
 );
 
 has 'requires_omit_core' => (
     is      => 'rw',
     isa     => Bool,
     default => 1,
-    lazy => 1,
+    lazy    => 1,
 );
 
 has 'requires_heading_level' => (
     is      => 'rw',
     isa     => HeadingLevel,
     default => 1,
-    lazy => 1,
+    lazy    => 1,
 );
 
 has 'requires_run' => (
     is      => 'rw',
     isa     => Bool,
     default => 0,
-    lazy => 1,
+    lazy    => 1,
 );
 
 sub cmd_requires {
@@ -127,7 +127,7 @@ sub cmd_requires {
     }
 
     my $file = path( $self->base_dir, $self->requires_from_file )->stringify;
-    unless (-e $file) {
+    unless ( -e $file ) {
         die "Cannot find META.yml file at '${file}";
     }
 
@@ -181,7 +181,7 @@ sub _get_prereqs {
         foreach ( keys %prereqs ) {
             my $ver = $prereqs{$_};
             delete $prereqs{$_}
-              if Module::CoreList->first_release($_, $prereqs{$ver})
+              if Module::CoreList->first_release( $_, $prereqs{$ver} )
               && version->parse( Module::CoreList->first_release($_) ) <=
               version->parse($perl);
         }

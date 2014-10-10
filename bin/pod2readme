@@ -164,7 +164,7 @@ my $pr = Pod::Readme->new(%args);
 $output ||= $pr->translate_to_file;
 
 if ( $opt->backup && $output && -e $output ) {
-    copy($output, $output . '.bak' );
+    copy( $output, $output . '.bak' );
 }
 
 $pr->run();

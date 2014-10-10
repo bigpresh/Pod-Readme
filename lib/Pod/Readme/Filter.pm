@@ -73,11 +73,11 @@ has output_file => (
 );
 
 has input_fh => (
-    is         => 'ro',
-    isa        => ReadIO,
-    lazy => 1,
+    is      => 'ro',
+    isa     => ReadIO,
+    lazy    => 1,
     builder => '_build_input_fh',
-    coerce   => sub { ReadIO->coerce(@_) },
+    coerce  => sub { ReadIO->coerce(@_) },
 );
 
 sub _build_input_fh {
@@ -177,24 +177,24 @@ sub in_pod {
 }
 
 has _for_buffer => (
-    is       => 'rw',
-    isa      => Str,
-    init_arg => undef,
-    default  => '',
+    is          => 'rw',
+    isa         => Str,
+    init_arg    => undef,
+    default     => '',
     handles_via => 'String',
-    handles  => {
+    handles     => {
         _append_for_buffer => 'append',
         _clear_for_buffer  => 'clear',
     },
 );
 
 has _begin_args => (
-    is       => 'rw',
-    isa      => Str,
-    init_arg => undef,
-    default  => '',
+    is          => 'rw',
+    isa         => Str,
+    init_arg    => undef,
+    default     => '',
     handles_via => 'String',
-    handles  => { _clear_begin_args => 'clear', },
+    handles     => { _clear_begin_args => 'clear', },
 );
 
 sub process_for {
@@ -405,13 +405,14 @@ sub cmd_stop {
 }
 
 sub _load_plugin {
-    my ($self, $plugin) = @_;
+    my ( $self, $plugin ) = @_;
     try {
         my $module = "Pod::Readme::Plugin::${plugin}";
         load $module;
         require Role::Tiny;
-        Role::Tiny->apply_roles_to_object($self, $module );
-    } catch {
+        Role::Tiny->apply_roles_to_object( $self, $module );
+    }
+    catch {
         die "Unable to locate plugin '${plugin}'\n";
     };
 }
