@@ -27,6 +27,9 @@ Pod::Readme::Plugin::requires - Include requirements in README
 This is a plugin for L<Pod::Readme> that includes module requirements
 from the F<META.yml> file.
 
+Because this depends on the F<META.yml> file, the F<README> should be
+generated after that file has been updated.
+
 =head1 ARGUMENTS
 
 =head2 C<file>

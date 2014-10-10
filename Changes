@@ -1,6 +1,9 @@
 Revision history for Pod-Readme
 
 v1.0.1_07
+  [Documentation]
+  - More documentation tweaks.
+
   [Other Changes]
   - Moved pod2readme tests to xt directory for author tests, due to
     inconsistent behaviour on different platforms.

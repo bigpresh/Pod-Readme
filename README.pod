@@ -116,6 +116,16 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
+=head2 Documentation
+
+=over 4
+
+=item * 
+
+More documentation tweaks.
+
+=back
+
 =head2 Other Changes
 
 =over 4
