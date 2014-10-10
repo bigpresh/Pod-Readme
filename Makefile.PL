@@ -23,14 +23,14 @@ configure_requires();
 build_requires(
     'Exporter'        => 0,
     'File::Compare'   => 0,
-    'File::Temp'      => 0,      # included in Path::Tiny anyway
+    'File::Temp'      => 0,    # included in Path::Tiny anyway
     'IO::String'      => 0,
-    'Test::Command'   => 0,
     'Test::Deep'      => 0,
     'Test::Exception' => 0,
+
     # 'Test::Kit'       => '2.10', # Buggy with Test::Builder 1.301001_056
-    'Test::More'      => 0,
-    'lib'             => 0,
+    'Test::More' => 0,
+    'lib'        => 0,
 );
 
 requires(
@@ -81,6 +81,7 @@ author_requires(
     'Test::Portability::Files'        => 0,
     'Test::Pod'                       => '1.00',
     'Test::CleanNamespaces'           => 0,
+    'Test::Command'                   => 0,
     'Test::Pod::Coverage'             => 0,
     'Test::MinimumVersion'            => 0,
 );

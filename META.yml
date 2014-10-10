@@ -8,7 +8,6 @@ build_requires:
   File::Compare: 0
   File::Temp: 0
   IO::String: 0
-  Test::Command: 0
   Test::Deep: 0
   Test::Exception: 0
   Test::More: 0
@@ -65,4 +64,4 @@ resources:
   homepage: https://metacpan.org/pod/Pod::Readme
   license: http://www.perlfoundation.org/artistic_license_2_0
   repository: git://github.com/bigpresh/Pod-Readme.git
-version: 1.000001_006
+version: 1.000001_007

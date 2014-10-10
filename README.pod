@@ -88,8 +88,6 @@ This distribution requires the following modules:
 
 =item * L<Role::Tiny>
 
-=item * L<Test::Command>
-
 =item * L<Test::Deep>
 
 =item * L<Test::Exception>
@@ -118,51 +116,13 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
-=head2 Bug Fixes
-
-=over 4
-
-=item * 
-
-Added minimum Perl version to Makefile.PL.
-
-=item * 
-
-Removed use of Path::Class in pod2readme utility.
-
-=back
-
-=head2 Documentation
-
-=over 4
-
-=item * 
-
-More documentation tweaks.
-
-=item * 
-
-Changed pod2readme usage text to match abstract.
-
-=back
-
-=head2 Enhancements
-
-=over 4
-
-=item * 
-
-The requires plugin uses minimum module versions to check if a module is in the core-list.
-
-=back
-
 =head2 Other Changes
 
 =over 4
 
 =item * 
 
-Added rudimentary tests for pod2readme script.
+Disabled pod2readme script unless RELEASE_TETSTING is set, because of inconsistent behaviour on different platforms.
 
 =back
 
