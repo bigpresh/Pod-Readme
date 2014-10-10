@@ -36,8 +36,8 @@ pod2readme - Intelligently generate a README file from POD
 This utility will use L<Pod::Readme> to extract a F<README> file from
 a POD document.
 
-It works by extracting the POD, and then calling the appropriate
-filter program to convert the POD to another format.
+It works by extracting and filtering the POD, and then calling the
+appropriate filter program to convert the POD to another format.
 
 =head1 OPTIONS
 
