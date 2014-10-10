@@ -76,14 +76,16 @@ install_script(qw{ bin/pod2readme });
 author_requires(
     'Module::Install::AuthorRequires' => 0.02,
     'Module::Install::AuthorTests'    => 0,
+    'Test::CPAN::Meta'                => 0,
     'Test::CheckManifest'             => 0.9,
-    'Test::Perl::Critic'              => 0,
-    'Test::Portability::Files'        => 0,
-    'Test::Pod'                       => '1.00',
     'Test::CleanNamespaces'           => 0,
     'Test::Command'                   => 0,
-    'Test::Pod::Coverage'             => 0,
+    'Test::ConsistentVersion'         => 0,
     'Test::MinimumVersion'            => 0,
+    'Test::Perl::Critic'              => 0,
+    'Test::Pod'                       => '1.00',
+    'Test::Pod::Coverage'             => 0,
+    'Test::Portability::Files'        => 0,
 );
 
 recursive_author_tests('xt');
