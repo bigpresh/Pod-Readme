@@ -122,7 +122,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-Disabled pod2readme script unless RELEASE_TETSTING is set, because of inconsistent behaviour on different platforms.
+Moved pod2readme tests to xt directory for author tests, due to inconsistent behaviour on different platforms.
 
 =back
 
