@@ -2,6 +2,8 @@ package Pod::Readme::Types;
 
 use v5.10.1;
 
+use feature 'state';
+
 use strict;
 use warnings;
 
