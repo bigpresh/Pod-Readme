@@ -11,8 +11,6 @@ Makefile
 Pod-Readme-*.tar.gz
 Pod-Readme-*/
 
-META.yml
-
 MYMETA.*
 
 .build/
