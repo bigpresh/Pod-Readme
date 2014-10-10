@@ -11,7 +11,7 @@ use File::Temp qw/ tempfile /;
 
 plan skip_all => 'Need META.yml to run this test' unless -e 'META.yml';
 
-my $cmd = 'perl -Ilib bin/pod2readme';
+my $cmd = 'perl -Mv5.10.1 -Ilib bin/pod2readme';
 
 {
     my $test = Test::Command->new( cmd => "${cmd} -h" );
