@@ -112,6 +112,11 @@ has 'requires_run' => (
     lazy    => 1,
 );
 
+around 'depends_on' => sub {
+    my ($orig, $self) = @_;
+    return ($self->requires_from_file, $self->$orig);
+};
+
 sub cmd_requires {
     my ( $self, @args ) = @_;
 

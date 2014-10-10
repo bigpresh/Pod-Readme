@@ -28,6 +28,10 @@ isa_ok $prf = $class->new(
 {
     filter_lines('=for readme plugin version', '');
     is $out, "=head1 VERSION\n\n${VERSION}\n\n";
+
+    is_deeply [ $prf->depends_on ], [ $prf->version_file, $prf->input_file ],
+      'depends_on';
+
     reset_out();
     $prf->version_run(0);
 }

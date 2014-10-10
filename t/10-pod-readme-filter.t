@@ -209,4 +209,9 @@ isa_ok $prf = $class->new( output_fh => $io, ), 'Pod::Readme::Filter';
 
 }
 
+{
+    can_ok $prf, qw/ depends_on /;
+    is_deeply [ $prf->depends_on ], [], 'depends_on';
+}
+
 done_testing;

@@ -41,6 +41,9 @@ SKIP: {
     like $out, qr/\nThis distribution requires the following modules:\n\n/,
         'description';
 
+    is_deeply [ $prf->depends_on ], [ $prf->requires_from_file, $prf->input_file ],
+      'depends_on';
+
     reset_out();
 
     $prf->requires_run(0);

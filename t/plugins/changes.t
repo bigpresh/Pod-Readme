@@ -26,6 +26,9 @@ isa_ok $prf = $class->new(
 {
     filter_lines( '=for readme plugin changes', '' );
 
+    is_deeply [ $prf->depends_on ], [ $prf->changes_file, $prf->input_file ],
+      'depends_on';
+
     note $out;
 
     like $out, qr/=head1 RECENT CHANGES\n\n/, '=head1';

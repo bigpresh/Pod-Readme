@@ -126,6 +126,16 @@ More documentation tweaks.
 
 =back
 
+=head2 Enhancements
+
+=over 4
+
+=item * 
+
+Added a depends_on method that returns a list of files that the README depends on.
+
+=back
+
 =head2 Other Changes
 
 =over 4

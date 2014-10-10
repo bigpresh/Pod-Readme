@@ -91,6 +91,13 @@ when writing plugins, e.g.
     lazy => 1,
   );
 
+  # We add this file to the list of dependencies
+
+  around 'depends_on' => sub {
+    my ($orig, $self) = @_;
+    return ($self->myplugin_file, $self->$orig);
+  };
+
 =head1 ATTRIBUTES
 
 =head2 C<verbatim_indent>

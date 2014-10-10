@@ -165,6 +165,13 @@ sub _inc_line_no {
     $self->_set_line_no( 1 + $self->_line_no );
 }
 
+sub depends_on {
+    my ($self) = @_;
+    my @files;
+    push @files, $self->input_file if $self->input_file;
+    return @files;
+}
+
 sub write {
     my ( $self, $line ) = @_;
     my $fh = $self->output_fh;

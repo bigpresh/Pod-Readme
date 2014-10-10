@@ -4,6 +4,10 @@ v1.0.1_07
   [Documentation]
   - More documentation tweaks.
 
+  [Enhancements]
+  - Added a depends_on method that returns a list of files that the
+    README depends on.
+
   [Other Changes]
   - Moved pod2readme tests to xt directory for author tests, due to
     inconsistent behaviour on different platforms.

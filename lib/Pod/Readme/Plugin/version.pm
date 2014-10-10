@@ -77,6 +77,11 @@ has 'version_run' => (
     lazy    => 1,
 );
 
+around 'depends_on' => sub {
+    my ($orig, $self) = @_;
+    return ($self->version_file, $self->$orig);
+};
+
 sub cmd_version {
     my ( $self, @args ) = @_;
 
