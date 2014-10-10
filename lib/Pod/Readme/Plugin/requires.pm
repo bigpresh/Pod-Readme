@@ -179,8 +179,9 @@ sub _get_prereqs {
     my $perl = delete $prereqs{perl};
     if ( $self->requires_omit_core && $perl ) {
         foreach ( keys %prereqs ) {
+            my $ver = $prereqs{$_};
             delete $prereqs{$_}
-              if Module::CoreList->first_release($_, $prereqs{$_})
+              if Module::CoreList->first_release($_, $prereqs{$ver})
               && version->parse( Module::CoreList->first_release($_) ) <=
               version->parse($perl);
         }
