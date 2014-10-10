@@ -7,6 +7,8 @@ use Test::Command;
 use File::Compare qw/ compare_text /;
 use File::Temp qw/ tempfile /;
 
+plan skip_all => 'Need META.yml to run this test' unless -e 'META.yml';
+
 my $cmd = 'perl -Ilib bin/pod2readme';
 
 {
