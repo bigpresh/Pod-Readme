@@ -146,6 +146,16 @@ Changed pod2readme usage text to match abstract.
 
 =back
 
+=head2 Enhancements
+
+=over 4
+
+=item * 
+
+The requires plugin uses minimum module versions to check if a module is in the core-list.
+
+=back
+
 =head2 Other Changes
 
 =over 4
