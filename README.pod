@@ -134,6 +134,18 @@ More documentation tweaks.
 
 Added a depends_on method that returns a list of files that the README depends on.
 
+=item * 
+
+Added dependencies_updated method to check if dependencies have been updated.
+
+=item * 
+
+The README is only updated if dependencies have been updated.
+
+=item * 
+
+Added a --force option to pod2readme to force updates.
+
 =back
 
 =head2 Other Changes

@@ -32,6 +32,8 @@ isa_ok $prf = $class->new(
     is_deeply [ $prf->depends_on ], [ $prf->version_file, $prf->input_file ],
       'depends_on';
 
+    lives_ok { $prf->dependencies_updated } 'dependencies_updated';
+
     reset_out();
     $prf->version_run(0);
 }

@@ -185,9 +185,10 @@ extends 'Pod::Readme::Filter';
 
 use Carp;
 use IO qw/ File Handle /;
+use List::Util qw/ any /;
 use Module::Load qw/ load /;
 use Path::Tiny qw/ path tempfile /;
-use Types::Standard qw/ Maybe Str /;
+use Types::Standard qw/ Bool Maybe Str /;
 
 use Pod::Readme::Types qw/ File WriteIO /;
 
@@ -280,6 +281,21 @@ around '_build_output_fh' => sub {
     }
 };
 
+=head2 C<force>
+
+For a new F<README> to be generated, even if the dependencies have not
+been updated.
+
+See L</dependencies_updated>.
+
+=cut
+
+has 'force' => (
+    is      => 'ro',
+    isa     => Bool,
+    default => 0,
+);
+
 =head1 METHODS
 
 This module extends L<Pod::Readme::Filter> with the following methods:
@@ -354,6 +370,39 @@ sub translate_file {
     }
 }
 
+=head2 C<dependencies_updated>
+
+Used to determine when the dependencies have been updated, and a
+translation can be run.
+
+Note that this only returns a meaningful value after the POD has been
+processed, since plugins may add to the dependencies.  A side-effect
+of this is that when generating a POD formatted F<README> is that it
+will always be updated, even when L</force> is false.
+
+=cut
+
+sub dependencies_updated {
+    my ($self) = @_;
+
+    my $dest = $self->translate_to_file;
+
+    if ( $dest and $self->input_file) {
+
+        return 1 unless -e $dest;
+
+        my $stat = $dest->stat;
+        return 1 unless $stat;
+
+        my $time = $stat->mtime;
+        return any { $_->mtime > $time } ( map { $_->stat } $self->depends_on );
+
+    }
+    else {
+        return 1;
+    }
+}
+
 =head2 C<run>
 
 This method runs C<filter_file> and then L</translate_file>.
@@ -363,7 +412,9 @@ This method runs C<filter_file> and then L</translate_file>.
 around 'run' => sub {
     my ( $orig, $self ) = @_;
     $self->$orig();
-    $self->translate_file();
+    if ( $self->force or $self->dependencies_updated ) {
+        $self->translate_file();
+    }
 };
 
 =head2 C<parse_from_file>
@@ -389,6 +440,7 @@ sub parse_from_file {
         input_file        => $source,
         translate_to_file => $dest,
         translation_class => 'Pod::Simple::Text',
+        force             => 1,
     );
     $prf->run();
 }
@@ -418,6 +470,7 @@ sub parse_from_filehandle {
         input_fh          => $src_io,
         translate_to_fh   => $dest_io,
         translation_class => 'Pod::Simple::Text',
+        force             => 1,
     );
     $prf->run();
 }

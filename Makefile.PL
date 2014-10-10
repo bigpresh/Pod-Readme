@@ -45,6 +45,7 @@ requires(
     'Getopt::Long::Descriptive' => 0,
     'Hash::Util'                => 0,
     'IO'                        => 0,
+    'List::Util'                => 1.33,
     'Module::CoreList'          => 0,
     'Module::Load'              => 0,
     'Moo'                       => 1.004005,

@@ -44,6 +44,8 @@ SKIP: {
     is_deeply [ $prf->depends_on ], [ $prf->requires_from_file, $prf->input_file ],
       'depends_on';
 
+    lives_ok { $prf->dependencies_updated } 'dependencies_updated';
+
     reset_out();
 
     $prf->requires_run(0);

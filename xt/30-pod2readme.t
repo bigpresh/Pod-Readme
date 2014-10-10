@@ -28,7 +28,7 @@ my $cmd = 'perl -Iblib/lib bin/pod2readme';
     my $test = Test::Command->new( cmd => "${cmd} -h" );
     $test->exit_isnt_num(0);
     $test->stderr_like(
-qr/^pod2readme \[-bcfhot\] \[long options\.\.\.\] input-file \[output-file\] \[target\]\n/
+qr/^pod2readme \[-bcFfhot\] \[long options\.\.\.\] input-file \[output-file\] \[target\]\n/
     );
 }
 

@@ -29,6 +29,8 @@ isa_ok $prf = $class->new(
     is_deeply [ $prf->depends_on ], [ $prf->changes_file, $prf->input_file ],
       'depends_on';
 
+    lives_ok { $prf->dependencies_updated } 'dependencies_updated';
+
     note $out;
 
     like $out, qr/=head1 RECENT CHANGES\n\n/, '=head1';

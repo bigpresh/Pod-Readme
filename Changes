@@ -8,6 +8,13 @@ v1.0.1_07
   - Added a depends_on method that returns a list of files that the
     README depends on.
 
+  - Added dependencies_updated method to check if dependencies have
+    been updated.
+
+  - The README is only updated if dependencies have been updated.
+
+  - Added a --force option to pod2readme to force updates.
+
   [Other Changes]
   - Moved pod2readme tests to xt directory for author tests, due to
     inconsistent behaviour on different platforms.

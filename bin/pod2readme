@@ -25,6 +25,7 @@ pod2readme - Intelligently generate a README file from POD
         -b --backup     backup output file
         -o --output     output filename (default based on target)
         -c --stdout     output to stdout (console)
+        -F --force      only update if files are changed
         -h --help       print usage and exit
 
 =head1 SYNOPSIS
@@ -73,6 +74,13 @@ Other supposed formats are "html", "latex", "man", "markdown", "pod",
 
 If enabled, it will output to the console instead of C<--output>.
 
+=head2 C<--force>
+
+By default, the F<README> will be generated if the source files have
+been changed.  Using C<--force> will force the file to be updated.
+
+Note: POD format files will always be updated.
+
 =head2 C<--help>
 
 Prints the usage and exits.
@@ -120,12 +128,13 @@ my ( $opt, $usage ) = describe_options(
     [ 'backup|b!' => "backup output file", { default => 1 } ],
     [ 'output|o' => "output filename (default based on target)" ],
     [ 'stdout|c' => "output to stdout (console)" ],
+    [ 'force|F!' => "only update if files are changed" ],
     [ 'help|h'   => "print usage and exit" ],
 );
 
 die $usage if $opt->help;
 
-my %args = ();
+my %args = ( force => $opt->force );
 
 if ( my $input = shift @ARGV ) {
     $args{input_file} = $input;
