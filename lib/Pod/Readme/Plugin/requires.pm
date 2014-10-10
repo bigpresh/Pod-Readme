@@ -180,7 +180,7 @@ sub _get_prereqs {
     if ( $self->requires_omit_core && $perl ) {
         foreach ( keys %prereqs ) {
             delete $prereqs{$_}
-              if Module::CoreList->first_release($_)
+              if Module::CoreList->first_release($_, $prereqs{$_})
               && version->parse( Module::CoreList->first_release($_) ) <=
               version->parse($perl);
         }
