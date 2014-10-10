@@ -53,6 +53,7 @@ requires(
     'namespace::autoclean'      => 0,
     'Path::Tiny'                => 0.018,
     'Pod::Simple'               => 0,
+    'Role::Tiny'                => 0,
     'Scalar::Util'              => 0,
     'Try::Tiny'                 => 0,
     'Type::Tiny'                => 0,
