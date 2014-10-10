@@ -54,6 +54,10 @@ corresponding extention of the C<--format>.
 
 For all intents, the default is F<README>.
 
+If a format other than "text" is chosen, then the appropriate
+extention will be added, e.g. for "markdown", the default output file
+is F<README.md>.
+
 =head2 C<--target>
 
 The target of the filter, which defaults to "readme".
