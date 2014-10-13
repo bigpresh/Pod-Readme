@@ -182,7 +182,7 @@ extends 'Pod::Readme::Filter';
 
 {
     use version 0.77;
-    $Pod::Readme::VERSION = version->declare('v1.0.1_08');
+    $Pod::Readme::VERSION = version->declare('v1.0.2');
 }
 
 use Carp;

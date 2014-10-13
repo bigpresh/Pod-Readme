@@ -1,5 +1,36 @@
 Revision history for Pod-Readme
 
+v1.0.2 2014-10-13 22:18 BST
+  - No changes since v1.0.1_08, just a version bump for a release.
+
+  - See the full list of changes since v1.0.0 for more details.
+
+  [Enhancements]
+  - This is a complete rewrite, using modern Perl with Moo.
+
+  - Added support for plugins, along with plugins to insert the module
+    version, prerequisites and the latest changes.
+
+  - Added the ability to generate a README in a variety of formats,
+    such as POD, Markdown, HTML, RTF, etc.
+
+  - Added command-line options to the pod2readme script, including the
+    ability to specify the output format.
+
+  - Switched to semantic versioning.
+
+  - The documentation has been updated accordingly.
+
+  [Incompatabilities]
+  - Perl v5.10.1 is required.
+
+  - This is no longer a subclass of a POD parser, although it has some
+    wrapper methods for compatability with software known to use it.
+
+v1.0.1_08 2014-10-13
+  [Documentation]
+  - More documentation tweaks.
+
 v1.0.1_07 2014-10-10 16:47 BST
   [Documentation]
   - More documentation tweaks.
