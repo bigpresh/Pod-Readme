@@ -136,6 +136,8 @@ Note that specific plugins may add options, e.g.
 
 See L<Pod::Readme::Plugin> for more information.
 
+Note that the C<plugin> command was added in version 1.0.0.
+
 =head2 C<=begin :readme>
 
 =head2 C<=end :readme>
@@ -180,7 +182,7 @@ extends 'Pod::Readme::Filter';
 
 {
     use version 0.77;
-    $Pod::Readme::VERSION = version->declare('v1.0.1_07');
+    $Pod::Readme::VERSION = version->declare('v1.0.1_08');
 }
 
 use Carp;
