@@ -69,9 +69,6 @@ recommends(
     'Type::Tiny::XS'     => 0,
 );
 
-# Note: test_requires is an alias for build_requires, so we don't need
-# to explicitly include it.
-
 install_script(qw{ bin/pod2readme });
 
 author_requires(
