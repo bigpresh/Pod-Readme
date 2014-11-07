@@ -64,7 +64,7 @@ This distribution requires the following modules:
 
 =over 4
 
-=item * L<Class::Method::Modifiers>
+=item * L<Class::Method::Modifiers> (version 2.00)
 
 =item * L<CPAN::Changes> (version 0.30)
 
