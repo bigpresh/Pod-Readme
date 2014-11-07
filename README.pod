@@ -4,7 +4,7 @@ Pod::Readme - Intelligently generate a README file from POD
 
 =head1 VERSION
 
-v1.0.2
+v1.0.3
 
 =head1 SYNOPSIS
 
@@ -120,55 +120,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-No changes since v1.0.1_08, just a version bump for a release.
-
-=item * 
-
-See the full list of changes since v1.0.0 for more details.
-
-=back
-
-=head2 Enhancements
-
-=over 4
-
-=item * 
-
-This is a complete rewrite, using modern Perl with Moo.
-
-=item * 
-
-Added support for plugins, along with plugins to insert the module version, prerequisites and the latest changes.
-
-=item * 
-
-Added the ability to generate a README in a variety of formats, such as POD, Markdown, HTML, RTF, etc.
-
-=item * 
-
-Added command-line options to the pod2readme script, including the ability to specify the output format.
-
-=item * 
-
-Switched to semantic versioning.
-
-=item * 
-
-The documentation has been updated accordingly.
-
-=back
-
-=head2 Incompatabilities
-
-=over 4
-
-=item * 
-
-Perl v5.10.1 is required.
-
-=item * 
-
-This is no longer a subclass of a POD parser, although it has some wrapper methods for compatability with software known to use it.
+Fixed bug with minimum version of Class::Method::Modifiers.
 
 =back
 
