@@ -35,7 +35,7 @@ build_requires(
 
 requires(
     'Carp'                      => 0,
-    'Class::Method::Modifiers'  => 0,
+    'Class::Method::Modifiers'  => '2.00',
     'CPAN::Changes'             => '0.30',
     'CPAN::Meta'                => 0,
     'Exporter'                  => 0,
