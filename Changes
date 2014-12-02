@@ -1,5 +1,7 @@
 Revision history for Pod-Readme
 
+  - Fixed typos in POD for requires plugin.
+
 v1.0.3 2014-11-07 18:58 GMT
   - Fixed bug with minimum version of Class::Method::Modifiers.
 

@@ -32,15 +32,15 @@ generated after that file has been updated.
 
 =head1 ARGUMENTS
 
-=head2 C<file>
+=head2 C<from-file>
 
-  =for readme plugin version file='MYMETA.yml'
+  =for readme plugin version from-file='MYMETA.yml'
 
 By default, it will extract the version from the F<META.yml> file. If,
 for some reason, this file is in a non-standard location, then you
 should specify it here.
 
-=head2 C<no-omit-coree>
+=head2 C<no-omit-core>
 
 By default, core modules for the version of Perl specified in the
 F<META.yml> file are omitted from this list.  If you prefer to lise
