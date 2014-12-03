@@ -298,6 +298,15 @@ has 'force' => (
     default => 0,
 );
 
+=head2 C<zilla>
+
+For use with L<Dist::Zilla> plugins.
+
+This allows plugins which normally depend on files in the distribution
+to use metadata from here instead.
+
+=cut
+
 =head1 METHODS
 
 This module extends L<Pod::Readme::Filter> with the following methods:
