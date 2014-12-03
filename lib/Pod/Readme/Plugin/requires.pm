@@ -40,6 +40,10 @@ By default, it will extract the version from the F<META.yml> file. If,
 for some reason, this file is in a non-standard location, then you
 should specify it here.
 
+The file will be ignored if the C<zilla> attribute is set, and instead
+obtain metadata from the L<Dist::Zilla> object (since the F<META.yml>
+file may not exist.)
+
 =head2 C<no-omit-core>
 
 By default, core modules for the version of Perl specified in the
@@ -113,8 +117,8 @@ has 'requires_run' => (
 );
 
 around 'depends_on' => sub {
-    my ($orig, $self) = @_;
-    return ($self->requires_from_file, $self->$orig);
+    my ( $orig, $self ) = @_;
+    return ( $self->requires_from_file, $self->$orig );
 };
 
 sub cmd_requires {
@@ -134,12 +138,24 @@ sub cmd_requires {
         }
     }
 
-    my $file = path( $self->base_dir, $self->requires_from_file )->stringify;
-    unless ( -e $file ) {
-        die "Cannot find META.yml file at '${file}";
-    }
+    my $meta;
 
-    my $meta = CPAN::Meta->load_file($file);
+    if ( $self->zilla ) {
+
+        $meta = CPAN::Meta->create( $self->zilla->distmeta,
+            { lazy_validation => 1 } );
+
+    }
+    else {
+
+        my $file =
+          path( $self->base_dir, $self->requires_from_file )->stringify;
+        unless ( -e $file ) {
+            die "Cannot find META.yml file at '${file}";
+        }
+
+        $meta = CPAN::Meta->load_file($file);
+    }
 
     my ( $prereqs, $perl ) = $self->_get_prereqs( $meta, 'requires' );
     if ( %{$prereqs} ) {

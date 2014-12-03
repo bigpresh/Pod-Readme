@@ -204,6 +204,10 @@ has _begin_args => (
     handles     => { _clear_begin_args => 'clear', },
 );
 
+has zilla => (
+    is  => 'ro',
+);
+
 sub process_for {
     my ( $self, $data ) = @_;
 
