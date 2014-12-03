@@ -4,7 +4,7 @@ use Moo::Role;
 
 {
     use version 0.77;
-    $Pod::Readme::Plugin::changes::VERSION = version->declare('v1.0.3');
+    $Pod::Readme::Plugin::changes::VERSION = version->declare('v1.1.0');
 }
 
 use CPAN::Changes 0.30;
