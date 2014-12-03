@@ -20,7 +20,7 @@ use Path::Tiny;
 use Try::Tiny;
 use Types::Standard qw/ Bool Int RegexpRef Str /;
 
-use Pod::Readme::Types qw/ Dir File ReadIO WriteIO TargetName /;
+use Pod::Readme::Types qw/ Dir File ReadIO WriteIO TargetName DistZilla /;
 
 =head1 NAME
 
@@ -206,6 +206,7 @@ has _begin_args => (
 
 has zilla => (
     is  => 'ro',
+    isa => DistZilla,
 );
 
 sub process_for {
