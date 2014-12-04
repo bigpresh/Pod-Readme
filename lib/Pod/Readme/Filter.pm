@@ -6,7 +6,7 @@ use Moo;
 
 {
     use version 0.77;
-    $Pod::Readme::Filter::VERSION = version->declare('v1.1.0');
+    $Pod::Readme::Filter::VERSION = version->declare('v1.1.1');
 }
 
 use MooX::HandlesVia;

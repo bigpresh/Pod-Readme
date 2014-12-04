@@ -1,5 +1,7 @@
 Revision history for Pod-Readme
 
+{{$NEXT}}
+
 v1.1.0 2014-12-03 19:08 GMT
   [Documentation]
   - Fixed typos in POD for requires plugin.
