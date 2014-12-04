@@ -4,7 +4,7 @@ use Moo::Role;
 
 {
     use version 0.77;
-    $Pod::Readme::Plugin::changes::VERSION = version->declare('v1.1.0');
+    $Pod::Readme::Plugin::changes::VERSION = version->declare('v1.1.1');
 }
 
 use CPAN::Changes 0.30;
@@ -126,7 +126,12 @@ sub cmd_changes {
 
     my $file = path( $self->base_dir, $self->changes_file );
 
-    my $changes = CPAN::Changes->load($file);
+    my %opts;
+    if ($self->zilla) {
+      $opts{next_token} = qr/{{\$NEXT}}/;
+    }
+
+    my $changes = CPAN::Changes->load($file, %opts);
     my $latest  = ( $changes->releases )[-1];
 
     my $heading = $self->can( "write_head" . $self->changes_heading_level )

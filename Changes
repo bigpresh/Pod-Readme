@@ -1,5 +1,9 @@
 Revision history for Pod-Readme
 
+v1.1.1 2014-12-04 13:11 GMT
+  [Bug Fixes]
+  - The changes plugin will work with Dist::Zilla {{$NEXT}} tokens.
+
 v1.1.0 2014-12-03 19:08 GMT
   [Documentation]
   - Fixed typos in POD for requires plugin.

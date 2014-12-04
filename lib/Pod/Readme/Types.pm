@@ -9,7 +9,7 @@ use warnings;
 
 {
     use version 0.77;
-    $Pod::Readme::Types::VERSION = version->declare('v1.1.0');
+    $Pod::Readme::Types::VERSION = version->declare('v1.1.1');
 }
 
 use Exporter qw/ import /;
