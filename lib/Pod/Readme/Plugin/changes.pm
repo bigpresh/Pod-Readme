@@ -126,7 +126,12 @@ sub cmd_changes {
 
     my $file = path( $self->base_dir, $self->changes_file );
 
-    my $changes = CPAN::Changes->load($file);
+    my %opts;
+    if ($self->zilla) {
+      $opts{next_token} = qr/{{\$NEXT}}/;
+    }
+
+    my $changes = CPAN::Changes->load($file, %opts);
     my $latest  = ( $changes->releases )[-1];
 
     my $heading = $self->can( "write_head" . $self->changes_heading_level )
