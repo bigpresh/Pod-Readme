@@ -41,7 +41,7 @@ requires(
     'Exporter'                  => 0,
     'ExtUtils::MakeMaker'       => 6.56,
     'File::Copy'                => 0,
-    'File::Slurp'               => 0,
+    'File::Slurp::Tiny'         => 0,
     'Getopt::Long::Descriptive' => 0,
     'Hash::Util'                => 0,
     'IO'                        => 0,
