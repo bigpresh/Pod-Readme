@@ -128,7 +128,7 @@ sub cmd_changes {
 
     my %opts;
     if ($self->zilla) {
-      $opts{next_token} = qr/{{\$NEXT}}/;
+      $opts{next_token} = qr/\{\{\$NEXT}}/;
     }
 
     my $changes = CPAN::Changes->load($file, %opts);
