@@ -13,7 +13,7 @@ use MooX::HandlesVia;
 with 'Pod::Readme::Plugin';
 
 use Carp;
-use File::Slurp::Tiny qw/ read_file /;
+use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
 use Module::Load qw/ load /;
 use Path::Tiny;
