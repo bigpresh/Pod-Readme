@@ -1,5 +1,9 @@
 Revision history for Pod-Readme
 
+  [Bug Fixes]
+  - Regex in changes plugin fixed to work with Perl 5.21 deprecated
+    syntax [khwilliamson].
+
 v1.1.1 2014-12-04 13:11 GMT
   [Bug Fixes]
   - The changes plugin will work with Dist::Zilla {{$NEXT}} tokens.
