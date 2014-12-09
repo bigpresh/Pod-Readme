@@ -1,5 +1,6 @@
 Revision history for Pod-Readme
 
+v1.1.2 2014-12-09 18:55 GMT
   [Bug Fixes]
   - Regex in changes plugin fixed to work with Perl 5.21 deprecated
     syntax [khwilliamson].
