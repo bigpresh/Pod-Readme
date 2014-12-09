@@ -4,7 +4,7 @@ Pod::Readme - Intelligently generate a README file from POD
 
 =head1 VERSION
 
-v1.1.1
+v1.1.2
 
 =head1 SYNOPSIS
 
@@ -116,27 +116,13 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
-=head2 Documentation
+=head2 Bug Fixes
 
 =over 4
 
 =item * 
 
-Fixed typos in POD for requires plugin.
-
-=back
-
-=head2 Enhancements
-
-=over 4
-
-=item * 
-
-Pod::Readme::Filter has a zilla attribute for Dist::Zilla objects.
-
-=item * 
-
-The requires plugin will use metadata from the Dist::Zilla object if it is set, rather than looking for a META.yml file (which will not exist, if this is used in a Dist::Zilla plugin).
+Regex in changes plugin fixed to work with Perl 5.21 deprecated syntax [khwilliamson].
 
 =back
 
