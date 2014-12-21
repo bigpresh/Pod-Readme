@@ -18,7 +18,7 @@ use IO qw/ File Handle /;
 use Module::Load qw/ load /;
 use Path::Tiny;
 use Try::Tiny;
-use Types::Standard qw/ Bool Int RegexpRef Str /;
+use Types::Standard qw/ Bool InstanceOf Int RegexpRef Str /;
 
 use Pod::Readme::Types qw/ Dir File ReadIO WriteIO TargetName DistZilla /;
 
@@ -206,7 +206,7 @@ has _begin_args => (
 
 has zilla => (
     is  => 'ro',
-    isa => DistZilla,
+    isa => InstanceOf[ 'Dist::Zilla' ],
 );
 
 sub process_for {
