@@ -320,7 +320,7 @@ sub write_para {
 Utility methods to write POD specific commands to the C<output_file>.
 
 These methods ensure the POD commands have extra newlines for
-compatability with older POD parsers.
+compatibility with older POD parsers.
 
 =cut
 
