@@ -51,12 +51,12 @@ this, use the C<--no-backup> option.
 
 Specifies the name of the output file. If omitted, it will use the
 second command line argument, or default to the C<--target> plus the
-corresponding extention of the C<--format>.
+corresponding extension of the C<--format>.
 
 For all intents, the default is F<README>.
 
 If a format other than "text" is chosen, then the appropriate
-extention will be added, e.g. for "markdown", the default output file
+extension will be added, e.g. for "markdown", the default output file
 is F<README.md>.
 
 =head2 C<--target>
