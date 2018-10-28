@@ -187,7 +187,7 @@ extends 'Pod::Readme::Filter';
 
 use Carp;
 use IO qw/ File Handle /;
-use List::Util qw/ any /;
+use List::Util 1.33 qw/ any /;
 use Module::Load qw/ load /;
 use Path::Tiny qw/ path tempfile /;
 use Types::Standard qw/ Bool Maybe Str /;

@@ -1,5 +1,8 @@
 Revision history for Pod-Readme
 
+  [Bug Fixes]
+  - Specify minimum version of List::Util, GH#22.
+
   [Incompatabilities]
   - Removed DistZilla type from Pod::Readme::Types, as it was not
     necessary.
