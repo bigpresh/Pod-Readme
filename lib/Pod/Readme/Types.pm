@@ -7,10 +7,7 @@ use feature 'state';
 use strict;
 use warnings;
 
-{
-    use version 0.77;
-    $Pod::Readme::Types::VERSION = version->declare('v1.1.2');
-}
+our $VERSION = 'v1.2.0';
 
 use Exporter qw/ import /;
 use IO qw/ Handle /;

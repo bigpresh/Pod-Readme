@@ -4,10 +4,7 @@ use v5.10.1;
 
 use Moo::Role;
 
-{
-    use version 0.77;
-    $Pod::Readme::Plugin::VERSION = version->declare('v1.1.2');
-}
+our $VERSION = 'v1.2.0';
 
 use Class::Method::Modifiers qw/ fresh /;
 use Hash::Util qw/ lock_keys /;

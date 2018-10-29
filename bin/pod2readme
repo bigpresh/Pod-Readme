@@ -10,6 +10,8 @@ use Getopt::Long::Descriptive;
 use IO::Handle;
 use Pod::Readme;
 
+our $VERSION = 'v1.2.0';
+
 =head1 NAME
 
 pod2readme - Intelligently generate a README file from POD
