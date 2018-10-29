@@ -1,6 +1,9 @@
 Revision history for Pod-Readme
 
 {{$NEXT}}
+  [Documentation]
+  - Added note about Github Flavoured Markdown (GFM) support
+    to Changes for v1.2.0.
 
 v1.2.0    2018-10-29 19:24:01+00:00 Europe/London
   [Bug Fixes]
@@ -8,6 +11,9 @@ v1.2.0    2018-10-29 19:24:01+00:00 Europe/London
 
   [Enhancements]
   - Added "md" as an alias for "markdown" in pod2readme.
+
+  - Added "github" or "gfm" for Github Flavored Markdown in
+    pod2readme, GH#15.
 
   [Incompatabilities]
   - Removed DistZilla type from Pod::Readme::Types, as it was not
