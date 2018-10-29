@@ -1,11 +1,17 @@
 Revision history for Pod-Readme
 
+{{$NEXT}}
   [Bug Fixes]
   - Specify minimum version of List::Util, GH#22.
 
   [Incompatabilities]
   - Removed DistZilla type from Pod::Readme::Types, as it was not
     necessary.
+
+  [Toolchain]
+  - Remove use of Module::Install, fixes GH#21.
+
+  - Use Dist::Zilla to build the distribution.
 
 v1.1.2 2014-12-09 18:55 GMT
   [Bug Fixes]
