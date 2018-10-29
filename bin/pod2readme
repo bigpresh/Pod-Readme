@@ -92,8 +92,8 @@ L<pod2text>, L<pod2markdown>.
 =cut
 
 my %FORMATS = (
-    'gfm'      => { class => 'Pod::Github' },
-    'github'   => { class => 'Pod::Github' },
+    'gfm'      => { class => 'Pod::Markdown::Github' },
+    'github'   => { class => 'Pod::Markdown::Github' },
     'html'     => { class => 'Pod::Simple::HTML', },
     'latex'    => { class => 'Pod::Simple::LaTeX' },
     'man'      => { class => 'Pod::Man' },
