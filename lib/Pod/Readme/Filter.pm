@@ -425,7 +425,7 @@ sub _load_plugin {
         Role::Tiny->apply_roles_to_object( $self, $module );
     }
     catch {
-        die "Unable to locate plugin '${plugin}'\n";
+        die "Unable to locate plugin '${plugin}': $_";
     };
 }
 
