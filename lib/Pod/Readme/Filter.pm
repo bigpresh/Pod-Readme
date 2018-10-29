@@ -4,7 +4,7 @@ use v5.10.1;
 
 use Moo;
 
-our $VERSION = 'v1.2.0';
+our $VERSION = 'v1.2.1';
 
 use MooX::HandlesVia;
 with 'Pod::Readme::Plugin';

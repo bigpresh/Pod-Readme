@@ -180,7 +180,7 @@ use v5.10.1;
 use Moo;
 extends 'Pod::Readme::Filter';
 
-our $VERSION = 'v1.2.0';
+our $VERSION = 'v1.2.1';
 
 use Carp;
 use IO qw/ File Handle /;

@@ -1,6 +1,8 @@
 Revision history for Pod-Readme
 
 {{$NEXT}}
+
+v1.2.0    2018-10-29 19:24:01+00:00 Europe/London
   [Bug Fixes]
   - Specify minimum version of List::Util, GH#22.
 
