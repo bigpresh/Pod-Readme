@@ -96,6 +96,7 @@ my %FORMATS = (
     'latex'    => { class => 'Pod::Simple::LaTeX' },
     'man'      => { class => 'Pod::Man' },
     'markdown' => { class => 'Pod::Markdown' },
+    'md'        => { class => 'Pod::Markdown' },
     'pod'      => { class => undef },
     'rtf'      => { class => 'Pod::Simple::RTF' },
     'text'     => { class => 'Pod::Simple::Text' },

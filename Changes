@@ -3,6 +3,9 @@ Revision history for Pod-Readme
   [Bug Fixes]
   - Specify minimum version of List::Util, GH#22.
 
+  [Enhancements]
+  - Added "md" as an alias for "markdown" in pod2readme.
+
   [Incompatabilities]
   - Removed DistZilla type from Pod::Readme::Types, as it was not
     necessary.
