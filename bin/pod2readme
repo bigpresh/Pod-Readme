@@ -10,7 +10,7 @@ use Getopt::Long::Descriptive;
 use IO::Handle;
 use Pod::Readme;
 
-our $VERSION = 'v1.2.1';
+our $VERSION = 'v1.2.2';
 
 =head1 NAME
 
