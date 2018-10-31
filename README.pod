@@ -70,8 +70,6 @@ This distribution requires the following modules:
 
 =item * L<CPAN::Meta>
 
-=item * L<File::Slurp>
-
 =item * L<Getopt::Long::Descriptive>
 
 =item * L<IO::String>
