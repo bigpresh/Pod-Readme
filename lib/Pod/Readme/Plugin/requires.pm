@@ -44,7 +44,7 @@ file may not exist.)
 =head2 C<no-omit-core>
 
 By default, core modules for the version of Perl specified in the
-F<META.yml> file are omitted from this list.  If you prefer to lise
+F<META.yml> file are omitted from this list.  If you prefer to list
 all requirements, then specify this option.
 
 =head2 C<title>

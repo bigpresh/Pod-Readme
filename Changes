@@ -1,6 +1,8 @@
 Revision history for Pod-Readme
 
 {{$NEXT}}
+  [Documentation]
+  - Fixed minor typos.
 
 v1.2.3    2018-10-31 22:56:42+00:00 Europe/London
   [Bug Fixes]
