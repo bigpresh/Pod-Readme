@@ -2,7 +2,7 @@ package Pod::Readme::Plugin::changes;
 
 use Moo::Role;
 
-our $VERSION = 'v1.2.3';
+our $VERSION = 'v1.2.4';
 
 use CPAN::Changes 0.30;
 use Path::Tiny;
