@@ -7,7 +7,7 @@ use feature 'state';
 use strict;
 use warnings;
 
-our $VERSION = 'v1.2.2';
+our $VERSION = 'v1.2.3';
 
 use Exporter qw/ import /;
 use IO qw/ Handle /;
