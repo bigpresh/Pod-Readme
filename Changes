@@ -2,7 +2,9 @@ Revision history for Pod-Readme
 
 {{$NEXT}}
   [Documentation]
-  - Updated POD with regard to format types (Mohammad S Anwar)
+  - Updated POD with regard to format types (Mohammad S Anwar).
+
+  - Fixed typos in Changes.
 
   [Toolchain]
   - Remove explicit core dependencies from prereqs list.
@@ -307,7 +309,7 @@ v1.0.0_01 2014-09-23 13:58 BST
 
 0.08  2006-05-01
 
-  - head3/4 headings not recognized
+  - head3/4 headings now recognized
 
   - went back to using Pod::PlainText
 
