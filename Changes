@@ -1,10 +1,11 @@
 Revision history for Pod-Readme
 
 {{$NEXT}}
-  [Toolchain]
-  - Remove explicit core dependencies from prereqs list.
   [Documentation]
   - Updated POD with regard to format types (Mohammad S Anwar)
+
+  [Toolchain]
+  - Remove explicit core dependencies from prereqs list.
 
 v1.2.1    2018-10-30 18:23:48+00:00 Europe/London
   [Documentation]
