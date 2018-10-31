@@ -1,6 +1,8 @@
 Revision history for Pod-Readme
 
 {{$NEXT}}
+  [Bug Fixes]
+  - Increased minimum version of Type::Tiny to 1.000000.
 
 v1.2.2    2018-10-31 22:41:45+00:00 Europe/London
   [Documentation]

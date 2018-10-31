@@ -13,7 +13,7 @@ use Exporter qw/ import /;
 use IO qw/ Handle /;
 use Path::Tiny;
 use Scalar::Util qw/ blessed /;
-use Type::Tiny;
+use Type::Tiny 1.000000;
 use Types::Standard qw/ FileHandle Str /;
 
 # RECOMMEND PREREQ: Type::Tiny::XS
