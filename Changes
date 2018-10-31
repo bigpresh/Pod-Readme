@@ -7,6 +7,9 @@ Revision history for Pod-Readme
   [Toolchain]
   - Remove explicit core dependencies from prereqs list.
 
+  - Updated list of contributors in distribution metadata. (Apologies
+    if anyone was omitted.)
+
 v1.2.1    2018-10-30 18:23:48+00:00 Europe/London
   [Documentation]
   - Added note about Github Flavoured Markdown (GFM) support
