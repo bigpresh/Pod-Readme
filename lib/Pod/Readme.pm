@@ -187,9 +187,19 @@ use IO qw/ File Handle /;
 use List::Util 1.33 qw/ any /;
 use Module::Load qw/ load /;
 use Path::Tiny qw/ path tempfile /;
+use Pod::Simple;
 use Types::Standard qw/ Bool Maybe Str /;
 
 use Pod::Readme::Types qw/ File WriteIO /;
+
+# RECOMMEND PREREQ: Pod::Man
+# RECOMMEND PREREQ: Pod::Markdown
+# RECOMMEND PREREQ: Pod::Markdown::Github
+# RECOMMEND PREREQ: Pod::Simple::HTML
+# RECOMMEND PREREQ: Pod::Simple::LaTeX
+# RECOMMEND PREREQ: Pod::Simple::RTF
+# RECOMMEND PREREQ: Pod::Simple::Text
+# RECOMMEND PREREQ: Pod::Simple::XHTML
 
 =head1 ATTRIBUTES
 

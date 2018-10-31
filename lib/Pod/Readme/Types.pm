@@ -16,6 +16,8 @@ use Scalar::Util qw/ blessed /;
 use Type::Tiny;
 use Types::Standard qw/ FileHandle Str /;
 
+# RECOMMEND PREREQ: Type::Tiny::XS
+
 our @EXPORT_OK =
   qw/ Dir File Indentation IO ReadIO WriteIO HeadingLevel TargetName DistZilla /;
 

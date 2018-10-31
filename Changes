@@ -6,6 +6,10 @@ Revision history for Pod-Readme
 
   - Fixed typos in Changes.
 
+  [Bug Fixes]
+  - Added explicit requirements for Pod::Simple as well as recommended
+    modules.
+
   [Toolchain]
   - Remove explicit core dependencies from prereqs list.
 
