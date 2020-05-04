@@ -116,7 +116,7 @@ sub Dir {
 
 =head2 C<File>
 
-A file. Can be a string or L<Path::Tiny> object.
+A file. Coerces a string to a L<Path::Tiny> object.
 
 =cut
 

@@ -1,7 +1,6 @@
 requires "CPAN::Changes" => "0.30";
 requires "CPAN::Meta" => "0";
 requires "Class::Method::Modifiers" => "0";
-requires "File::Slurp" => "0";
 requires "Getopt::Long::Descriptive" => "0";
 requires "Hash::Util" => "0";
 requires "List::Util" => "1.33";

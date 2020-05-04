@@ -10,7 +10,6 @@ use MooX::HandlesVia;
 with 'Pod::Readme::Plugin';
 
 use Carp;
-use File::Slurp qw/ read_file /;
 use IO qw/ File Handle /;
 use Module::Load qw/ load /;
 use Path::Tiny;
@@ -80,7 +79,7 @@ has input_fh => (
 sub _build_input_fh {
     my ($self) = @_;
     if ( $self->input_file ) {
-        $self->input_file->openr;
+        $self->input_file->openr($self->encoding);
     }
     else {
         my $fh = IO::Handle->new;
@@ -104,7 +103,7 @@ has output_fh => (
 sub _build_output_fh {
     my ($self) = @_;
     if ( $self->output_file ) {
-        $self->output_file->openw;
+        $self->output_file->openw($self->encoding);
     }
     else {
         my $fh = IO::Handle->new;
@@ -341,8 +340,7 @@ sub filter_line {
 sub filter_file {
     my ($self) = @_;
 
-    foreach
-      my $line ( read_file( $self->input_fh, binmode => $self->encoding ) )
+    while ( my $line = readline($self->input_fh) )
     {
         $self->filter_line($line)
           or last;
